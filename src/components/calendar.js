@@ -10,10 +10,15 @@ import interactionPlugin from "@fullcalendar/interaction";
 import axios from 'axios'
 
 class NewCalendar extends Component {
+   state = {
+      currentEvents:[]
+   }
+
+   calendarRef = React.createRef()
 
    handleDateSelect = (selectInfo) => {
       //TODO: Function-> user selects employee
-         //adds shift to employee's schedule
+      console.log(selectInfo);
       let calendarApi = selectInfo.view.calendar
       calendarApi.addEvent({
          id: 'fake id here',//TODO: make this dynmaic
@@ -23,38 +28,76 @@ class NewCalendar extends Component {
       })
    }
 
-   //Remove event on click
+   //-----------------Remove event from calendar on click
    handleEventClick = (clickInfo) => {
       if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
          clickInfo.event.remove()
       }
    }
 
-   //Update Database
+   //-----------------Populate Calendar from database (1 employee)
+   fetchEvents = () => {
+      let events = []
+      let calendarApi = this.calendarRef.current._calendarApi.view.calendar
+         //call API, search by employee ID
+         axios
+            .get('http://localhost:3001/admin/'+'636e927ece43e8354b80a56a')
+            .then((response) => {
+               events = response.data.schedule
+               events.forEach( shift => {
+                  let payload = {
+                     id:'placeholder ID',
+                     title:'palceholder title',
+                     start:shift.start,
+                     end:shift.end
+                  }
+                  this.state.currentEvents.push(payload);
+               })
+            })
+            .catch((error) => {
+               console.log(error);
+            })
+            .finally(() => {
+               let array = this.state.currentEvents
+               array.forEach(item => {
+                  calendarApi.addEvent(item)
+               });
+               console.log(calendarApi);
+            })
+   }
+
+   //-----------------Update Database
    handleEventAdd = (e) => {
       //create shift object to send to database
       console.log(e.event.start);
       let body = {
-         //!MAKE DATE DYNAMIC
+         //TODO!MAKE DATE DYNAMIC
          date:0,
-         //!!!NOT WORKING BECAUSE THIS IS STRING, turn date into numbers??
          start:e.event.start.toJSON(),
          end:e.event.end.toJSON(),
          //TODO! make period dynamic!
          period: 'lunch'
-         }
+      }
       console.log(body);
       axios //TODO! Make player ID dynamic!
-      .put('http://localhost:3001/admin/'+'636e927ece43e8354b80a56a/new-shift',body)
+      .put('http://localhost:3001/schedule/'+'636e927ece43e8354b80a56a/new-shift',body)
       .then((response, error) => {
          console.log(response.data);
       })
+   }
+
+   componentDidMount() {
+    this.fetchEvents()
+   }
+   componentDidUpdate() {
+    this.fetchEvents()
    }
 
    render(){
       return(
          <div className="App">
             <FullCalendar
+               ref={this.calendarRef}
                plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin ]}
                initialView='timeGridWeek'
                headerToolbar={{
@@ -62,6 +105,7 @@ class NewCalendar extends Component {
                   center: 'title',
                   left: 'dayGridMonth,timeGridWeek,timeGridDay'
                }}
+               // events={this.state.currentEvents}
                editable={true}
                selectable={true}
                select={this.handleDateSelect}
@@ -70,6 +114,7 @@ class NewCalendar extends Component {
                eventAdd={this.handleEventAdd}
                eventChange={1}
                eventRemove={1}
+               initialEvents={this.state.currentEvents}
              />
          </div>
       )
