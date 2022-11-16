@@ -1,5 +1,4 @@
-import React , {Component} from "react";
-import {useState, useEffect} from 'react';
+import React , {useState, useEffect} from "react";
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 // import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -8,14 +7,13 @@ import listPlugin from '@fullcalendar/list';
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from 'axios'
 
-class NewCalendar extends Component {
-   state = {
-      currentEvents:null
-   }
+const NewCalendar = (props)=> {
 
-   calendarRef = React.createRef()
+   const [currentEvents, setCurrentEvents] = useState([])
 
-   handleDateSelect = (selectInfo) => {
+   const calendarRef = React.createRef()
+
+   const handleDateSelect = (selectInfo) => {
       //TODO: Function-> user selects employee
       let calendarApi = selectInfo.view.calendar
       let payload = {
@@ -26,43 +24,41 @@ class NewCalendar extends Component {
       }
       calendarApi.addEvent(payload)
       console.log(selectInfo);
-      this.handleEventAdd(selectInfo)
+      handleEventAdd(selectInfo)
    }
 
    //-----------------Remove event from calendar on click
-   handleEventClick = (clickInfo) => {
+   const handleEventClick = (clickInfo) => {
       if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
          clickInfo.event.remove()
-         this.handleEventRemove(clickInfo)
+         handleEventRemove(clickInfo)
       }
    }
 
    //-----------------Populate Calendar from database (1 employee)
-   fetchEvents = () => {
+   const fetchEvents = () => {
          //call API, search by employee ID
          axios
-            .get('http://localhost:3001/admin/'+'636e927ece43e8354b80a56a')
+            .get(`http://localhost:3001/admin/${props.currentEmployee}`)
             .then((response) => {
                let events = response.data.schedule
-               this.populateCalendar(events)
+               populateCalendar(events)
             })
             .catch((error) => {console.log(error)})
    }
 
-   populateCalendar=(array) => {
-      let calendarApi = this.calendarRef.current._calendarApi.view.calendar
+   const populateCalendar=(array) => {
+      let calendarApi = calendarRef.current._calendarApi.view.calendar
       array.forEach(item => {
          calendarApi.addEvent(item)
       });
    }
 
-
-
-   handleEvents = (events) => {
-      this.setState({currentEvents: events})
+   const handleEvents = (events) => {
+      setCurrentEvents(events)
    }
 
-   renderEventContent = (eventInfo) => {
+   const renderEventContent = (eventInfo) => {
      return (
        <>
          <b>{eventInfo.timeText}</b>
@@ -72,13 +68,13 @@ class NewCalendar extends Component {
    }
 //===============Databse Helpers=============
    //---------Remove event
-   handleEventRemove = (e) => {
+   const handleEventRemove = (e) => {
       console.log('attempting to remove from db');
       let body = {
          start: e.startStr
       }
       axios
-         .put('http://localhost:3001/schedule/'+'636e927ece43e8354b80a56a/remove', body)
+         .put(`http://localhost:3001/schedule/${props.currentEmployee}/remove`, body)
          .then((response) => {
             console.log('removal success!!');
          })
@@ -87,7 +83,7 @@ class NewCalendar extends Component {
          })
    }
    //---------Add event
-   handleEventAdd = (e) => {
+   const handleEventAdd = (e) => {
       //create shift object to send to database
       console.log('trying to add to db');
       let body = {
@@ -99,40 +95,35 @@ class NewCalendar extends Component {
          period: 'lunch'
       }
       axios //TODO! Make player ID dynamic!
-      .put('http://localhost:3001/schedule/'+'636e927ece43e8354b80a56a/new-shift',body)
+      .put(`http://localhost:3001/schedule/${props.currentEmployee}/new-shift`,body)
       .then((response, error) => {
          console.log('event added to DB!');
       })
    }
-   componentDidMount() {
-      this.fetchEvents()
-   }
 
-   render(){
-      return(
-         <div className="App">
-            <FullCalendar
-               ref={this.calendarRef}
-               plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin ]}
-               initialView='timeGridWeek'
-               headerToolbar={{
-                  right: 'prev,next today',
-                  center: 'title',
-                  left: 'dayGridMonth,timeGridWeek,timeGridDay'
-               }}
-               editable={true}
-               selectable={true}
-               select={this.handleDateSelect}
-               selectMirror={true}
-               eventClick={this.handleEventClick}
-               // eventAdd={this.handleEventAdd}
-               eventContent={this.renderEventContent}
-               eventsSet={this.handleEvents}
-               // initialEvents={this.state.currentEvents}
-             />
-         </div>
-      )
-   }
+   return(
+      <div className="App">
+         <FullCalendar
+            ref={calendarRef}
+            plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin ]}
+            initialView='timeGridWeek'
+            headerToolbar={{
+               right: 'prev,next today',
+               center: 'title',
+               left: 'dayGridMonth,timeGridWeek,timeGridDay'
+            }}
+            editable={true}
+            selectable={true}
+            select={handleDateSelect}
+            selectMirror={true}
+            eventClick={handleEventClick}
+            // eventAdd={handleEventAdd}
+            eventContent={renderEventContent}
+            eventsSet={handleEvents}
+            // initialEvents={state.currentEvents}
+          />
+      </div>
+   )
 }
 
 export default NewCalendar

@@ -1,0 +1,25 @@
+
+.main{
+   display: flex;
+   flex-direction: row;
+   flex-grow: 1;
+   flex-wrap: wrap;
+}
+
+.sideMenu{
+   margin-right: 4em;
+   display: flex;
+   flex-direction: column;
+}
+
+.sideMenu button{
+   margin: .6em;
+}
+
+.employeeDetails{
+   margin-bottom: 2em;
+}
+
+li{
+   list-style-type: none;
+}
