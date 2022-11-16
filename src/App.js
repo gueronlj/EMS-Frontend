@@ -1,4 +1,5 @@
 import './App.css'
+import { useAuth0 } from '@auth0/auth0-react'
 import React, {useState, useEffect} from 'react'
 import Login from './components/login.js'
 import Logout from './components/logoutButton.js'
@@ -9,8 +10,9 @@ import EventForm from './components/event-form.js'
 
 const App = () => {
 
+   const { user, isAuthenticated, isLoading} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
-   const [selectedEmployee, setSelectedEmployee] = useState('')
+   const [selectedEmployee, setSelectedEmployee] = useState(null)
    const [eventForm, setEventForm] = useState(false)
 
    return (
@@ -20,6 +22,7 @@ const App = () => {
          <Logout />
       </div>
       <div className="main">
+      {isAuthenticated &&(
          <div className="sideMenu">
             <EmployeeList
                employeeList={employeeList}
@@ -30,14 +33,21 @@ const App = () => {
             <button>New employee</button>
             <AddEvent
                eventForm={eventForm}
-               setEventForm={setEventForm}/>
+               setEventForm={setEventForm}
+               selectedEmployee={selectedEmployee}/>
          </div>
+      )}
          <div className="dashboard">
             <Profile
                setEmployeeList={setEmployeeList}
                setSelectedEmployee={setSelectedEmployee}
                selectedEmployee={selectedEmployee}/>
-            {eventForm?<EventForm />:<></>}
+            {eventForm?
+               <EventForm
+                  employeeList={employeeList}
+                  selectedEmployee={selectedEmployee}
+                  setEventForm={setEventForm}/>
+            :<></>}
          </div>
       </div>
       </>

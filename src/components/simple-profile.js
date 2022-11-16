@@ -15,7 +15,7 @@ const Profile = (props) => {
          <div>
             <Details
                selectedEmployee={props.selectedEmployee}
-                  setSchedule={setSchedule}/>
+               setSchedule={setSchedule}/>
             <Schedule
                selectedEmployee={props.selectedEmployee}
                schedule={schedule}/>

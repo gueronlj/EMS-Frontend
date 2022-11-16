@@ -1,10 +1,37 @@
 import React, {useState, useEffect} from 'react'
 import { Form, Field } from 'react-final-form'
+import axios from 'axios'
 
-const EventForm = () => {
+const EventForm = (props) => {
+
+   const defaultForm = {
+      id:'',
+      date:'',
+      period:'',
+      start:'',
+      end:''
+   }
+
+   const [formData, setFormData] = useState(defaultForm)
+
+   const handleInput = (e) => {
+      setFormData({...formData, date:'1',[e.target.name]:e.target.value})
+   }
 
    const handleOnSubmit = () => {
       console.log('submitting');
+      let body = {
+         date:formData.date,
+         period:formData.period,
+         start:formData.start,
+         end:formData.end,
+      }
+      axios
+         .put(`http://localhost:3001/schedule/${formData.id}/new-shift`, body)
+         .then((response) => {
+            console.log(response.data)
+         })
+         .catch((error) => {console.log(error)})
    }
 
    return(
@@ -14,15 +41,15 @@ const EventForm = () => {
             return <form onSubmit={handleSubmit}>
                <div>
                   <label>Employee</label>
-                  <Field name="favoriteColor" component="select">
+                     <Field name="id" component="select" onChange={handleInput}>
                     <option />
-                    <option value="#ff0000">❤️ Red</option>
-                    <option value="#00ff00">💚 Green</option>
-                    <option value="#0000ff">💙 Blue</option>
+                    {props.employeeList.map((employee) => {
+                       return(<option key={employee._id} value={employee._id}>{employee.name}</option>)
+                    })}
                   </Field>
                </div>
                <label>Type:</label>
-                  <div>
+                  <div onChange={handleInput}>
                     <label>
                       <Field
                         name="period"
@@ -58,6 +85,9 @@ const EventForm = () => {
                     component="input"
                     type="text"
                     placeholder="Date string"
+                    value={formData.start}
+                    onChange={handleInput}
+
                   />
                </div>
                <div>
@@ -67,6 +97,8 @@ const EventForm = () => {
                     component="input"
                     type="text"
                     placeholder="Date string"
+                    onChange={handleInput}
+                    value={formData.end}
                   />
                </div>
                <div className="buttons">
