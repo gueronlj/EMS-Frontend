@@ -1,4 +1,3 @@
-
 import React , {Component} from "react";
 import {useState, useEffect} from 'react';
 import FullCalendar from '@fullcalendar/react' // must go before plugins
@@ -11,86 +10,102 @@ import axios from 'axios'
 
 class NewCalendar extends Component {
    state = {
-      currentEvents:[]
+      currentEvents:null
    }
 
    calendarRef = React.createRef()
 
    handleDateSelect = (selectInfo) => {
       //TODO: Function-> user selects employee
-      console.log(selectInfo);
       let calendarApi = selectInfo.view.calendar
-      calendarApi.addEvent({
+      let payload = {
          id: 'fake id here',//TODO: make this dynmaic
          title: 'Employee name here', //TODO: make user choose Title
          start: selectInfo.startStr,
          end: selectInfo.endStr,
-      })
+      }
+      calendarApi.addEvent(payload)
+      console.log(selectInfo);
+      this.handleEventAdd(selectInfo)
    }
 
    //-----------------Remove event from calendar on click
    handleEventClick = (clickInfo) => {
       if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
          clickInfo.event.remove()
+         this.handleEventRemove(clickInfo)
       }
    }
 
    //-----------------Populate Calendar from database (1 employee)
    fetchEvents = () => {
-      let events = []
-      let calendarApi = this.calendarRef.current._calendarApi.view.calendar
          //call API, search by employee ID
          axios
             .get('http://localhost:3001/admin/'+'636e927ece43e8354b80a56a')
             .then((response) => {
-               events = response.data.schedule
-               events.forEach( shift => {
-                  let payload = {
-                     id:'placeholder ID',
-                     title:'palceholder title',
-                     start:shift.start,
-                     end:shift.end
-                  }
-                  this.state.currentEvents.push(payload);
-               })
+               let events = response.data.schedule
+               this.populateCalendar(events)
             })
-            .catch((error) => {
-               console.log(error);
-            })
-            .finally(() => {
-               let array = this.state.currentEvents
-               array.forEach(item => {
-                  calendarApi.addEvent(item)
-               });
-               console.log(calendarApi);
-            })
+            .catch((error) => {console.log(error)})
    }
 
-   //-----------------Update Database
+   populateCalendar=(array) => {
+      let calendarApi = this.calendarRef.current._calendarApi.view.calendar
+      array.forEach(item => {
+         calendarApi.addEvent(item)
+      });
+   }
+
+
+
+   handleEvents = (events) => {
+      this.setState({currentEvents: events})
+   }
+
+   renderEventContent = (eventInfo) => {
+     return (
+       <>
+         <b>{eventInfo.timeText}</b>
+         <i>{eventInfo.event.title}</i>
+       </>
+     )
+   }
+//===============Databse Helpers=============
+   //---------Remove event
+   handleEventRemove = (e) => {
+      console.log('attempting to remove from db');
+      let body = {
+         start: e.startStr
+      }
+      axios
+         .put('http://localhost:3001/schedule/'+'636e927ece43e8354b80a56a/remove', body)
+         .then((response) => {
+            console.log('removal success!!');
+         })
+         .catch((error) => {
+            console.log(error);
+         })
+   }
+   //---------Add event
    handleEventAdd = (e) => {
       //create shift object to send to database
-      console.log(e.event.start);
+      console.log('trying to add to db');
       let body = {
          //TODO!MAKE DATE DYNAMIC
          date:0,
-         start:e.event.start.toJSON(),
-         end:e.event.end.toJSON(),
+         start:e.startStr,
+         end:e.endStr,
          //TODO! make period dynamic!
          period: 'lunch'
       }
-      console.log(body);
       axios //TODO! Make player ID dynamic!
       .put('http://localhost:3001/schedule/'+'636e927ece43e8354b80a56a/new-shift',body)
       .then((response, error) => {
-         console.log(response.data);
+         console.log('event added to DB!');
       })
    }
-
    componentDidMount() {
-    this.fetchEvents()
-   }
-   componentDidUpdate() {
-    this.fetchEvents()
+      this.fetchEvents()
    }
 
    render(){
@@ -105,16 +120,15 @@ class NewCalendar extends Component {
                   center: 'title',
                   left: 'dayGridMonth,timeGridWeek,timeGridDay'
                }}
-               // events={this.state.currentEvents}
                editable={true}
                selectable={true}
                select={this.handleDateSelect}
                selectMirror={true}
                eventClick={this.handleEventClick}
-               eventAdd={this.handleEventAdd}
-               eventChange={1}
-               eventRemove={1}
-               initialEvents={this.state.currentEvents}
+               // eventAdd={this.handleEventAdd}
+               eventContent={this.renderEventContent}
+               eventsSet={this.handleEvents}
+               // initialEvents={this.state.currentEvents}
              />
          </div>
       )
