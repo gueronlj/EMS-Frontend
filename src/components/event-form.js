@@ -83,7 +83,6 @@ const EventForm = (props) => {
                     placeholder="Date string"
                     value={formData.date}
                     onChange={handleInput}
-
                   />
                </div>
                <div>
