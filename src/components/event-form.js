@@ -15,11 +15,11 @@ const EventForm = (props) => {
    const [formData, setFormData] = useState(defaultForm)
 
    const handleInput = (e) => {
-      setFormData({...formData, date:'1',[e.target.name]:e.target.value})
+      setFormData({...formData, [e.target.name]:e.target.value})
    }
 
-   const handleOnSubmit = () => {
-      console.log('submitting');
+   const handleSubmit = (e) => {
+      e.preventDefault()
       let body = {
          date:formData.date,
          period:formData.period,
@@ -34,88 +34,88 @@ const EventForm = (props) => {
          .catch((error) => {console.log(error)})
    }
 
+   const formReset = () => {
+      console.log('resetting form');
+   }
+
    return(
-      <Form
-         onSubmit={handleOnSubmit}
-         render={({ handleSubmit, form, submitting, pristine, values }) => {
-            return <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
                <div>
                   <label>Employee</label>
-                     <Field name="id" component="select" onChange={handleInput}>
-                    <option />
-                    {props.employeeList.map((employee) => {
+                  <select name="id" onChange={handleInput} value={formData.name}>
+                     <option />
+                     {props.employeeList.map((employee) => {
                        return(<option key={employee._id} value={employee._id}>{employee.name}</option>)
-                    })}
-                  </Field>
+                     })}
+                  </select>
                </div>
-               <label>Type:</label>
-                  <div onChange={handleInput}>
-                    <label>
-                      <Field
-                        name="period"
-                        component="input"
-                        type="radio"
-                        value="lunch"
-                      />{' '}
-                      Lunch
-                    </label>
-                    <label>
-                      <Field
-                        name="period"
-                        component="input"
-                        type="radio"
-                        value="dinner"
-                      />{' '}
-                      Dinner
-                    </label>
-                    <label>
-                      <Field
-                        name="period"
-                        component="input"
-                        type="radio"
-                        value="double"
-                      />{' '}
-                      Double
-                    </label>
-                  </div>
+               <div onChange={handleInput}>
+                  <label>
+                  <input
+                     name="period"
+                     type="radio"
+                     value="lunch"
+                  />{' '}
+                  Lunch
+                  </label>
+                  <label>
+                  <input
+                     name="period"
+                     type="radio"
+                     value="dinner"
+                  />{' '}
+                  Dinner
+                  </label>
+                  <label>
+                  <input
+                     name="period"
+                     type="radio"
+                     value="double"
+                  />{' '}
+                  Double
+                  </label>
+               </div>
                <div>
-                  <label>Start</label>
-                  <Field
-                    name="start"
-                    component="input"
-                    type="text"
+                  <label>Day</label>
+                  <input
+                    name="date"
+                    type="date"
                     placeholder="Date string"
-                    value={formData.start}
+                    value={formData.date}
                     onChange={handleInput}
 
                   />
                </div>
                <div>
-                  <label>End</label>
-                  <Field
+                  <label>Starting time</label>
+                  <input
+                    name="start"
+                    type="time"
+                    value={formData.start}
+                    onChange={handleInput}
+                  />
+               </div>
+               <div>
+                  <label>Ending time</label>
+                  <input
                     name="end"
-                    component="input"
-                    type="text"
-                    placeholder="Date string"
+                    type="time"
                     onChange={handleInput}
                     value={formData.end}
                   />
                </div>
                <div className="buttons">
-                  <button type="submit" disabled={submitting || pristine}>
+                  <button type="submit">
                     Submit
                   </button>
                   <button
                     type="button"
-                    onClick={form.reset}
-                    disabled={submitting || pristine}
-                  >
-                    Reset
+                    onClick={formReset}
+                  >Reset
                   </button>
                </div>
             </form>
-         }}
-      />
+
    )
 }
 

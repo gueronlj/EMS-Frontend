@@ -2,7 +2,6 @@
 .main{
    display: flex;
    flex-direction: row;
-   flex-grow: 1;
    flex-wrap: wrap;
 }
 
@@ -16,6 +15,11 @@
    margin: .6em;
 }
 
+.dashboard{
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+}
 .employeeDetails{
    margin-bottom: 2em;
 }

@@ -7,7 +7,7 @@ const Details = (props) => {
 
    const fetchDetails = () => {
       axios
-         .get(`http://localhost:3001/admin/${props.selectedEmployee}`)
+         .get(`http://localhost:3001/admin/${props.selectedEmployee._id}`)
          .then((response) => {
             setDetails(response.data)
          })

@@ -7,7 +7,7 @@ const Schedule = (props) => {
 
    const fetchSchedule = () => {
       axios
-         .get(`http://localhost:3001/admin/${props.selectedEmployee}`)
+         .get(`http://localhost:3001/admin/${props.selectedEmployee._id}`)
          .then((response) => {
             setSchedule(response.data.schedule)
          })
@@ -24,6 +24,7 @@ const Schedule = (props) => {
             {schedule.length ?
                <thead>
                   <tr>
+                     <th>Date</th>
                      <th>Start</th>
                      <th>End</th>
                      <th>L/D</th>
@@ -35,6 +36,7 @@ const Schedule = (props) => {
                   {schedule.map((shift) => {
                      return(
                         <tr>
+                           <td>{shift.date}</td>
                            <td>{shift.start}</td>
                            <td>{shift.end}</td>
                            <td>{shift.period}</td>
