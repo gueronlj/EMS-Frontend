@@ -16,7 +16,6 @@ const EmployeeList = (props) => {
    }
 
    const handleNameClick =(e) => {
-      console.log(e);
       props.setSelectedEmployee(e)
    }
 

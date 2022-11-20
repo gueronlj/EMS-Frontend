@@ -10,6 +10,7 @@ const Details = (props) => {
          .get(`http://localhost:3001/admin/${props.selectedEmployee._id}`)
          .then((response) => {
             setDetails(response.data)
+            props.setSchedule(response.data.schedule)
          })
          .catch((error) => {console.log(error)})
    }

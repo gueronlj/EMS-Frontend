@@ -19,7 +19,6 @@ const AddEvent = (props) => {
    }
 
    useEffect(() => {
-      console.log('checking button');
       checkButton();
    },[props.selectedEmployee])
 

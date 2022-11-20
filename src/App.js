@@ -7,6 +7,7 @@ import Profile from './components/simple-profile.js'
 import EmployeeList from './components/employee-list.js'
 import AddEvent from './components/add-event.js'
 import EventForm from './components/event-form.js'
+import axios from 'axios'
 
 const App = () => {
 
@@ -14,6 +15,16 @@ const App = () => {
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState(null)
    const [eventForm, setEventForm] = useState(false)
+   const [schedule, setSchedule] = useState()
+
+   const fetchSchedule = () => {
+      axios
+         .get(`http://localhost:3001/admin/${selectedEmployee._id}`)
+         .then((response) => {
+            setSchedule(response.data.schedule)
+         })
+         .catch((error) => {console.log(error)})
+   }
 
    return (
       <>
@@ -29,6 +40,8 @@ const App = () => {
                setEmployeeList={setEmployeeList}
                setSelectedEmployee={setSelectedEmployee}
                selectedEmployee={selectedEmployee}
+               fetchSchedule={fetchSchedule}
+               setSchedule={setSchedule}
                />
             <button>New employee</button>
             <AddEvent
@@ -41,7 +54,10 @@ const App = () => {
             <Profile
                setEmployeeList={setEmployeeList}
                setSelectedEmployee={setSelectedEmployee}
-               selectedEmployee={selectedEmployee}/>
+               selectedEmployee={selectedEmployee}
+               fetchSchedule={fetchSchedule}
+               schedule={schedule}
+               setSchedule={setSchedule}/>
             {eventForm?
                <EventForm
                   employeeList={employeeList}
