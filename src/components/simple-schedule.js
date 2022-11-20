@@ -4,9 +4,9 @@ import React, {useState, useEffect} from 'react'
 const Schedule = (props) => {
 
    const [schedule, setSchedule] = useState()
-   const [editTarget, setEditTarget ] = useState()
-
-   const reference = React.createRef()
+   const [editTarget, setEditTarget ] = useState({id:'', name:'', value:null})
+   const [editMode, setEditMode] =useState(false)
+   const [formData, setFormData] = useState({})
 
    const fetchSchedule = () => {
       axios
@@ -17,57 +17,92 @@ const Schedule = (props) => {
          .catch((error) => {console.log(error)})
    }
 
-   const handleClick = (e) => {
-      let name = e.target.attributes.name
-      console.log(name);
-      if (name=='period'){console.log('clicking');}
-      if (name=='end'){setEditTarget({name:'end',type:'time',value:''})}
-      if (name=='start'){setEditTarget({name:'start',type:'time',value:''})}
-      if (name=='date'){setEditTarget({name:'date',type:'date',value:''})}
+   const toggleEdit = () => {
+      editMode?setEditMode(false):setEditMode(true)
    }
+
+   const handleClick = (e) => {
+      toggleEdit()
+      let shiftId = e.target.parentElement.id
+      console.log(shiftId);
+      let fieldValue = e.target.innerText
+      let fieldName = e.target.id
+      fetchShiftInfo()
+      setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
+   }
+
+   const fetchShiftInfo = () => {
+      axios
+         .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/${editTarget.id}`)
+         .then((response) => {
+            console.log(response.data);
+            setFormData({date:response.data.date, start:response.data.start, end:response.data.end, period:response.data.period})
+         })
+         .catch((error) => {
+            console.log(error);
+         })
+   }
+
+   const renderEditForm = () => {
+      if (editTarget.name ==='date'){
+         console.log('tring to render date edit');//render input type "date"}
+         return (<form onSubmit={handleSubmit}>
+            <input onChange={handleInput} type='date' name={editTarget.name} value={formData.date}/>
+            <button type="submit">
+              Submit
+            </button>
+         </form>)
+      }
+      else if (editTarget.name ==='start'||editTarget.name ==='end'){
+         console.log('tring to render time edit')//render input type "time"
+         return (<form onSubmit={handleSubmit}>
+            <input onChange={handleInput} type='time' name={editTarget.name} value={formData.start||formData.end}/>
+            <button type="submit">
+              Submit
+            </button>
+         </form>)
+      }
+      else if (editTarget.name ==='period'){
+         console.log('tring to render period edit')//render input type "select"
+         return(
+            <form onSubmit={handleSubmit}>
+               <select onChange={handleInput} name={editTarget.name} value={formData.period}>
+                  <option>Lunch</option>
+                  <option>Dinner</option>
+                  <option>Double</option>
+               </select>
+               <button type="submit">
+                 Submit
+               </button>
+            </form>
+         )
+      }
+   }
+
 
    const handleInput=(e) => {
-
+      setFormData({...formData, [e.target.name]:e.target.value})
    }
 
-   const handleSubmit=() => {
-
+   const handleSubmit=(e) => {
+      e.preventDefault()
+      const body ={
+         date:formData.date,
+         period:formData.period,
+         start:formData.start,
+         end:formData.end,
+      }
+      axios
+         .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/edit/${editTarget.id}`, body)
+         .then((response) => {
+            console.log(response.data)
+         })
+         .catch((error) => {console.log(error)})
    }
-
-   const renderEditForm = (target, type) => {
-      console.log('tring to render');
-
-      const select = (<form onSubmit={handleSubmit}>
-         <select name={editTarget.name}>
-            <option>Lunch</option>
-            <option>Dinner</option>
-            <option>Double</option>
-         </select>
-      </form>)
-
-      const input = (<form onSubmit={handleSubmit}>
-         <select name={editTarget.name}>
-            <option>Lunch</option>
-            <option>Dinner</option>
-            <option>Double</option>
-         </select>
-      </form>)
-
-      if(type=='period'){
-         return(select)
-      }else{
-         return(input)}
-   }
-
-   const checkEdit = () => {
-      editTarget && renderEditForm(editTarget.name,editTarget.type)
-   }
-
 
    useEffect(() => {
       fetchSchedule()
-      editTarget && renderEditForm(editTarget.name,editTarget.type)
-   },[schedule, editTarget])
+   },[schedule])
 
    return(
       schedule && (
@@ -87,19 +122,18 @@ const Schedule = (props) => {
                <tbody>
                   {schedule.map((shift) => {
                      return(
-                        <tr>
-                           <td onClick={handleClick} name="date">{shift.date}</td>
-                           <td onClick={handleClick} name="start">{shift.start}</td>
-                           <td onClick={handleClick} name="end">{shift.end}</td>
-                           <td onClick={handleClick} name="period">{shift.period}</td>
+                        <tr id={shift.id}>
+                           <td onClick={handleClick} id="date">{shift.date}</td>
+                           <td onClick={handleClick} id="start">{shift.start}</td>
+                           <td onClick={handleClick} id="end">{shift.end}</td>
+                           <td onClick={handleClick} id="period">{shift.period}</td>
                         </tr>
                      )})}
                </tbody>
             </table>
-
-      </>
+            {editMode && renderEditForm()}
+         </>
       )
-
    )
 }
 

@@ -5,7 +5,6 @@ import axios from 'axios'
 const EventForm = (props) => {
 
    const defaultForm = {
-      id:'',
       date:'',
       period:'',
       start:'',
