@@ -26,28 +26,15 @@ const EventForm = (props) => {
          end:formData.end,
       }
       axios
-         .put(`http://localhost:3001/schedule/${formData.id}/new-shift`, body)
+         .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
-            console.log(response.data)
+            props.fetchSchedule()
          })
          .catch((error) => {console.log(error)})
    }
 
-   const formReset = () => {
-      console.log('resetting form');
-   }
-
    return(
       <form onSubmit={handleSubmit}>
-               <div>
-                  <label>Employee</label>
-                  <select name="id" onChange={handleInput} value={formData.name}>
-                     <option />
-                     {props.employeeList.map((employee) => {
-                       return(<option key={employee._id} value={employee._id}>{employee.name}</option>)
-                     })}
-                  </select>
-               </div>
                <div onChange={handleInput}>
                   <label>
                   <input
@@ -105,11 +92,6 @@ const EventForm = (props) => {
                <div className="buttons">
                   <button type="submit">
                     Submit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={formReset}
-                  >Reset
                   </button>
                </div>
             </form>

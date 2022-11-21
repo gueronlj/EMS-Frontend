@@ -14,6 +14,20 @@ const Schedule = (props) => {
       let fieldName = e.target.id
       fetchShiftInfo()
       props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
+      props.setEventForm(false)
+   }
+
+   const handleDelete = (e) => {
+      //TODO:Add confirmation popup
+      axios
+         .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.id}`)
+         .then((response) => {
+            console.log(response.data);
+            props.fetchSchedule()
+         })
+         .catch((error) => {
+            console.log(error);
+         })
    }
 
    const fetchShiftInfo = () => {
@@ -54,6 +68,7 @@ const Schedule = (props) => {
                            <td onClick={handleClick} id="start">{shift.start}</td>
                            <td onClick={handleClick} id="end">{shift.end}</td>
                            <td onClick={handleClick} id="period">{shift.period}</td>
+                           <td onClick={handleDelete} >-remove</td>
                         </tr>
                      )})}
                </tbody>

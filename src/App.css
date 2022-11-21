@@ -24,6 +24,11 @@
    margin-bottom: 2em;
 }
 
+.quickMenu{
+   display: flex;
+   flex-direction: row;
+}
+
 li{
    list-style-type: none;
 }

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-const AddEvent = (props) => {
+const DetailsButton = (props) => {
    const [disabled, setDisabled] = useState(true)
 
    const checkButton = () => {
@@ -16,9 +16,9 @@ const AddEvent = (props) => {
    },[props.selectedEmployee])
 
    return(
-         <button onClick={()=>{props.handleAddEvent()}} disabled={disabled}>
-            {props.addEventText}
+         <button onClick={()=>{props.toggleDetailsView()}} disabled={disabled}>
+            {props.detailButtonText}
          </button>
    )
 }
-export default AddEvent
+export default DetailsButton

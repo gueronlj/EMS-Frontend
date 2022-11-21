@@ -26,14 +26,14 @@ const EmployeeList = (props) => {
    if (isLoading) return <p>Loading employee info...</p>
    return (
       <>
-      <h3>Employees</h3>
-      {props.employeeList.map( employee => {
-         return(
-            <li key={employee._id} onClick={() => {
-               handleNameClick(employee);
-            }} >{employee.name}</li>
-         )
-      })}
+         <h3>Employees</h3>
+         {props.employeeList.map( employee => {
+            return(
+               <li key={employee._id} onClick={() => {
+                  handleNameClick(employee);
+               }} >{employee.name}</li>
+            )
+         })}
       </>
    )
 }

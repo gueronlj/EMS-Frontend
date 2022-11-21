@@ -20,7 +20,7 @@ const Details = (props) => {
    },[props.selectedEmployee])
 
    return(
-      details &&(
+      details &&
          <div className="employeeDetails">
             <h3>Details</h3>
                <li>Name:{details.name}</li>
@@ -28,7 +28,6 @@ const Details = (props) => {
                <li>Hourly Rate:{details.perHour}</li>
                <li>Daily Rate:{details.perDiem}</li>
          </div>
-      )
    )
 }
 
