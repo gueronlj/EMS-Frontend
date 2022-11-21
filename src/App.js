@@ -20,17 +20,6 @@ const App = () => {
    const [schedule, setSchedule] = useState()
    const [addEventText, setAddEventText] = useState("Add event")
    const [detailsView, setDetailsView ] = useState(false)
-   const [detailButtonText, setDetailButtonText] = useState("View details")
-
-   const toggleDetailsView = () => {
-      if(detailsView){
-         setDetailsView(false)
-         setDetailButtonText('View details')
-      }else{
-         setDetailsView(true)
-         setDetailButtonText('Close')
-      }
-   }
 
    const fetchSchedule = () => {
       axios
@@ -50,8 +39,7 @@ const App = () => {
          setAddEventText('Cancel')
       }
    }
-   return (
-      <>
+   return (<>
       <div className="header">
          <Login />
          <Logout />
@@ -63,51 +51,35 @@ const App = () => {
                employeeList={employeeList}
                setEmployeeList={setEmployeeList}
                setSelectedEmployee={setSelectedEmployee}
-               selectedEmployee={selectedEmployee}
-               fetchSchedule={fetchSchedule}
-               setSchedule={setSchedule}
-               />
-            <button>New employee</button>
+               selectedEmployee={selectedEmployee}/>
             <AddEvent
-               eventForm={eventForm}
-               setEventForm={setEventForm}
                selectedEmployee={selectedEmployee}
                handleAddEvent={handleAddEvent}
                addEventText={addEventText}/>
             <DetailsButton
                selectedEmployee={selectedEmployee}
-               detailButtonText={detailButtonText}
-               toggleDetailsView={toggleDetailsView}/>
+               detailsView={detailsView}
+               setDetailsView={setDetailsView}/>
          </div>
       )}
          <div className="dashboard">
             <Profile
-               setEmployeeList={setEmployeeList}
-               setSelectedEmployee={setSelectedEmployee}
                selectedEmployee={selectedEmployee}
                fetchSchedule={fetchSchedule}
                schedule={schedule}
                setSchedule={setSchedule}
                editMode={editMode}
                setEditMode={setEditMode}
-               setEventForm={setEventForm}
+               detailsView={detailsView}/>
+         {eventForm?
+            <EventForm
+               selectedEmployee={selectedEmployee}
                eventForm={eventForm}
-               detailsView={detailsView}
-               setDetailsView={setDetailsView}
-               />
-            {eventForm?
-               <EventForm
-                  employeeList={employeeList}
-                  selectedEmployee={selectedEmployee}
-                  setEventForm={setEventForm}
-                  eventForm={eventForm}
-                  fetchSchedule={fetchSchedule}
-                  handleAddEvent={handleAddEvent}/>
-            :<></>}
+               fetchSchedule={fetchSchedule}/>
+         :<></>}
          </div>
       </div>
-      </>
-   )
+   </>)
 }
 
 export default App;

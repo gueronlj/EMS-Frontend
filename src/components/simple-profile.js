@@ -17,13 +17,9 @@ const Profile = (props) => {
       props.selectedEmployee &&(
          <div>
             <QuickMenu
-               detailsView={props.detailsView}
-               setDetailsView={props.setDetailsView}
                selectedEmployee={props.selectedEmployee}
-               setSelectedEmployee={props.setSelectedEmployee}
                fetchSchedule={props.fetchSchedule}/>
-            {props.detailsView?
-               <>
+            {props.detailsView?<>
                   <Details
                      selectedEmployee={props.selectedEmployee}
                      setSchedule={props.setSchedule}/>
@@ -47,8 +43,7 @@ const Profile = (props) => {
                         selectedEmployee={props.selectedEmployee}
                         fetchSchedule={props.fetchSchedule}/>
                      :<></>
-                  }
-               </>
+                  }</>
                :<></>
             }
          </div>

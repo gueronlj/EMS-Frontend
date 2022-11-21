@@ -46,9 +46,8 @@ const Schedule = (props) => {
    },[])
 
    return(
-      props.schedule && (
-         <>
-            <table>
+      props.schedule && (<>
+         <table>
             {props.schedule.length ?
                <thead>
                   <tr>
@@ -60,21 +59,20 @@ const Schedule = (props) => {
                </thead>:
                <p>No schedule found</p>
             }
-               <tbody>
-                  {props.schedule.map((shift) => {
-                     return(
-                        <tr id={shift.id}>
-                           <td onClick={handleClick} id="date">{shift.date}</td>
-                           <td onClick={handleClick} id="start">{shift.start}</td>
-                           <td onClick={handleClick} id="end">{shift.end}</td>
-                           <td onClick={handleClick} id="period">{shift.period}</td>
-                           <td onClick={handleDelete} >-remove</td>
-                        </tr>
-                     )})}
-               </tbody>
-            </table>
-         </>
-      )
+            <tbody>
+               {props.schedule.map((shift) => {
+                  return(
+                     <tr id={shift.id}>
+                        <td onClick={handleClick} id="date">{shift.date}</td>
+                        <td onClick={handleClick} id="start">{shift.start}</td>
+                        <td onClick={handleClick} id="end">{shift.end}</td>
+                        <td onClick={handleClick} id="period">{shift.period}</td>
+                        <td onClick={handleDelete} >-remove</td>
+                     </tr>
+                  )})}
+            </tbody>
+         </table>
+      </>)
    )
 }
 
