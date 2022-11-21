@@ -20,7 +20,8 @@ const Profile = (props) => {
                detailsView={props.detailsView}
                setDetailsView={props.setDetailsView}
                selectedEmployee={props.selectedEmployee}
-               setSelectedEmployee={props.setSelectedEmployee}/>
+               setSelectedEmployee={props.setSelectedEmployee}
+               fetchSchedule={props.fetchSchedule}/>
             {props.detailsView?
                <>
                   <Details

@@ -40,7 +40,7 @@ const EventForm = (props) => {
                   <input
                      name="period"
                      type="radio"
-                     value="lunch"
+                     value="Lunch"
                   />{' '}
                   Lunch
                   </label>
@@ -48,7 +48,7 @@ const EventForm = (props) => {
                   <input
                      name="period"
                      type="radio"
-                     value="dinner"
+                     value="Dinner"
                   />{' '}
                   Dinner
                   </label>
@@ -56,7 +56,7 @@ const EventForm = (props) => {
                   <input
                      name="period"
                      type="radio"
-                     value="double"
+                     value="Double"
                   />{' '}
                   Double
                   </label>
