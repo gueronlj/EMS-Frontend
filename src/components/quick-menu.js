@@ -4,6 +4,8 @@ import {useState, useEffect} from 'react'
 const QuickMenu = (props) => {
    const [message, setMessage] = useState('')
    const [currentDateTime, setCurrentDateTime] = useState([])
+   const [clockOutDisabled, setClockOutDisabled]= useState(false)
+   const [clockInDisabled, setClockInDisabled]= useState(false)
    const LocalStorage = window.localStorage
 
    const writeToDb = (e) => {
@@ -17,23 +19,28 @@ const QuickMenu = (props) => {
          .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
             props.fetchSchedule()
-            setMessage(`${e.target.id} has been added.`)
          })
          .catch((error) => {console.log(error)})
    }
 
    const quickAddEvent = async (e) => {
       const dateAndTime = await getCurrentDateAndTime()
-      //add token to localStorage
-      // localStorage.setItem(storageKey, JSON.stringify(value));
-      const token = {
-         employeeId:props.selectedEmployee._id,
-         employeeName:props.selectedEmployee.name,
-         date:currentDateTime[0],
-         time:currentDateTime[1]
-      }
-      LocalStorage.setItem(props.selectedEmployee._id, JSON.stringify(token))
       writeToDb(e)
+   }
+
+   const clockIn = async(e) => {
+      try{
+         if(!LocalStorage.getItem(props.selectedEmployee._id)){
+            const dateAndTime = await getCurrentDateAndTime()
+            const token = {
+               employeeName:props.selectedEmployee.name,
+            }
+            LocalStorage.setItem(props.selectedEmployee._id, JSON.stringify(token))
+            setMessage(`${props.selectedEmployee.name} has been clocked in.`)
+            writeToDb(e)
+         }
+
+      }catch(error){console.log(error);}
    }
 
    const clockOut = async() => {
@@ -42,8 +49,7 @@ const QuickMenu = (props) => {
          if (LocalStorage.getItem(props.selectedEmployee._id)){
             const res = await axios
                .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/clockout`)
-               const dateAndTime = await getCurrentDateAndTime()
-               console.log(res.data);
+               await getCurrentDateAndTime()
                let body = {
                   id:res.data.id,
                   date:res.data.date,
@@ -51,7 +57,7 @@ const QuickMenu = (props) => {
                   end:currentDateTime[1],
                   period:res.data.period
                }
-               let clockedOut = await axios
+               await axios
                   .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/edit/${body.id}`, body)
                props.fetchSchedule()
                setMessage(`${props.selectedEmployee.name} has been clocked out.`)
@@ -66,21 +72,35 @@ const QuickMenu = (props) => {
       setCurrentDateTime([currentDate, currentTime])
    }
 
+   const checkLocalStorage = () => {
+      if(LocalStorage.getItem(props.selectedEmployee._id)){
+         setClockInDisabled(true)
+         setClockOutDisabled(false)
+      }else{
+         setClockInDisabled(false)
+         setClockOutDisabled(true)
+      }
+   }
+
    useEffect(() => {
       getCurrentDateAndTime()
-   },[])
+      checkLocalStorage()
+   },[props.selectedEmployee, message])
 
    return(
       props.selectedEmployee &&(<>
          <h4>{props.selectedEmployee.name}</h4>
+         <div className="quickMessage">
+            {message}
+         </div>
          <div className="quickMenu">
             <div>
-               <button id={currentDateTime[1]} innerText="start" onClick={quickAddEvent}>
+               <button id={currentDateTime[1]} innerText="start" onClick={clockIn} disabled={clockInDisabled}>
                   Clock-In
                </button>
             </div>
             <div>
-               <button id="clockOut" innerText="end" onClick={clockOut}>
+               <button id="clockOut" innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
                   Clock-Out
                </button>
             </div>
@@ -99,9 +119,6 @@ const QuickMenu = (props) => {
                   Add Double
                </button>
             </div>
-         </div>
-         <div className="quickMessage">
-            {message}
          </div>
       </>)
    )

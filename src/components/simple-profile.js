@@ -19,34 +19,34 @@ const Profile = (props) => {
             <QuickMenu
                selectedEmployee={props.selectedEmployee}
                fetchSchedule={props.fetchSchedule}/>
-            {props.detailsView?<>
-                  <Details
-                     selectedEmployee={props.selectedEmployee}
-                     setSchedule={props.setSchedule}/>
-                  <Schedule
-                     selectedEmployee={props.selectedEmployee}
-                     editTarget={editTarget}
-                     setEditTarget={setEditTarget}
-                     setEditMode={props.setEditMode}
-                     editMode={props.editMode}
-                     formData={formData}
-                     setFormData={setFormData}
-                     schedule={props.schedule}
-                     fetchSchedule={props.fetchSchedule}/>
-                  {props.editMode?
-                     <EditEvent
-                        editTarget={editTarget}
-                        editMode={props.editMode}
-                        setEditMode={props.setEditMode}
-                        formData={formData}
-                        setFormData={setFormData}
-                        selectedEmployee={props.selectedEmployee}
-                        fetchSchedule={props.fetchSchedule}/>
-                     :<></>
-                  }</>
-               :<></>
-            }
-         </div>
+      {props.detailsView?<>
+            <Details
+               selectedEmployee={props.selectedEmployee}
+               setSchedule={props.setSchedule}/>
+            <Schedule
+               selectedEmployee={props.selectedEmployee}
+               editTarget={editTarget}
+               setEditTarget={setEditTarget}
+               setEditMode={props.setEditMode}
+               editMode={props.editMode}
+               formData={formData}
+               setFormData={setFormData}
+               schedule={props.schedule}
+               fetchSchedule={props.fetchSchedule}/>
+         {props.editMode?
+            <EditEvent
+               editTarget={editTarget}
+               editMode={props.editMode}
+               setEditMode={props.setEditMode}
+               formData={formData}
+               setFormData={setFormData}
+               selectedEmployee={props.selectedEmployee}
+               fetchSchedule={props.fetchSchedule}/>
+            :<></>
+         }</>
+         :<></>
+      }
+      </div>
       )
    )
 }

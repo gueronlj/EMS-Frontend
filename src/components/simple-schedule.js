@@ -14,7 +14,6 @@ const Schedule = (props) => {
       let fieldName = e.target.id
       fetchShiftInfo()
       props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
-      props.setEventForm(false)
    }
 
    const handleDelete = (e) => {

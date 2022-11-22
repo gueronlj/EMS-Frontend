@@ -23,7 +23,6 @@ const Details = (props) => {
       details &&
          <div className="employeeDetails">
             <h3>Details</h3>
-               <li>Name:{details.name}</li>
                <li>Contact:{details.phone}</li>
                <li>Hourly Rate:{details.perHour}</li>
                <li>Daily Rate:{details.perDiem}</li>
