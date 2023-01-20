@@ -1,45 +1,41 @@
 import {useState, useEffect} from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
 
-const EmployeeList = () => {
-   const [employeeList, setEmployeeList] = useState([])
+const EmployeeList = (props) => {
+
+   const { user, isAuthenticated, isLoading} = useAuth0();
 
    const updateEmployeeList = async() => {
       try{
          const response = await fetch("http://localhost:3001/admin");
          const data = await response.json();
-         setEmployeeList(data);
+         props.setEmployeeList(data);
+
       }catch(error){
          console.log(error);
       }
+   }
+   
+   const handleNameClick =(e) => {
+      props.setSelectedEmployee(e)
    }
 
    useEffect(() => {
       updateEmployeeList()
    },[])
 
+   if (isLoading) return <p>Loading employee info...</p>
    return (
-      <table>
-         <thead>
-            <tr>
-               <th>Employee Name</th>
-               <th>Phone</th>
-               <th>Hourly $</th>
-               <th>Daily $</th>
-            </tr>
-         </thead>
-         <tbody>
-            {employeeList.map((employee) => {
-               return(
-                  <tr key={employee._id}>
-                     <td>{employee.name}</td>
-                     <td>{employee.phone}</td>
-                     <td>{employee.perHour}</td>
-                     <td>{employee.perDiem}</td>
-                  </tr>
-               )
-            })}
-         </tbody>
-      </table>
+      <>
+         <h3>Employees</h3>
+         {props.employeeList.map( employee => {
+            return(
+               <li key={employee._id} onClick={() => {
+                  handleNameClick(employee);
+               }} >{employee.name}</li>
+            )
+         })}
+      </>
    )
 }
 

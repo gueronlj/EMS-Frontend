@@ -1,0 +1,34 @@
+
+.main{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+}
+
+.sideMenu{
+   margin-right: 4em;
+   display: flex;
+   flex-direction: column;
+}
+
+.sideMenu button{
+   margin: .6em;
+}
+
+.dashboard{
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+}
+.employeeDetails{
+   margin-bottom: 2em;
+}
+
+.quickMenu{
+   display: flex;
+   flex-direction: column;
+}
+
+li{
+   list-style-type: none;
+}
