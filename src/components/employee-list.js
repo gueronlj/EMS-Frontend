@@ -10,11 +10,12 @@ const EmployeeList = (props) => {
          const response = await fetch("http://localhost:3001/admin");
          const data = await response.json();
          props.setEmployeeList(data);
+
       }catch(error){
          console.log(error);
       }
    }
-
+   
    const handleNameClick =(e) => {
       props.setSelectedEmployee(e)
    }
