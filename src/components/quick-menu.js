@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react'
 
 const QuickMenu = (props) => {
    const [message, setMessage] = useState('')
-   const [currentDateTime, setCurrentDateTime] = useState([])
    const [clockOutDisabled, setClockOutDisabled]= useState(false)
    const [clockInDisabled, setClockInDisabled]= useState(false)
    const LocalStorage = window.localStorage
@@ -12,7 +11,7 @@ const QuickMenu = (props) => {
       let body={}
       let targetKey = e.target.attributes.innerText.value
       body = {
-         date:currentDateTime[0],
+         date:new Date().toLocaleDateString(),
          [targetKey]:e.target.id
       }
       axios
@@ -24,14 +23,12 @@ const QuickMenu = (props) => {
    }
 
    const quickAddEvent = async (e) => {
-      const dateAndTime = await getCurrentDateAndTime()
       writeToDb(e)
    }
 
    const clockIn = async(e) => {
       try{
          if(!LocalStorage.getItem(props.selectedEmployee._id)){
-            const dateAndTime = await getCurrentDateAndTime()
             const token = {
                employeeName:props.selectedEmployee.name,
             }
@@ -49,12 +46,11 @@ const QuickMenu = (props) => {
          if (LocalStorage.getItem(props.selectedEmployee._id)){
             const res = await axios
                .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/clockout`)
-               await getCurrentDateAndTime()
                let body = {
                   id:res.data.id,
                   date:res.data.date,
                   start:res.data.start,
-                  end:currentDateTime[1],
+                  end:new Date().toLocaleTimeString(),
                   period:res.data.period
                }
                await axios
@@ -64,12 +60,6 @@ const QuickMenu = (props) => {
                LocalStorage.removeItem(props.selectedEmployee._id)
          }
       }catch(error){console.log(error)}
-   }
-
-   const getCurrentDateAndTime = () => {
-      let currentDate = new Date().toLocaleDateString()
-      let currentTime = new Date().toLocaleTimeString()
-      setCurrentDateTime([currentDate, currentTime])
    }
 
    const checkLocalStorage = () => {
@@ -83,7 +73,6 @@ const QuickMenu = (props) => {
    }
 
    useEffect(() => {
-      getCurrentDateAndTime()
       checkLocalStorage()
    },[props.selectedEmployee, message])
 
@@ -95,7 +84,7 @@ const QuickMenu = (props) => {
          </div>
          <div className="quickMenu">
             <div>
-               <button id={currentDateTime[1]} innerText="start" onClick={clockIn} disabled={clockInDisabled}>
+               <button id={new Date().toLocaleTimeString()} innerText="start" onClick={clockIn} disabled={clockInDisabled}>
                   Clock-In
                </button>
             </div>
