@@ -2,6 +2,17 @@ import React, {useState, useEffect} from 'react'
 
 const AddEvent = (props) => {
    const [disabled, setDisabled] = useState(true)
+   const [addEventText, setAddEventText] = useState("Manual entry")
+
+   const handleAddEvent =() => {
+      if(props.eventForm){
+         props.setEventForm(false);
+         setAddEventText('Manual entry')
+      } else{
+         props.setEventForm(true);
+         setAddEventText('Cancel')
+      }
+   }
 
    const checkButton = () => {
       if(props.selectedEmployee){
@@ -16,8 +27,8 @@ const AddEvent = (props) => {
    },[props.selectedEmployee])
 
    return(
-         <button onClick={()=>{props.handleAddEvent()}} disabled={disabled}>
-            {props.addEventText}
+         <button onClick={()=>{handleAddEvent()}} disabled={disabled}>
+            {addEventText}
          </button>
    )
 }

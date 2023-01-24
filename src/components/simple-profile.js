@@ -4,6 +4,7 @@ import Details from './employee-details.js'
 import Schedule from './simple-schedule.js'
 import EditEvent from './edit-event.js'
 import QuickMenu from './quick-menu.js'
+import GenerateReport from './generate-report.js'
 
 const Profile = (props) => {
    const {isLoading} = useAuth0();
@@ -18,36 +19,39 @@ const Profile = (props) => {
             <QuickMenu
                selectedEmployee={props.selectedEmployee}
                fetchSchedule={props.fetchSchedule}
-               formData={formData}/>
-      {props.detailsView?<>
-            <Details
-               selectedEmployee={props.selectedEmployee}
-               setSchedule={props.setSchedule}/>
-            <Schedule
-               selectedEmployee={props.selectedEmployee}
-               editTarget={editTarget}
-               setEditTarget={setEditTarget}
-               setEditMode={props.setEditMode}
-               editMode={props.editMode}
-               setFormData={setFormData}
-               schedule={props.schedule}
-               fetchSchedule={props.fetchSchedule}/>
-         {props.editMode?
-            <EditEvent
-               editTarget={editTarget}
-               editMode={props.editMode}
-               setEditMode={props.setEditMode}
                formData={formData}
-               setFormData={setFormData}
-               selectedEmployee={props.selectedEmployee}
-               fetchSchedule={props.fetchSchedule}/>
+               eventForm={props.eventForm}
+               setEventForm={props.setEventForm}/>
+         {props.detailsView?
+            <>
+               <Details
+                  selectedEmployee={props.selectedEmployee}
+                  setSchedule={props.setSchedule}/>
+               <Schedule
+                  selectedEmployee={props.selectedEmployee}
+                  editTarget={editTarget}
+                  setEditTarget={setEditTarget}
+                  setEditMode={props.setEditMode}
+                  editMode={props.editMode}
+                  setFormData={setFormData}
+                  schedule={props.schedule}
+                  fetchSchedule={props.fetchSchedule}/>
+            {props.editMode?
+               <EditEvent
+                  editTarget={editTarget}
+                  editMode={props.editMode}
+                  setEditMode={props.setEditMode}
+                  formData={formData}
+                  setFormData={setFormData}
+                  selectedEmployee={props.selectedEmployee}
+                  fetchSchedule={props.fetchSchedule}/>
+               :<></>
+            }
+            </>
             :<></>
-         }</>
-         :<></>
-      }
-      </div>
+         }
+         </div>
       )
    )
 }
-
 export default Profile

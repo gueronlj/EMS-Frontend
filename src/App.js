@@ -5,37 +5,27 @@ import Login from './components/login.js'
 import Logout from './components/logoutButton.js'
 import Profile from './components/simple-profile.js'
 import EmployeeList from './components/employee-list.js'
-import AddEvent from './components/add-event.js'
 import EventForm from './components/event-form.js'
 import DetailsButton from './components/details-button.js'
+import ReportButton from './components/report-button.js'
+import GenerateReport from './components/generate-report.js'
 import axios from 'axios'
 
 const App = () => {
-
    const {isAuthenticated} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState(null)
    const [editMode, setEditMode] =useState(false)
    const [eventForm, setEventForm] = useState(false)
    const [schedule, setSchedule] = useState()
-   const [addEventText, setAddEventText] = useState("Add event")
    const [detailsView, setDetailsView ] = useState(false)
+   const [openReport, setOpenReport] = useState(false)
 
    const fetchSchedule = async () => {
       try{
          const response = await axios.get(`http://localhost:3001/admin/${selectedEmployee._id}`)
          setSchedule(response.data.schedule)
       } catch(error){console.log(error)}
-   }
-
-   const handleAddEvent =() => {
-      if(eventForm){
-         setEventForm(false);
-         setAddEventText('Add event')
-      } else{
-         setEventForm(true);
-         setAddEventText('Cancel')
-      }
    }
 
    return (<>
@@ -51,14 +41,13 @@ const App = () => {
                setEmployeeList={setEmployeeList}
                setSelectedEmployee={setSelectedEmployee}
                selectedEmployee={selectedEmployee}/>
-            <AddEvent
-               selectedEmployee={selectedEmployee}
-               handleAddEvent={handleAddEvent}
-               addEventText={addEventText}/>
             <DetailsButton
                selectedEmployee={selectedEmployee}
                detailsView={detailsView}
                setDetailsView={setDetailsView}/>
+            <ReportButton
+               selectedEmployee={selectedEmployee}
+               setOpenReport={setOpenReport}/>
          </div>
       )}
          <div className="dashboard">
@@ -69,13 +58,19 @@ const App = () => {
                setSchedule={setSchedule}
                editMode={editMode}
                setEditMode={setEditMode}
-               detailsView={detailsView}/>
+               detailsView={detailsView}
+               openReport={openReport}
+               eventForm={eventForm}
+               setEventForm={setEventForm}/>
          {eventForm?
             <EventForm
                selectedEmployee={selectedEmployee}
                eventForm={eventForm}
                fetchSchedule={fetchSchedule}/>
-         :<></>}
+            :<></>}
+         {openReport?
+            <GenerateReport/>
+            :<></>}
          </div>
       </div>
    </>)

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import {parse} from 'date-fns'
+import AddEvent from './add-event.js'
 
 const QuickMenu = (props) => {
    const [message, setMessage] = useState('')
@@ -19,7 +20,6 @@ const QuickMenu = (props) => {
       let endISO = parse(body.end, 'pp', new Date())
       if(body.start){body.start = startISO}
       if(body.end){body.end = endISO}
-      console.log(body);
       axios
          .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
@@ -89,7 +89,7 @@ const QuickMenu = (props) => {
 
    return(
       props.selectedEmployee &&(<>
-         <h4>{props.selectedEmployee.name}</h4>
+         <h1>{props.selectedEmployee.name}</h1>
          <div className="quickMessage">
             {message}
          </div>
@@ -118,6 +118,12 @@ const QuickMenu = (props) => {
                <button id="Double" innerText="period" onClick={quickAddEvent}>
                   Add Double
                </button>
+            </div>
+            <div>
+               <AddEvent
+                  selectedEmployee={props.selectedEmployee}
+                  eventForm={props.eventForm}
+                  setEventForm={props.setEventForm}/>
             </div>
          </div>
       </>)

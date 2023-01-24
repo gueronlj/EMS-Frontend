@@ -17,35 +17,29 @@ const Schedule = (props) => {
       props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
    }
 
-   const handleDelete = (e) => {
+   const handleDelete = async(e) => {
       //TODO:Add confirmation popup
-      axios
-         .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.id}`)
-         .then((response) => {
-            console.log(response.data);
-            props.fetchSchedule()
-         })
-         .catch((error) => {
-            console.log(error);
-         })
+      try{
+         let response = await axios
+            .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.id}`)
+            .then(() => {
+               props.fetchSchedule()
+            })
+      }catch(error){console.log(error)}
    }
 
-   const fetchShiftInfo = () => {
-      axios
-         .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/${props.editTarget.id}`)
-         .then((response) => {
+   const fetchShiftInfo = async () => {
+      try{
+         let response = await axios
+            .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/${props.editTarget.id}`)
             let formData = {
                date:response.data.date,
                start:response.data.start,
                end:response.data.end,
                period:response.data.period
             }
-            console.log(response.data.start, response.data.end);
             props.setFormData(formData)
-         })
-         .catch((error) => {
-            console.log(error);
-         })
+      }catch(error){console.log(error)}
    }
 
    const butifyTime = (timeObj) => {
