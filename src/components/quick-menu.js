@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
+import {format, parseISO, parse} from 'date-fns'
 
 const QuickMenu = (props) => {
    const [message, setMessage] = useState('')
@@ -14,6 +15,11 @@ const QuickMenu = (props) => {
          date:new Date().toLocaleDateString(),
          [targetKey]:e.target.id
       }
+      let startISO = parse(body.start, 'pp', new Date())
+      let endISO = parse(body.end, 'pp', new Date())
+      if(body.start){body.start = startISO}
+      if(body.end){body.end = endISO}
+      console.log(body);
       axios
          .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
@@ -46,18 +52,24 @@ const QuickMenu = (props) => {
          if (LocalStorage.getItem(props.selectedEmployee._id)){
             const res = await axios
                .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/clockout`)
+               let time = new Date().toLocaleTimeString()
+               let endTimeISO = parse(time, 'pp' , new Date())
                let body = {
                   id:res.data.id,
                   date:res.data.date,
                   start:res.data.start,
-                  end:new Date().toLocaleTimeString(),
+                  end:endTimeISO,
                   period:res.data.period
                }
+               console.log(body);
                await axios
                   .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/edit/${body.id}`, body)
-               props.fetchSchedule()
-               setMessage(`${props.selectedEmployee.name} has been clocked out.`)
-               LocalStorage.removeItem(props.selectedEmployee._id)
+                  .then(() => {
+                     props.fetchSchedule()
+                     setMessage(`${props.selectedEmployee.name} has been clocked out.`)
+                     LocalStorage.removeItem(props.selectedEmployee._id)
+                  })
+                  .catch((error) => {console.log(error)})
          }
       }catch(error){console.log(error)}
    }
@@ -89,7 +101,7 @@ const QuickMenu = (props) => {
                </button>
             </div>
             <div>
-               <button id="clockOut" innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
+               <button id={new Date().toLocaleTimeString()} innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
                   Clock-Out
                </button>
             </div>

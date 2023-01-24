@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
+import {format, parseISO, parse} from 'date-fns'
 
 const Schedule = (props) => {
 
@@ -33,11 +34,26 @@ const Schedule = (props) => {
       axios
          .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/${props.editTarget.id}`)
          .then((response) => {
-            props.setFormData({date:response.data.date, start:response.data.start, end:response.data.end, period:response.data.period})
+            let formData = {
+               date:response.data.date,
+               start:response.data.start,
+               end:response.data.end,
+               period:response.data.period
+            }
+            console.log(response.data.start, response.data.end);
+            props.setFormData(formData)
          })
          .catch((error) => {
             console.log(error);
          })
+   }
+
+   const butifyTime = (timeObj) => {
+      if(timeObj!= null){
+         let timeISO = parseISO(timeObj)
+         let prettyTime = format(timeISO, 'pp', new Date())
+         return prettyTime
+      }
    }
 
    useEffect(() => {
@@ -61,10 +77,10 @@ const Schedule = (props) => {
             <tbody>
                {props.schedule.map((shift) => {
                   return(
-                     <tr id={shift.id}>
+                     <tr key={shift.id} id={shift.id}>
                         <td onClick={handleClick} id="date">{shift.date}</td>
-                        <td onClick={handleClick} id="start">{shift.start}</td>
-                        <td onClick={handleClick} id="end">{shift.end}</td>
+                        <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
+                        <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
                         <td onClick={handleClick} id="period">{shift.period}</td>
                         <td onClick={handleDelete} >-remove</td>
                      </tr>

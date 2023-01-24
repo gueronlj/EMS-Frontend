@@ -21,13 +21,11 @@ const App = () => {
    const [addEventText, setAddEventText] = useState("Add event")
    const [detailsView, setDetailsView ] = useState(false)
 
-   const fetchSchedule = () => {
-      axios
-         .get(`http://localhost:3001/admin/${selectedEmployee._id}`)
-         .then((response) => {
-            setSchedule(response.data.schedule)
-         })
-         .catch((error) => {console.log(error)})
+   const fetchSchedule = async () => {
+      try{
+         const response = await axios.get(`http://localhost:3001/admin/${selectedEmployee._id}`)
+         setSchedule(response.data.schedule)
+      } catch(error){console.log(error)}
    }
 
    const handleAddEvent =() => {
@@ -39,6 +37,7 @@ const App = () => {
          setAddEventText('Cancel')
       }
    }
+
    return (<>
       <div className="header">
          <Login />
