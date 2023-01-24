@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react'
-import { Form, Field } from 'react-final-form'
+import React, {useState} from 'react'
 import axios from 'axios'
 
 const EventForm = (props) => {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
-import {format, parseISO, parse} from 'date-fns'
+import {parse} from 'date-fns'
 
 const QuickMenu = (props) => {
    const [message, setMessage] = useState('')
@@ -42,7 +42,6 @@ const QuickMenu = (props) => {
             setMessage(`${props.selectedEmployee.name} has been clocked in.`)
             writeToDb(e)
          }
-
       }catch(error){console.log(error);}
    }
 

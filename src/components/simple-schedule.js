@@ -1,6 +1,6 @@
 import axios from 'axios'
-import React, {useState, useEffect} from 'react'
-import {format, parseISO, parse} from 'date-fns'
+import React, {useEffect} from 'react'
+import {format, parseISO} from 'date-fns'
 
 const Schedule = (props) => {
 

@@ -1,6 +1,6 @@
 import './App.css'
 import { useAuth0 } from '@auth0/auth0-react'
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import Login from './components/login.js'
 import Logout from './components/logoutButton.js'
 import Profile from './components/simple-profile.js'
@@ -12,7 +12,7 @@ import axios from 'axios'
 
 const App = () => {
 
-   const { user, isAuthenticated, isLoading} = useAuth0();
+   const {isAuthenticated} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState(null)
    const [editMode, setEditMode] =useState(false)

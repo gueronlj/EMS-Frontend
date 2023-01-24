@@ -1,9 +1,9 @@
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 
 const EmployeeList = (props) => {
 
-   const { user, isAuthenticated, isLoading} = useAuth0();
+   const {isLoading} = useAuth0();
 
    const updateEmployeeList = async() => {
       try{
@@ -15,7 +15,7 @@ const EmployeeList = (props) => {
          console.log(error);
       }
    }
-   
+
    const handleNameClick =(e) => {
       props.setSelectedEmployee(e)
    }

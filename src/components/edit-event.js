@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
-import {format, parseISO, parseJSON, parse} from 'date-fns'
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
@@ -12,15 +11,9 @@ const EditEvent = (props) => {
    const handleInput=(e) => {
       props.setFormData({...props.formData, [e.target.name]:e.target.value})
    }
-   const handleTimePick=(e) => {
 
-   }
    const handleSubmit=(e) => {
       e && e.preventDefault()
-      // let start = new Date(props.formData.start)
-      // let end = new Date(props.formData.end)
-      // let startISO = start.toISOString()
-      // let endISO = end.toISOString()
       const body ={
          date:props.formData.date,
          period:props.formData.period,

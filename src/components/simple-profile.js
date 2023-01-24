@@ -1,13 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import {useState, useEffect} from 'react'
-import EmployeeList from './employee-list.js'
+import {useState} from 'react'
 import Details from './employee-details.js'
 import Schedule from './simple-schedule.js'
 import EditEvent from './edit-event.js'
 import QuickMenu from './quick-menu.js'
 
 const Profile = (props) => {
-   const { user, isAuthenticated, isLoading} = useAuth0();
+   const {isLoading} = useAuth0();
    const [editTarget, setEditTarget ] = useState({id:'', name:'', value:null})
    const [formData, setFormData] = useState({})
 
