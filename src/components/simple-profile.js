@@ -18,15 +18,13 @@ const Profile = (props) => {
          <div>
             <QuickMenu
                selectedEmployee={props.selectedEmployee}
+               schedule={props.schedule}
                fetchSchedule={props.fetchSchedule}
                formData={formData}
                eventForm={props.eventForm}
                setEventForm={props.setEventForm}/>
          {props.detailsView?
             <>
-               <Details
-                  selectedEmployee={props.selectedEmployee}
-                  setSchedule={props.setSchedule}/>
                <Schedule
                   selectedEmployee={props.selectedEmployee}
                   editTarget={editTarget}
@@ -47,6 +45,9 @@ const Profile = (props) => {
                   fetchSchedule={props.fetchSchedule}/>
                :<></>
             }
+               <Details
+                  selectedEmployee={props.selectedEmployee}
+                  setSchedule={props.setSchedule}/>
             </>
             :<></>
          }

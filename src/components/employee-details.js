@@ -22,7 +22,7 @@ const Details = (props) => {
    return(
       details &&
          <div className="employeeDetails">
-            <h3>Details</h3>
+            <h4>Details</h4>
                <li>Contact:{details.phone}</li>
                <li>Hourly Rate:{details.perHour}</li>
                <li>Daily Rate:{details.perDiem}</li>

@@ -69,7 +69,10 @@ const App = () => {
                fetchSchedule={fetchSchedule}/>
             :<></>}
          {openReport?
-            <GenerateReport/>
+            <GenerateReport
+               fetchSchedule={fetchSchedule}
+               schedule={schedule}
+               selectedEmployee={selectedEmployee}/>
             :<></>}
          </div>
       </div>
