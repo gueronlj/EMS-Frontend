@@ -19,7 +19,6 @@ const App = () => {
    const [eventForm, setEventForm] = useState(false)
    const [schedule, setSchedule] = useState()
    const [detailsView, setDetailsView ] = useState(false)
-   const [openReport, setOpenReport] = useState(false)
 
    const fetchSchedule = async () => {
       try{
@@ -45,9 +44,6 @@ const App = () => {
                selectedEmployee={selectedEmployee}
                detailsView={detailsView}
                setDetailsView={setDetailsView}/>
-            <ReportButton
-               selectedEmployee={selectedEmployee}
-               setOpenReport={setOpenReport}/>
          </div>
       )}
          <div className="dashboard">
@@ -59,7 +55,6 @@ const App = () => {
                editMode={editMode}
                setEditMode={setEditMode}
                detailsView={detailsView}
-               openReport={openReport}
                eventForm={eventForm}
                setEventForm={setEventForm}/>
          {eventForm?
@@ -67,12 +62,6 @@ const App = () => {
                selectedEmployee={selectedEmployee}
                eventForm={eventForm}
                fetchSchedule={fetchSchedule}/>
-            :<></>}
-         {openReport?
-            <GenerateReport
-               fetchSchedule={fetchSchedule}
-               schedule={schedule}
-               selectedEmployee={selectedEmployee}/>
             :<></>}
          </div>
       </div>

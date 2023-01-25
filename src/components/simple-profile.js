@@ -12,7 +12,6 @@ const Profile = (props) => {
    const [formData, setFormData] = useState({})
 
    if (isLoading) return <p>Loading...</p>
-
    return (
       props.selectedEmployee &&(
          <div>
@@ -23,8 +22,7 @@ const Profile = (props) => {
                formData={formData}
                eventForm={props.eventForm}
                setEventForm={props.setEventForm}/>
-         {props.detailsView?
-            <>
+            {props.detailsView?<>
                <Schedule
                   selectedEmployee={props.selectedEmployee}
                   editTarget={editTarget}
@@ -34,23 +32,24 @@ const Profile = (props) => {
                   setFormData={setFormData}
                   schedule={props.schedule}
                   fetchSchedule={props.fetchSchedule}/>
-            {props.editMode?
-               <EditEvent
-                  editTarget={editTarget}
-                  editMode={props.editMode}
-                  setEditMode={props.setEditMode}
-                  formData={formData}
-                  setFormData={setFormData}
-                  selectedEmployee={props.selectedEmployee}
-                  fetchSchedule={props.fetchSchedule}/>
-               :<></>
-            }
+               {props.editMode?
+                  <EditEvent
+                     editTarget={editTarget}
+                     editMode={props.editMode}
+                     setEditMode={props.setEditMode}
+                     formData={formData}
+                     setFormData={setFormData}
+                     selectedEmployee={props.selectedEmployee}
+                     fetchSchedule={props.fetchSchedule}/>
+               :<></>}
                <Details
                   selectedEmployee={props.selectedEmployee}
                   setSchedule={props.setSchedule}/>
-            </>
-            :<></>
-         }
+               <GenerateReport
+                  fetchSchedule={props.fetchSchedule}
+                  schedule={props.schedule}
+                  selectedEmployee={props.selectedEmployee}/></>
+            :<></>}
          </div>
       )
    )
