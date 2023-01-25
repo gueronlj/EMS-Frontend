@@ -13,7 +13,7 @@ const QuickMenu = (props) => {
       let body={}
       let targetKey = e.target.attributes.innerText.value
       body = {
-         date:new Date().toLocaleDateString(),
+         date:new Date(),
          [targetKey]:e.target.id
       }
       let startISO = parse(body.start, 'pp', new Date())

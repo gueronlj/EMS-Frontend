@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { differenceInHours, parseISO } from 'date-fns'
+import ReportFilters from './report-filters.js'
 
 const GenerateReport = (props) => {
    const [calculated, setCalculated] = useState({})
@@ -56,7 +57,7 @@ const GenerateReport = (props) => {
    },[props.schedule])
 
    return(
-      <>
+      <div className = "report-container">
          <div className="report">
             <h4>Labor Report</h4>
             <li>Total Days: {totalDays}</li>
@@ -64,7 +65,10 @@ const GenerateReport = (props) => {
             <li>Total Wages: {totalWages}</li>
             <button onClick={createReport}>Refresh</button>
          </div>
-      </>
+         <div className="report-filters">
+            <ReportFilters/>
+         </div>
+      </div>
    )
 }
 

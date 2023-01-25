@@ -3,25 +3,16 @@ import {useState} from 'react'
 import Details from './employee-details.js'
 import Schedule from './simple-schedule.js'
 import EditEvent from './edit-event.js'
-import QuickMenu from './quick-menu.js'
 import GenerateReport from './generate-report.js'
 
 const Profile = (props) => {
    const {isLoading} = useAuth0();
-   const [editTarget, setEditTarget ] = useState({id:'', name:'', value:null})
-   const [formData, setFormData] = useState({})
+   const [editTarget, setEditTarget] = useState({id:'', name:'', value:null})
 
    if (isLoading) return <p>Loading...</p>
    return (
       props.selectedEmployee &&(
-         <div>
-            <QuickMenu
-               selectedEmployee={props.selectedEmployee}
-               schedule={props.schedule}
-               fetchSchedule={props.fetchSchedule}
-               formData={formData}
-               eventForm={props.eventForm}
-               setEventForm={props.setEventForm}/>
+         <>
             {props.detailsView?<>
                <Schedule
                   selectedEmployee={props.selectedEmployee}
@@ -29,7 +20,7 @@ const Profile = (props) => {
                   setEditTarget={setEditTarget}
                   setEditMode={props.setEditMode}
                   editMode={props.editMode}
-                  setFormData={setFormData}
+                  setFormData={props.setFormData}
                   schedule={props.schedule}
                   fetchSchedule={props.fetchSchedule}/>
                {props.editMode?
@@ -37,8 +28,8 @@ const Profile = (props) => {
                      editTarget={editTarget}
                      editMode={props.editMode}
                      setEditMode={props.setEditMode}
-                     formData={formData}
-                     setFormData={setFormData}
+                     formData={props.formData}
+                     setFormData={props.setFormData}
                      selectedEmployee={props.selectedEmployee}
                      fetchSchedule={props.fetchSchedule}/>
                :<></>}
@@ -50,7 +41,7 @@ const Profile = (props) => {
                   schedule={props.schedule}
                   selectedEmployee={props.selectedEmployee}/></>
             :<></>}
-         </div>
+         </>
       )
    )
 }

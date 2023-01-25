@@ -13,8 +13,8 @@ const Schedule = (props) => {
       let shiftId = e.target.parentElement.id
       let fieldValue = e.target.innerText
       let fieldName = e.target.id
-      fetchShiftInfo()
       props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
+      fetchShiftInfo()
    }
 
    const handleDelete = async(e) => {
@@ -50,6 +50,14 @@ const Schedule = (props) => {
       }
    }
 
+   const butifyDate = (dateObj) => {
+      if(dateObj!=null){
+         let dateISO = parseISO(dateObj)
+         let prettyDate = format(dateISO, 'M/d/yyyy', new Date())
+         return prettyDate
+      }
+   }
+
    useEffect(() => {
       props.fetchSchedule()
    },[])
@@ -72,7 +80,7 @@ const Schedule = (props) => {
                {props.schedule.map((shift) => {
                   return(
                      <tr key={shift.id} id={shift.id}>
-                        <td onClick={handleClick} id="date">{shift.date}</td>
+                        <td onClick={handleClick} id="date">{butifyDate(shift.date)}</td>
                         <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
                         <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
                         <td onClick={handleClick} id="period">{shift.period}</td>

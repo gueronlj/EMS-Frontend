@@ -19,9 +19,13 @@
    display: flex;
    flex-direction: column;
    flex-wrap: wrap;
+   width: 100vw;
 }
-.employeeDetails{
-   margin-bottom: 2em;
+
+.main-top{
+   display: flex;
+   flex-direction: row;
+   width: 100vw;
 }
 
 .quickMenu{
@@ -31,4 +35,15 @@
 
 li{
    list-style-type: none;
+}
+
+.report-container{
+   display: flex;
+   justify-content: space-between;
+}
+.report-filters{
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column-reverse;
+   max-width: 35vw;
 }

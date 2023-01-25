@@ -9,6 +9,7 @@ import EventForm from './components/event-form.js'
 import DetailsButton from './components/details-button.js'
 import ReportButton from './components/report-button.js'
 import GenerateReport from './components/generate-report.js'
+import QuickMenu from './components/quick-menu.js'
 import axios from 'axios'
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
    const [eventForm, setEventForm] = useState(false)
    const [schedule, setSchedule] = useState()
    const [detailsView, setDetailsView ] = useState(false)
+   const [formData, setFormData] = useState({})
 
    const fetchSchedule = async () => {
       try{
@@ -33,37 +35,52 @@ const App = () => {
          <Logout />
       </div>
       <div className="main">
-      {isAuthenticated &&(
-         <div className="sideMenu">
-            <EmployeeList
-               employeeList={employeeList}
-               setEmployeeList={setEmployeeList}
-               setSelectedEmployee={setSelectedEmployee}
-               selectedEmployee={selectedEmployee}/>
-            <DetailsButton
-               selectedEmployee={selectedEmployee}
-               detailsView={detailsView}
-               setDetailsView={setDetailsView}/>
-         </div>
-      )}
-         <div className="dashboard">
-            <Profile
-               selectedEmployee={selectedEmployee}
-               fetchSchedule={fetchSchedule}
-               schedule={schedule}
-               setSchedule={setSchedule}
-               editMode={editMode}
-               setEditMode={setEditMode}
-               detailsView={detailsView}
-               eventForm={eventForm}
-               setEventForm={setEventForm}/>
-         {eventForm?
-            <EventForm
-               selectedEmployee={selectedEmployee}
-               eventForm={eventForm}
-               fetchSchedule={fetchSchedule}/>
-            :<></>}
-         </div>
+         {isAuthenticated &&(<>
+            <div className="main-top">
+               <div className="sideMenu">
+                  <EmployeeList
+                     employeeList={employeeList}
+                     setEmployeeList={setEmployeeList}
+                     setSelectedEmployee={setSelectedEmployee}
+                     selectedEmployee={selectedEmployee}/>
+                  <DetailsButton
+                     selectedEmployee={selectedEmployee}
+                     detailsView={detailsView}
+                     setDetailsView={setDetailsView}/>
+               </div>
+               <div className="quick-menu">
+                  {selectedEmployee&&(
+                     <QuickMenu
+                        selectedEmployee={selectedEmployee}
+                        schedule={schedule}
+                        fetchSchedule={fetchSchedule}
+                        formData={formData}
+                        eventForm={eventForm}
+                        setEventForm={setEventForm}/>
+                  )}
+               </div>
+            </div>
+            <div className="dashboard">
+               <Profile
+                  selectedEmployee={selectedEmployee}
+                  fetchSchedule={fetchSchedule}
+                  schedule={schedule}
+                  setSchedule={setSchedule}
+                  editMode={editMode}
+                  setEditMode={setEditMode}
+                  detailsView={detailsView}
+                  eventForm={eventForm}
+                  setEventForm={setEventForm}
+                  formData={formData}
+                  setFormData={setFormData}/>
+               {eventForm?
+                  <EventForm
+                     selectedEmployee={selectedEmployee}
+                     eventForm={eventForm}
+                     fetchSchedule={fetchSchedule}/>
+                  :<></>}
+            </div>
+         </>)}
       </div>
    </>)
 }
