@@ -38,6 +38,7 @@ const Profile = (props) => {
                   setSchedule={props.setSchedule}/>
                <GenerateReport
                   fetchSchedule={props.fetchSchedule}
+                  setSchedule={props.setSchedule}
                   schedule={props.schedule}
                   selectedEmployee={props.selectedEmployee}/></>
             :<></>}

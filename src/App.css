@@ -44,6 +44,14 @@ li{
 .report-filters{
    display: flex;
    flex-wrap: wrap;
-   flex-direction: column-reverse;
+   flex-direction: column;
    max-width: 35vw;
+}
+
+h4{
+   margin-bottom: .5em;
+}
+
+table{
+   margin-top: 1em;
 }

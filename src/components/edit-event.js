@@ -11,13 +11,11 @@ const EditEvent = (props) => {
    const [startTime, setStartTime] = useState(props.formData.start);
    const [endTime, setEndTime] = useState(props.formData.end);
    const [date, setDate] = useState(props.formData.date);
+   
    const handleInput=(e) => {
       props.setFormData({...props.formData, [e.target.name]:e.target.value})
    }
-   // const prettyDate = (str) => {
-   //    let prettyDate = format(str, 'M/d/yyyy')
-   //    return prettyDate
-   // }
+
    const handleSubmit=(e) => {
       e && e.preventDefault()
       const body ={
@@ -38,20 +36,12 @@ const EditEvent = (props) => {
    const renderEditForm = () => {
       if (props.editTarget.name ==='date'){
          return (
-            // <form onSubmit={handleSubmit}>
-            //    <input onChange={handleInput} type='date' name={props.editTarget.name} value={props.formData.date}/>
-            //    <button type="submit">Submit</button>
-            // </form>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                <MobileDatePicker
                 label="New date"
                 value={date}
-                onChange={(newValue) => {
-                  setDate(newValue);
-                }}
-                onAccept={() => {
-                   handleSubmit()
-                }}
+                onChange={(newValue) => {setDate(newValue)}}
+                onAccept={() => {handleSubmit()}}
                 renderInput={(params) => <TextField {...params} />}
                />
             </LocalizationProvider>
@@ -63,12 +53,8 @@ const EditEvent = (props) => {
                <MobileTimePicker
                   label="Change start time"
                   value={startTime}
-                  onChange={(newValue) => {
-                    setStartTime(newValue);
-                  }}
-                  onAccept={() => {
-                     handleSubmit()
-                  }}
+                  onChange={(newValue) => {setStartTime(newValue)}}
+                  onAccept={() => {handleSubmit()}}
                   renderInput={(params) => <TextField {...params} />}
                 />
              </LocalizationProvider>
@@ -80,12 +66,8 @@ const EditEvent = (props) => {
                <MobileTimePicker
                   label="Change end time"
                   value={endTime}
-                  onChange={(newValue) => {
-                    setEndTime(newValue);
-                  }}
-                  onAccept={() => {
-                     handleSubmit()
-                  }}
+                  onChange={(newValue) => {setEndTime(newValue)}}
+                  onAccept={() => {handleSubmit()}}
                   renderInput={(params) => <TextField {...params} />}
                 />
              </LocalizationProvider>
