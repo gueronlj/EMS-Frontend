@@ -5,13 +5,14 @@ const AddEvent = (props) => {
    const [addEventText, setAddEventText] = useState("Manual entry")
 
    const handleAddEvent =() => {
-      if(props.eventForm){
-         props.setEventForm(false);
-         setAddEventText('Manual entry')
-      } else{
-         props.setEventForm(true);
-         setAddEventText('Cancel')
-      }
+      // if(props.eventForm){
+      //    props.setEventForm(false);
+      //    setAddEventText('Manual entry')
+      // } else{
+      //    props.setEventForm(true);
+      //    setAddEventText('Cancel')
+      // }
+      props.setEventForm(true)
    }
 
    const checkButton = () => {

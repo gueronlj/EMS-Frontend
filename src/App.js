@@ -77,6 +77,7 @@ const App = () => {
                   <EventForm
                      selectedEmployee={selectedEmployee}
                      eventForm={eventForm}
+                     setEventForm={setEventForm}
                      fetchSchedule={fetchSchedule}/>
                   :<></>}
             </div>

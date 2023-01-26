@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import {parse, parseISO} from 'date-fns'
 
 const EventForm = (props) => {
 
@@ -16,13 +17,25 @@ const EventForm = (props) => {
       setFormData({...formData, [e.target.name]:e.target.value})
    }
 
+   const handleCancelBtn = () => {
+     props.setEventForm(false)
+   }
+
    const handleSubmit = (e) => {
       e.preventDefault()
+      //format date
+      let dateISO=parse(formData.date, 'yyyy-mm-dd', new Date())
+      //format start time
+      let startISO=parse(formData.start, 'k:mm', new Date())
+      //fornt end;
+      let endISO=parse(formData.end, 'k:mm', new Date())
+      console.log(formData);
+      console.log(dateISO, startISO, endISO);
       let body = {
-         date:formData.date,
+         date:dateISO,
          period:formData.period,
-         start:formData.start,
-         end:formData.end,
+         start:startISO,
+         end:endISO,
       }
       axios
          .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/new-shift`, body)
@@ -91,6 +104,9 @@ const EventForm = (props) => {
                <div className="buttons">
                   <button type="submit">
                     Submit
+                  </button>
+                  <button
+                    onClick={handleCancelBtn}>Cancel
                   </button>
                </div>
             </form>
