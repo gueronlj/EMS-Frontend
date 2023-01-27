@@ -76,5 +76,9 @@ table{
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 5px;
+}
+
+.MuiDataGrid-cellContent{
+   user-select: none;
 }
