@@ -12,7 +12,8 @@ const AddEvent = (props) => {
       //    props.setEventForm(true);
       //    setAddEventText('Cancel')
       // }
-      props.setEventForm(true)
+      // props.setEventForm(true)
+      props.setShowModal(true)
    }
 
    const checkButton = () => {

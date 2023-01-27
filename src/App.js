@@ -10,6 +10,7 @@ import DetailsButton from './components/details-button.js'
 import ReportButton from './components/report-button.js'
 import GenerateReport from './components/generate-report.js'
 import QuickMenu from './components/quick-menu.js'
+import Modal from './components/modal.js'
 import axios from 'axios'
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
    const [schedule, setSchedule] = useState()
    const [detailsView, setDetailsView ] = useState(false)
    const [formData, setFormData] = useState({})
+   const [showModal, setShowModal] = useState(false)
 
    const fetchSchedule = async () => {
       try{
@@ -56,7 +58,9 @@ const App = () => {
                         fetchSchedule={fetchSchedule}
                         formData={formData}
                         eventForm={eventForm}
-                        setEventForm={setEventForm}/>
+                        setEventForm={setEventForm}
+                        showModal={showModal}
+                        setShowModal={setShowModal}/>
                   )}
                </div>
             </div>
@@ -73,12 +77,13 @@ const App = () => {
                   setEventForm={setEventForm}
                   formData={formData}
                   setFormData={setFormData}/>
-               {eventForm?
-                  <EventForm
+               {showModal?
+                  <Modal
                      selectedEmployee={selectedEmployee}
                      eventForm={eventForm}
                      setEventForm={setEventForm}
-                     fetchSchedule={fetchSchedule}/>
+                     fetchSchedule={fetchSchedule}
+                     setShowModal={setShowModal}/>
                   :<></>}
             </div>
          </>)}

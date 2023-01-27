@@ -59,7 +59,8 @@ const ReportFilters = (props) => {
       return(total);
    }
 
-   return(<>
+   return(
+     <Stack spacing={2}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
          <MobileDatePicker
           label="Starting Date"
@@ -73,6 +74,6 @@ const ReportFilters = (props) => {
           renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
       <button onClick={handleSubmit}>Apply</button>
-   </>)
+   </Stack>)
 }
 export default ReportFilters

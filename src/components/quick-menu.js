@@ -123,7 +123,9 @@ const QuickMenu = (props) => {
                <AddEvent
                   selectedEmployee={props.selectedEmployee}
                   eventForm={props.eventForm}
-                  setEventForm={props.setEventForm}/>
+                  setEventForm={props.setEventForm}
+                  showModal={props.showModal}
+                  setShowModal={props.setShowModal}/>
             </div>
          </div>
       </>)

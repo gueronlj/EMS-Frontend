@@ -18,7 +18,8 @@ const EventForm = (props) => {
    }
 
    const handleCancelBtn = () => {
-     props.setEventForm(false)
+     // props.setEventForm(false)
+     props.setShowModal(false)
    }
 
    const handleSubmit = (e) => {
