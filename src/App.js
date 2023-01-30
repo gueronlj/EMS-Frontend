@@ -19,7 +19,7 @@ const App = () => {
    const [selectedEmployee, setSelectedEmployee] = useState(null)
    const [editMode, setEditMode] =useState(false)
    const [eventForm, setEventForm] = useState(false)
-   const [schedule, setSchedule] = useState()
+   const [schedule, setSchedule] = useState([])
    const [detailsView, setDetailsView ] = useState(false)
    const [formData, setFormData] = useState({})
    const [showModal, setShowModal] = useState(false)

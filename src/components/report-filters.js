@@ -15,11 +15,9 @@ const ReportFilters = (props) => {
    const handleSubmit = async () => {
       let startISO = startLimit.toISOString()
       let endISO = endLimit.toISOString()
-      console.log(startISO, endISO);
       try{
          const res = await axios
             .get(`http://localhost:3001/report/${props.selectedEmployee._id}/${startISO}/${endISO}`)
-         console.log(res.data);
          props.setSchedule(res.data)
          props.setTotalDays(res.data.length)
          const sumHours = calculateTotalHours(res.data)
@@ -27,10 +25,6 @@ const ReportFilters = (props) => {
          props.setTotalHours(sumHours)
          props.setTotalWages(sumWages)
       }catch(error){console.log(error)}
-   }
-
-   const createReport = () => {
-      props.setTotalWages(calculateTotalWages(props.totalHours))
    }
 
    const calculateTotalHours = (schedule) => {
@@ -45,22 +39,25 @@ const ReportFilters = (props) => {
                sum += hoursInShift
             }
          })
-      return(sum);
+         console.log(sum);
+         return(sum);
    }
 
    const calculateTotalWages = (hours) => {
       let total = 0
       if(props.selectedEmployee.perDiem){
-         total = props.selectedEmployee.perDiem * props.totalDays
+         total = props.selectedEmployee.perDiem * props.schedule.length
+         console.log("total by day:", total);
       }
-      if(props.selectedEmployee.perHour){
+      else{
          total = hours * props.selectedEmployee.perHour;
+         console.log("total by hours:", total);
       }
-      return(total);
+      return total
    }
 
    return(
-     <Stack spacing={2}>
+     <Stack spacing={2} direction="row">
       <LocalizationProvider dateAdapter={AdapterDateFns}>
          <MobileDatePicker
           label="Starting Date"

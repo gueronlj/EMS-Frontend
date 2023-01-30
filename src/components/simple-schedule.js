@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, {useEffect} from 'react'
 import {format, parseISO} from 'date-fns'
 import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler, useGridApiContext, } from "@mui/x-data-grid";
+import Paper from '@mui/material/Paper';
 
 const Schedule = (props) => {
 
@@ -111,42 +112,43 @@ const Schedule = (props) => {
       props.fetchSchedule()
    },[])
 
+//return(
+   // props.schedule && (<>
+   //    <div className='data-grid' style={{ height: 300, width: "100%" }}>
+   //       <DataGrid
+   //          rows={rows}
+   //          columns={columns}
+   //          onCellClick={handleEvent}/>
+   //    </div>
+   // </>)
+//)
    return(
-      props.schedule && (<>
-         <div className='data-grid' style={{ height: 300, width: "100%" }}>
-            <DataGrid
-               rows={rows}
-               columns={columns}
-               onCellClick={handleEvent}/>
-         </div>
-      </>)
+      <table>
+         {props.schedule.length ?
+            <thead>
+               <tr>
+                  <th>Date</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>L/D</th>
+               </tr>
+            </thead>:
+            <p>No schedule found</p>
+         }
+         <tbody>
+            {props.schedule.map((shift) => {
+               return(
+                  <tr key={shift.id} id={shift.id}>
+                     <td onClick={handleClick} id="date">{butifyDate(shift.date)}</td>
+                     <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
+                     <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
+                     <td onClick={handleClick} id="period">{shift.period}</td>
+                     <td onClick={handleDelete} >--</td>
+                  </tr>
+               )})}
+         </tbody>
+      </table>
    )
-         // <table>
-         //    {props.schedule.length ?
-         //       <thead>
-         //          <tr>
-         //             <th>Date</th>
-         //             <th>Start</th>
-         //             <th>End</th>
-         //             <th>L/D</th>
-         //          </tr>
-         //       </thead>:
-         //       <p>No schedule found</p>
-         //    }
-         //    <tbody>
-         //       {props.schedule.map((shift) => {
-         //          return(
-         //             <tr key={shift.id} id={shift.id}>
-         //                <td onClick={handleClick} id="date">{butifyDate(shift.date)}</td>
-         //                <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
-         //                <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
-         //                <td onClick={handleClick} id="period">{shift.period}</td>
-         //                <td onClick={handleDelete} >-remove</td>
-         //             </tr>
-         //          )})}
-         //    </tbody>
-         // </table>
-
 }
 
 export default Schedule

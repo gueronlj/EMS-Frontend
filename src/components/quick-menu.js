@@ -2,6 +2,9 @@ import axios from 'axios'
 import {useState, useEffect} from 'react'
 import {parse} from 'date-fns'
 import AddEvent from './add-event.js'
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Paper from '@mui/material/Paper';
 
 const QuickMenu = (props) => {
    const [message, setMessage] = useState('')
@@ -90,44 +93,38 @@ const QuickMenu = (props) => {
    return(
       props.selectedEmployee &&(<>
          <h1>{props.selectedEmployee.name}</h1>
-         <div className="quickMessage">
+         <div className="quick-message">
             {message}
          </div>
-         <div className="quickMenu">
-            <div>
-               <button id={new Date().toLocaleTimeString()} innerText="start" onClick={clockIn} disabled={clockInDisabled}>
-                  Clock-In
-               </button>
+         <Paper elevation={3}>
+            <div className="quick-menu">
+               <div className="clock-in-out">
+                  <button id={new Date().toLocaleTimeString()} innerText="start" onClick={clockIn} disabled={clockInDisabled}>
+                     Clock-In
+                  </button>
+                  <button id={new Date().toLocaleTimeString()} innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
+                     Clock-Out
+                  </button>
+               </div>
+               <div className="quick-menu-shortcuts">
+                  <button id="Lunch" innerText="period" onClick={quickAddEvent}>
+                     Add Lunch
+                  </button>
+                  <button id="Dinner" innerText="period" onClick={quickAddEvent}>
+                     Add Dinner
+                  </button>
+                  <button id="Double" innerText="period" onClick={quickAddEvent}>
+                     Add Double
+                  </button>
+                  <AddEvent
+                     selectedEmployee={props.selectedEmployee}
+                     eventForm={props.eventForm}
+                     setEventForm={props.setEventForm}
+                     showModal={props.showModal}
+                     setShowModal={props.setShowModal}/>
+               </div>
             </div>
-            <div>
-               <button id={new Date().toLocaleTimeString()} innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
-                  Clock-Out
-               </button>
-            </div>
-            <div>
-               <button id="Lunch" innerText="period" onClick={quickAddEvent}>
-                  Add Lunch
-               </button>
-            </div>
-            <div>
-               <button id="Dinner" innerText="period" onClick={quickAddEvent}>
-                  Add Dinner
-               </button>
-            </div>
-            <div>
-               <button id="Double" innerText="period" onClick={quickAddEvent}>
-                  Add Double
-               </button>
-            </div>
-            <div>
-               <AddEvent
-                  selectedEmployee={props.selectedEmployee}
-                  eventForm={props.eventForm}
-                  setEventForm={props.setEventForm}
-                  showModal={props.showModal}
-                  setShowModal={props.setShowModal}/>
-            </div>
-         </div>
+         </Paper>
       </>)
    )
 }

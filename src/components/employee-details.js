@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
+import Paper from '@mui/material/Paper';
 
 const Details = (props) => {
 
@@ -22,10 +23,9 @@ const Details = (props) => {
    return(
       details &&
          <div className="employeeDetails">
-            <h4>Details</h4>
-               <li>Contact:{details.phone}</li>
-               <li>Hourly Rate:{details.perHour}</li>
-               <li>Daily Rate:{details.perDiem}</li>
+               <li>Phone:{details.phone}</li>
+               <li>Hourly Rate: ${details.perHour}</li>
+               <li>Daily Rate: ${details.perDiem}</li>
          </div>
    )
 }

@@ -6,7 +6,7 @@
 }
 
 .sideMenu{
-   margin-right: 4em;
+   margin-right: 1em;
    display: flex;
    flex-direction: column;
 }
@@ -20,6 +20,11 @@
    flex-direction: column;
    flex-wrap: wrap;
    width: 100vw;
+}
+
+.dashboard>*{
+   margin-top: .5em;
+   margin-bottom: .5em;
 }
 
 .main-top{
@@ -44,16 +49,15 @@ li{
 .report-filters{
    display: flex;
    flex-wrap: wrap;
-   flex-direction: column;
-   max-width: 35vw;
 }
 
 h4{
-   margin-bottom: .5em;
+   margin: .5em;
 }
 
 table{
-   margin-top: 1em;
+   width: 90vw;
+   margin: .5em;
 }
 
 .modal-bg{
@@ -81,4 +85,39 @@ table{
 
 .MuiDataGrid-cellContent{
    user-select: none;
+}
+
+.clock-in-out{
+   display: flex;
+   flex-direction: row;
+   margin-bottom: .5em;
+}
+
+.quick-menu-shortcuts{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+}
+
+.details-card{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: flex-start;
+   padding: .5em;
+}
+
+.details-card>*{
+   margin: 5px;
+}
+
+.quick-menu button{
+   margin: 5px;
+}
+
+.quick-menu{
+   padding: .5em;
+}
+
+th{
+   text-align: left;
 }
