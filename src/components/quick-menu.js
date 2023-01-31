@@ -106,15 +106,16 @@ const QuickMenu = (props) => {
                      Clock-Out
                   </button>
                </div>
+               <h4>-Quick Add-</h4>
                <div className="quick-menu-shortcuts">
                   <button id="Lunch" innerText="period" onClick={quickAddEvent}>
-                     Add Lunch
+                     Lunch
                   </button>
                   <button id="Dinner" innerText="period" onClick={quickAddEvent}>
-                     Add Dinner
+                     Dinner
                   </button>
                   <button id="Double" innerText="period" onClick={quickAddEvent}>
-                     Add Double
+                     Double
                   </button>
                   <AddEvent
                      selectedEmployee={props.selectedEmployee}

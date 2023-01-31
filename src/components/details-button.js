@@ -27,7 +27,7 @@ const DetailsButton = (props) => {
    },[props.selectedEmployee])
 
    return(
-         <button onClick={()=>{toggleDetailsView()}} disabled={disabled}>
+         <button id="details-btn" onClick={()=>{toggleDetailsView()}} disabled={disabled}>
             {detailButtonText}
          </button>
    )

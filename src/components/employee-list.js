@@ -24,10 +24,10 @@ const EmployeeList = (props) => {
    if (isLoading) return <p>Loading employee info...</p>
    return (
       <>
-         <h3>Employees</h3>
+         <h5>Employees</h5>
          {props.employeeList.map( employee => {
             return(
-               <li key={employee._id} onClick={() => {
+               <li key={employee._id} className="employee-name" onClick={() => {
                   handleNameClick(employee);
                }} >{employee.name}</li>
             )

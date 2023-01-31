@@ -23,7 +23,7 @@ const Details = (props) => {
    return(
       details &&
          <div className="employeeDetails">
-               <li>Phone:{details.phone}</li>
+               <li>Phone: {details.phone}</li>
                <li>Hourly Rate: ${details.perHour}</li>
                <li>Daily Rate: ${details.perDiem}</li>
          </div>

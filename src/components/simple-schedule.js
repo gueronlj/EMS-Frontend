@@ -102,9 +102,9 @@ const Schedule = (props) => {
    const columns: GridColDef[] = [
       { field: "id", hide: true },
       { field: "date", headerName: "Date", width: 85 },
-      { field: "start", headerName: "Clocked-in", width: 105 },
-      { field: "end", headerName: "Clocked-out", width: 105 },
-      { field: "period", headerName: "L/D", width: 66 },
+      { field: "start", headerName: "Clocked-in", width: 95 },
+      { field: "end", headerName: "Clocked-out", width: 95 },
+      { field: "period", headerName: "L/D", width: 65 },
       { field: "delete", headerName: "-", width: 10},
    ];
 
@@ -112,43 +112,55 @@ const Schedule = (props) => {
       props.fetchSchedule()
    },[])
 
-//return(
-   // props.schedule && (<>
-   //    <div className='data-grid' style={{ height: 300, width: "100%" }}>
-   //       <DataGrid
-   //          rows={rows}
-   //          columns={columns}
-   //          onCellClick={handleEvent}/>
-   //    </div>
-   // </>)
-//)
-   return(
-      <table>
-         {props.schedule.length ?
-            <thead>
-               <tr>
-                  <th>Date</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th>L/D</th>
-               </tr>
-            </thead>:
-            <p>No schedule found</p>
-         }
-         <tbody>
-            {props.schedule.map((shift) => {
-               return(
-                  <tr key={shift.id} id={shift.id}>
-                     <td onClick={handleClick} id="date">{butifyDate(shift.date)}</td>
-                     <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
-                     <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
-                     <td onClick={handleClick} id="period">{shift.period}</td>
-                     <td onClick={handleDelete} >--</td>
-                  </tr>
-               )})}
-         </tbody>
-      </table>
-   )
+return(
+   props.schedule && (<>
+      <div className='data-grid' style={{ height: 260, width: "100%"}}>
+         <DataGrid
+            rows={rows}
+            columns={columns}
+            onCellClick={handleEvent}
+            hideFooter={true}
+            sx={{m:0,
+                border: 1,
+                borderColor: 'white',
+                '& .MuiDataGrid-cell': {
+                  color: 'white',
+                  padding: '5px'
+                },
+                '& .MuiDataGrid-columnHeaders': {
+                  color: "#56f4de",
+                },
+            }}/>
+      </div>
+   </>)
+)
+   // return(
+   //    <table>
+   //       {props.schedule.length ?
+   //          <thead>
+   //             <tr>
+   //                <th>Date</th>
+   //                <th>Start</th>
+   //                <th>End</th>
+   //                <th>L/D</th>
+   //             </tr>
+   //          </thead>:
+   //          <p>No schedule found</p>
+   //       }
+   //       <tbody>
+   //          {props.schedule.map((shift) => {
+   //             return(
+   //                <tr key={shift.id} id={shift.id}>
+   //                   <td onClick={handleClick} id="date">{butifyDate(shift.date)}</td>
+   //                   <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
+   //                   <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
+   //                   <td onClick={handleClick} id="period">{shift.period}</td>
+   //                   <td onClick={handleDelete} >--</td>
+   //                </tr>
+   //             )})}
+   //       </tbody>
+   //    </table>
+   // )
 }
 
 export default Schedule

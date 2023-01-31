@@ -63,7 +63,8 @@ const ReportFilters = (props) => {
           label="Starting Date"
           value={startLimit}
           onChange={(newValue) => {setStartLimit(newValue)}}
-          renderInput={(params) => <TextField {...params} />}/>
+          renderInput={(params) => <TextField {...params}/>}
+          />
          <MobileDatePicker
           label="End Date"
           value={endLimit}
