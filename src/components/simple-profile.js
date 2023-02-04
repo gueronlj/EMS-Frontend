@@ -4,8 +4,9 @@ import Details from './employee-details.js'
 import Schedule from './simple-schedule.js'
 import EditEvent from './edit-event.js'
 import GenerateReport from './generate-report.js'
-import Paper from '@mui/material/Paper';
+import Paper from '@mui/material/Paper'
 import ReportFilters from './report-filters.js'
+import EditProfileBtn from './edit-profile-button.js'
 
 const Profile = (props) => {
    const {isLoading} = useAuth0();
@@ -60,6 +61,7 @@ const Profile = (props) => {
                         totalDays={totalDays}
                         totalHours={totalHours}
                         totalWages={totalWages}/>
+                     <EditProfileBtn />
                   </div>
                </Paper>
             </>

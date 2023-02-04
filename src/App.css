@@ -31,7 +31,7 @@ label{
    display: flex;
    flex-direction: column;
    font-size: 1em;
-   width: 40vw;
+   width: 35vw;
 }
 
 .sideMenu button{
@@ -54,7 +54,6 @@ label{
    display: flex;
    flex-direction: row;
    width: 100vw;
-   align-items: flex-end;
 }
 
 .quickMenu{
@@ -156,6 +155,7 @@ table{
    display: flex;
    flex-direction: row;
    margin-bottom: .5em;
+   justify-content: space-evenly;
 }
 
 .quick-menu-shortcuts{
@@ -206,8 +206,16 @@ button{
 
  button:hover{
     transition: 500ms;
-    color: white;
-   background: var(--evening);
+}
+
+button:active{
+   background-color: var(--teal);
+}
+
+button:disabled{
+   color: var(--stormy);
+   border: 1px solid var(--stormy);
+
 }
 
 .report-filters{
@@ -226,6 +234,39 @@ button{
    align-self: center;
 }
 
+.edit-button{
+   max-height: 2.3em;
+   color: var(--teal);
+}
+
+.clock-in-btn{
+   min-height: 5.5em;
+   min-width: 6.7em;
+   background: linear-gradient(129deg, rgba(118,201,76,1) 55%, rgba(195,255,164,1) 100%);
+   color: var(--evening);
+   border: 1px solid rgba(118,201,76,1);
+}
+.clock-out-btn{
+   min-height: 5.5em;
+   min-width: 6.7em;
+   background: linear-gradient(145deg, rgba(191,81,73,1) 70%, rgba(255,166,166,1) 100%);
+   color: white;
+   border: 1px solid rgba(191,81,73,1);
+}
+
+.clock-in-btn:disabled, .clock-out-btn:disabled{
+   background: none;
+}
+
+.submit-btn{
+   color: rgba(118,201,76,1);
+   border: 1px solid rgba(118,201,76,1);
+}
+
+.cancel-btn{
+   color: rgba(191,81,73,1);
+   border: 1px solid rgba(191,81,73,1);
+}
 /* #details-btn{
    border: solid 1px var(--sunset);
    color: var(--sunset);

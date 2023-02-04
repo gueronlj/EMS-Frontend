@@ -43,6 +43,9 @@ const EventForm = (props) => {
          .then((response) => {
             props.fetchSchedule()
          })
+         .then(() => {
+            props.setShowModal(false)
+         })
          .catch((error) => {console.log(error)})
    }
 
@@ -103,11 +106,11 @@ const EventForm = (props) => {
                   />
                </div>
                <div className="buttons">
-                  <button type="submit">
+                  <button type="submit" className="submit-btn">
                     Submit
                   </button>
                   <button
-                    onClick={handleCancelBtn}>Cancel
+                    onClick={handleCancelBtn} className="cancel-btn">Cancel
                   </button>
                </div>
             </form>

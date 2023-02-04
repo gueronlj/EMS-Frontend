@@ -99,10 +99,10 @@ const QuickMenu = (props) => {
          <Paper elevation={3}>
             <div className="quick-menu">
                <div className="clock-in-out">
-                  <button id={new Date().toLocaleTimeString()} innerText="start" onClick={clockIn} disabled={clockInDisabled}>
+                  <button id={new Date().toLocaleTimeString()} className="clock-in-btn" innerText="start" onClick={clockIn} disabled={clockInDisabled}>
                      Clock-In
                   </button>
-                  <button id={new Date().toLocaleTimeString()} innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
+                  <button id={new Date().toLocaleTimeString()} className="clock-out-btn" innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
                      Clock-Out
                   </button>
                </div>
