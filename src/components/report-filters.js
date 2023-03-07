@@ -16,45 +16,16 @@ const ReportFilters = (props) => {
       let startISO = startLimit.toISOString()
       let endISO = endLimit.toISOString()
       try{
-         const res = await axios
-            .get(`http://localhost:3001/report/${props.selectedEmployee._id}/${startISO}/${endISO}`)
-         props.setSchedule(res.data)
-         props.setTotalDays(res.data.length)
-         const sumHours = calculateTotalHours(res.data)
-         const sumWages = calculateTotalWages(sumHours)
-         props.setTotalHours(sumHours)
-         props.setTotalWages(sumWages)
+        const res = await axios
+          .get(`http://localhost:3001/report/${props.selectedEmployee._id}/${startISO}/${endISO}`)
+        console.log(res.data);
+        props.setSchedule(res.data.schedule)
+        props.setTotalDays(res.data.totalDays)
+        props.setTotalHours(res.data.totalHours)
+        props.setTotalDailyWages(res.data.totalDailyWages)
+        props.setTotalHourlyWages(res.data.totalHourlyWages)
       }catch(error){console.log(error)}
-   }
-
-   const calculateTotalHours = (schedule) => {
-      //TODO: Currently only counts full hours, ie- 59 min = 0 hours
-      let sum = 0
-      schedule.length &&
-         schedule.forEach((shift) => {
-            if(shift.start && shift.end){
-               let startTime = parseISO(shift.start)
-               let endTime = parseISO(shift.end)
-               let hoursInShift = differenceInHours(endTime, startTime)
-               sum += hoursInShift
-            }
-         })
-         console.log(sum);
-         return(sum);
-   }
-
-   const calculateTotalWages = (hours) => {
-      let total = 0
-      if(props.selectedEmployee.perDiem){
-         total = props.selectedEmployee.perDiem * props.schedule.length
-         console.log("total by day:", total);
-      }
-      else{
-         total = hours * props.selectedEmployee.perHour;
-         console.log("total by hours:", total);
-      }
-      return total
-   }
+    }
 
    return(
      <Stack spacing={2} direction="row">
@@ -72,6 +43,7 @@ const ReportFilters = (props) => {
           renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
       <button onClick={handleSubmit}>Apply</button>
-   </Stack>)
+   </Stack>
+  )
 }
 export default ReportFilters

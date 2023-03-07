@@ -2,7 +2,7 @@ import {useState} from 'react'
 const EditProfileBtn = (props) => {
 
    const handleEditProfileBtn = () => {
-      //Show employee edit modal
+      props.setShowEditModal(true)
    }
    return(
       <button className='edit-button' onClick={handleEditProfileBtn}>Edit</button>

@@ -7,7 +7,8 @@ const GenerateReport = (props) => {
          <div className="report">
             <li>Days: {props.totalDays}</li>
             <li>Hours: {props.totalHours}</li>
-            <li>Total Wages: ${props.totalWages}</li>
+            <li>Total Daily Wages: ${props.totalDailyWages}</li>
+            <li>Total Hourly Wages: ${props.totalHourlyWages}</li>
          </div>
       </div>
    )

@@ -5,12 +5,10 @@ import Login from './components/login.js'
 import Logout from './components/logoutButton.js'
 import Profile from './components/simple-profile.js'
 import EmployeeList from './components/employee-list.js'
-import EventForm from './components/event-form.js'
 import DetailsButton from './components/details-button.js'
-import ReportButton from './components/report-button.js'
-import GenerateReport from './components/generate-report.js'
 import QuickMenu from './components/quick-menu.js'
 import Modal from './components/modal.js'
+import EmployeeEditModal from './components/employee-edit-modal.js'
 import axios from 'axios'
 
 const App = () => {
@@ -23,6 +21,7 @@ const App = () => {
    const [detailsView, setDetailsView ] = useState(false)
    const [formData, setFormData] = useState({})
    const [showModal, setShowModal] = useState(false)
+   const [showEditModal, setShowEditModal] = useState(false)
 
    const fetchSchedule = async () => {
       try{
@@ -76,7 +75,8 @@ const App = () => {
                   eventForm={eventForm}
                   setEventForm={setEventForm}
                   formData={formData}
-                  setFormData={setFormData}/>
+                  setFormData={setFormData}
+                  setShowEditModal={setShowEditModal}/>
                {showModal?
                   <Modal
                      selectedEmployee={selectedEmployee}
@@ -84,7 +84,13 @@ const App = () => {
                      setEventForm={setEventForm}
                      fetchSchedule={fetchSchedule}
                      setShowModal={setShowModal}/>
-                  :<></>}
+                  :null}
+                {showEditModal?
+                  <EmployeeEditModal
+                    setShowEditModal={setShowEditModal}
+                    selectedEmployee={selectedEmployee}
+                    setSelectedEmployee={setSelectedEmployee}/>
+                :null}
             </div>
          </>)}
       </div>

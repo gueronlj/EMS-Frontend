@@ -13,7 +13,8 @@ const Profile = (props) => {
    const [editTarget, setEditTarget] = useState({id:'', name:'', value:null})
    const [totalDays, setTotalDays] = useState(0)
    const [totalHours, setTotalHours] = useState(0)
-   const [totalWages, setTotalWages] = useState(0)
+   const [totalDailyWages, setTotalDailyWages] = useState(0)
+   const [totalHourlyWages, setTotalHourlyWages] = useState(0)
 
    if (isLoading) return <p>Loading...</p>
    return (
@@ -48,7 +49,8 @@ const Profile = (props) => {
                            selectedEmployee={props.selectedEmployee}
                            setTotalDays={setTotalDays}
                            setTotalHours={setTotalHours}
-                           setTotalWages={setTotalWages}/>
+                           setTotalHourlyWages={setTotalHourlyWages}
+                           setTotalDailyWages={setTotalDailyWages}/>
                      </div>
                      <Details
                         selectedEmployee={props.selectedEmployee}
@@ -60,8 +62,11 @@ const Profile = (props) => {
                         selectedEmployee={props.selectedEmployee}
                         totalDays={totalDays}
                         totalHours={totalHours}
-                        totalWages={totalWages}/>
-                     <EditProfileBtn />
+                        totalHourlyWages={totalHourlyWages}
+                        totalDailyWages={totalDailyWages}/>
+                     <EditProfileBtn
+                        selectedEmployee={props.selectedEmployee}
+                        setShowEditModal={props.setShowEditModal}/>
                   </div>
                </Paper>
             </>
