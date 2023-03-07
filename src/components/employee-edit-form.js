@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 
 const EmployeeEditForm = (props) => {
+  const URI = 'http://localhost:3001';
   const [formData, setFormData] = useState({
     name:props.selectedEmployee.name,
     phone:props.selectedEmployee.phone,
@@ -14,7 +15,7 @@ const EmployeeEditForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
-      .put(`http://localhost:3001/admin/${props.selectedEmployee._id}`, formData)
+      .put(`${URI}/admin/${props.selectedEmployee._id}`, formData)
       .then((response) => {
         console.log(response.data);
         props.setSelectedEmployee(response.data)

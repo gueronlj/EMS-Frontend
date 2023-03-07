@@ -9,9 +9,12 @@ import DetailsButton from './components/details-button.js'
 import QuickMenu from './components/quick-menu.js'
 import Modal from './components/modal.js'
 import EmployeeEditModal from './components/employee-edit-modal.js'
+import AddEmployeeButton from './components/new-employee-button.js'
+import NewEmployeeModal from './components/employee-new-modal.js'
 import axios from 'axios'
 
 const App = () => {
+   const TARGET_URI = 'http://localhost:3001';
    const {isAuthenticated} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState(null)
@@ -22,10 +25,11 @@ const App = () => {
    const [formData, setFormData] = useState({})
    const [showModal, setShowModal] = useState(false)
    const [showEditModal, setShowEditModal] = useState(false)
+   const [showNewEmployeeModal,setShowNewEmployeeModal ] = useState(false)
 
    const fetchSchedule = async () => {
       try{
-         const response = await axios.get(`http://localhost:3001/admin/${selectedEmployee._id}`)
+         const response = await axios.get(`${TARGET_URI}/admin/${selectedEmployee._id}`)
          setSchedule(response.data.schedule)
       } catch(error){console.log(error)}
    }
@@ -44,6 +48,16 @@ const App = () => {
                      setEmployeeList={setEmployeeList}
                      setSelectedEmployee={setSelectedEmployee}
                      selectedEmployee={selectedEmployee}/>
+                  <AddEmployeeButton
+                     selectedEmployee={selectedEmployee}
+                     showNewEmployeeModal={showNewEmployeeModal}
+                     setShowNewEmployeeModal={setShowNewEmployeeModal}/>
+                 {showNewEmployeeModal?
+                   <NewEmployeeModal
+                     setShowNewEmployeeModal={setShowNewEmployeeModal}
+                     selectedEmployee={selectedEmployee}
+                     setSelectedEmployee={setSelectedEmployee}/>
+                 :null}
                   <DetailsButton
                      selectedEmployee={selectedEmployee}
                      detailsView={detailsView}

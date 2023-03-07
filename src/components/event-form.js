@@ -12,7 +12,7 @@ const EventForm = (props) => {
    }
 
    const [formData, setFormData] = useState(defaultForm)
-
+   const URI = 'http://localhost:3001';
    const handleInput = (e) => {
       setFormData({...formData, [e.target.name]:e.target.value})
    }
@@ -39,7 +39,7 @@ const EventForm = (props) => {
          end:endISO,
       }
       axios
-         .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/new-shift`, body)
+         .put(`${URI}/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
             props.fetchSchedule()
          })

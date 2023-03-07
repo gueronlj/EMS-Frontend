@@ -6,10 +6,10 @@ const Profile = () => {
    const { user, isAuthenticated, isLoading} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState('636e927ece43e8354b80a56a')
-
+   const URI = 'http://localhost:3001';
    const updateEmployeeList = async() => {
       try{
-         const response = await fetch("http://localhost:3001/admin");
+         const response = await fetch(`${URI}/admin`);
          const data = await response.json();
          setEmployeeList(data);
       } catch(error){

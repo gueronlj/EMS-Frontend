@@ -13,6 +13,7 @@ class NewCalendar extends Component {
    }
 
    calendarRef = React.createRef()
+   const URI = process.env.DEVELOPMENT_URI;
 
    handleDateSelect = (selectInfo) => {
       //TODO: Function-> user selects employee
@@ -40,7 +41,7 @@ class NewCalendar extends Component {
    fetchEvents = () => {
          //call API, search by employee ID
          axios
-            .get(`http://localhost:3001/admin/${this.props.selectedEmployee}`)
+            .get(`${URI}/admin/${this.props.selectedEmployee}`)
             .then((response) => {
                let events = response.data.schedule
                this.populateCalendar(events)
@@ -77,7 +78,7 @@ class NewCalendar extends Component {
          start: e.startStr
       }
       axios
-         .put(`http://localhost:3001/schedule/${this.props.selectedEmployee}/remove`, body)
+         .put(`${URI}/schedule/${this.props.selectedEmployee}/remove`, body)
          .then((response) => {
             console.log('removal success!!');
          })
@@ -98,7 +99,7 @@ class NewCalendar extends Component {
          period: 'lunch'
       }
       axios
-      .put(`http://localhost:3001/schedule/${this.props.selectedEmployee}/new-shift`,body)
+      .put(`${URI}/schedule/${this.props.selectedEmployee}/new-shift`,body)
       .then((response, error) => {
          console.log('event added to DB!');
       })

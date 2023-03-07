@@ -11,7 +11,7 @@ const EditEvent = (props) => {
    const [startTime, setStartTime] = useState(props.formData.start);
    const [endTime, setEndTime] = useState(props.formData.end);
    const [date, setDate] = useState(props.formData.date);
-
+   const URI = 'http://localhost:3001';
    const handleInput=(e) => {
       props.setFormData({...props.formData, [e.target.name]:e.target.value})
    }
@@ -25,7 +25,7 @@ const EditEvent = (props) => {
          end:endTime
       }
       axios
-         .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/edit/${props.editTarget.id}`, body)
+         .put(`${URI}/schedule/${props.selectedEmployee._id}/edit/${props.editTarget.id}`, body)
          .then((response) => {
             props.fetchSchedule()
             props.setEditMode(false)

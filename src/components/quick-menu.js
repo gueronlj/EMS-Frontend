@@ -11,6 +11,7 @@ const QuickMenu = (props) => {
    const [clockOutDisabled, setClockOutDisabled]= useState(false)
    const [clockInDisabled, setClockInDisabled]= useState(false)
    const LocalStorage = window.localStorage
+   const URI = 'http://localhost:3001';
 
    const writeToDb = (e) => {
       let body={}
@@ -24,7 +25,7 @@ const QuickMenu = (props) => {
       if(body.start){body.start = startISO}
       if(body.end){body.end = endISO}
       axios
-         .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/new-shift`, body)
+         .put(`${URI}/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
             props.fetchSchedule()
          })
@@ -53,7 +54,7 @@ const QuickMenu = (props) => {
       try{
          if (LocalStorage.getItem(props.selectedEmployee._id)){
             const res = await axios
-               .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/clockout`)
+               .get(`${URI}/schedule/${props.selectedEmployee._id}/clockout`)
                let time = new Date().toLocaleTimeString()
                let endTimeISO = parse(time, 'pp' , new Date())
                let body = {
@@ -65,7 +66,7 @@ const QuickMenu = (props) => {
                }
                console.log(body);
                await axios
-                  .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/edit/${body.id}`, body)
+                  .put(`${URI}/schedule/${props.selectedEmployee._id}/edit/${body.id}`, body)
                   .then(() => {
                      props.fetchSchedule()
                      setMessage(`${props.selectedEmployee.name} has been clocked out.`)

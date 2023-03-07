@@ -8,9 +8,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import axios from 'axios'
 
 const NewCalendar = (props)=> {
-
+   const URI = process.env.DEVELOPMENT_URI;
    const [currentEvents, setCurrentEvents] = useState([])
-
    const calendarRef = React.createRef()
 
    const handleDateSelect = (selectInfo) => {
@@ -39,7 +38,7 @@ const NewCalendar = (props)=> {
    const fetchEvents = () => {
          //call API, search by employee ID
          axios
-            .get(`http://localhost:3001/admin/${props.currentEmployee}`)
+            .get(`${URI}/admin/${props.currentEmployee}`)
             .then((response) => {
                let events = response.data.schedule
                populateCalendar(events)
@@ -74,7 +73,7 @@ const NewCalendar = (props)=> {
          start: e.startStr
       }
       axios
-         .put(`http://localhost:3001/schedule/${props.currentEmployee}/remove`, body)
+         .put(`${URI}/schedule/${props.currentEmployee}/remove`, body)
          .then((response) => {
             console.log('removal success!!');
          })
@@ -95,7 +94,7 @@ const NewCalendar = (props)=> {
          period: 'lunch'
       }
       axios //TODO! Make player ID dynamic!
-      .put(`http://localhost:3001/schedule/${props.currentEmployee}/new-shift`,body)
+      .put(`${URI}/schedule/${props.currentEmployee}/new-shift`,body)
       .then((response, error) => {
          console.log('event added to DB!');
       })

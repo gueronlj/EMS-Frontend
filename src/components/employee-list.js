@@ -5,10 +5,10 @@ import axios from 'axios'
 const EmployeeList = (props) => {
 
    const {isLoading} = useAuth0();
-
+   const TARGET_URI = 'http://localhost:3001';
    const updateEmployeeList = async() => {
       try{
-         const response = await axios.get("http://localhost:3001/admin");
+         const response = await axios.get(`${TARGET_URI}/admin`);
          props.setEmployeeList(response.data);
       }catch(error){console.log(error)}
    }

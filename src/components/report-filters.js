@@ -9,6 +9,7 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import Stack from '@mui/material/Stack';
 
 const ReportFilters = (props) => {
+   const URI = 'http://localhost:3001';
    const [startLimit, setStartLimit] = useState(new Date('1,1,2023'))
    const [endLimit, setEndLimit] = useState(new Date())
 
@@ -17,7 +18,7 @@ const ReportFilters = (props) => {
       let endISO = endLimit.toISOString()
       try{
         const res = await axios
-          .get(`http://localhost:3001/report/${props.selectedEmployee._id}/${startISO}/${endISO}`)
+          .get(`${URI}/report/${props.selectedEmployee._id}/${startISO}/${endISO}`)
         console.log(res.data);
         props.setSchedule(res.data.schedule)
         props.setTotalDays(res.data.totalDays)

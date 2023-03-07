@@ -5,7 +5,7 @@ import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler, useGridApiC
 import Paper from '@mui/material/Paper';
 
 const Schedule = (props) => {
-
+  const URI = 'http://localhost:3001';
    const toggleEdit = () => {
       props.editMode?props.setEditMode(false):props.setEditMode(true)
    }
@@ -23,7 +23,7 @@ const Schedule = (props) => {
       //TODO:Add confirmation popup
       try{
          let response = await axios
-            .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.dataset.id}`)
+            .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.dataset.id}`)
             .then(() => {
                props.fetchSchedule()
             })
@@ -33,7 +33,7 @@ const Schedule = (props) => {
    const fetchShiftInfo = async () => {
       try{
          let response = await axios
-            .get(`http://localhost:3001/schedule/${props.selectedEmployee._id}/${props.editTarget.id}`)
+            .get(`${URI}/schedule/${props.selectedEmployee._id}/${props.editTarget.id}`)
             let formData = {
                date:response.data.date,
                start:response.data.start,
