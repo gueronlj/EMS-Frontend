@@ -9,6 +9,7 @@
 body{
    background-color: var(--evening);
    color: white;
+   margin-top: 0;
 }
 input, select{
     padding: .3em;
@@ -27,7 +28,15 @@ button{
 .header{
   display:flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
+  background: linear-gradient(90deg, rgba(25,34,49,1) 0%, rgba(73,78,107,1) 100%, rgba(152,135,143,1) 100%);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+}
+
+.header-btn{
+  border: 1px solid var(--teal);
 }
 
 .main{
@@ -136,6 +145,7 @@ table{
 }
 
 .modal-bg{
+  margin: 0;
   position: fixed;
   display: flex;
   align-items: center;
@@ -144,7 +154,7 @@ table{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.7);
   z-index: 100;
 }
 
@@ -234,8 +244,6 @@ button:active{
 
 button:disabled{
    color: var(--stormy);
-   border: 1px solid var(--stormy);
-
 }
 
 .report-filters{
@@ -275,6 +283,7 @@ button:disabled{
 
 .clock-in-btn:disabled, .clock-out-btn:disabled{
    background: none;
+   border: 1px solid var(--stormy);
 }
 
 .submit-btn{
