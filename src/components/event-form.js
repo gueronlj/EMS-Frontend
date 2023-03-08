@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
-import { Form, Field } from 'react-final-form'
+import React, {useState} from 'react'
 import axios from 'axios'
+import {parse, parseISO} from 'date-fns'
 
 const EventForm = (props) => {
 
@@ -12,23 +12,39 @@ const EventForm = (props) => {
    }
 
    const [formData, setFormData] = useState(defaultForm)
-
+   const URI = 'http://localhost:3001';
    const handleInput = (e) => {
       setFormData({...formData, [e.target.name]:e.target.value})
    }
 
+   const handleCancelBtn = () => {
+     // props.setEventForm(false)
+     props.setShowModal(false)
+   }
+
    const handleSubmit = (e) => {
       e.preventDefault()
+      //format date
+      let dateISO=parse(formData.date, 'yyyy-mm-dd', new Date())
+      //format start time
+      let startISO=parse(formData.start, 'k:mm', new Date())
+      //fornt end;
+      let endISO=parse(formData.end, 'k:mm', new Date())
+      console.log(formData);
+      console.log(dateISO, startISO, endISO);
       let body = {
-         date:formData.date,
+         date:dateISO,
          period:formData.period,
-         start:formData.start,
-         end:formData.end,
+         start:startISO,
+         end:endISO,
       }
       axios
-         .put(`http://localhost:3001/schedule/${props.selectedEmployee._id}/new-shift`, body)
+         .put(`${URI}/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
             props.fetchSchedule()
+         })
+         .then(() => {
+            props.setShowModal(false)
          })
          .catch((error) => {console.log(error)})
    }
@@ -90,8 +106,11 @@ const EventForm = (props) => {
                   />
                </div>
                <div className="buttons">
-                  <button type="submit">
+                  <button type="submit" className="submit-btn">
                     Submit
+                  </button>
+                  <button
+                    onClick={handleCancelBtn} className="cancel-btn">Cancel
                   </button>
                </div>
             </form>
