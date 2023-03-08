@@ -21,6 +21,7 @@ const Profile = (props) => {
       props.selectedEmployee &&(
          <>
             {props.detailsView?<>
+                  <h1>{props.selectedEmployee.name}</h1>
                   <Schedule
                      selectedEmployee={props.selectedEmployee}
                      editTarget={editTarget}

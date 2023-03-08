@@ -36,11 +36,54 @@ const App = () => {
 
    return (<>
       <div className="header">
-         <Login />
-         <Logout />
+         <AddEmployeeButton
+            selectedEmployee={selectedEmployee}
+            showNewEmployeeModal={showNewEmployeeModal}
+            setShowNewEmployeeModal={setShowNewEmployeeModal}/>
+         <DetailsButton
+            selectedEmployee={selectedEmployee}
+            detailsView={detailsView}
+            setDetailsView={setDetailsView}/>
+          <Login />
+          <Logout />
       </div>
       <div className="main">
          {isAuthenticated &&(<>
+           <div className="dashboard">
+              <Profile
+                 selectedEmployee={selectedEmployee}
+                 fetchSchedule={fetchSchedule}
+                 schedule={schedule}
+                 setSchedule={setSchedule}
+                 editMode={editMode}
+                 setEditMode={setEditMode}
+                 detailsView={detailsView}
+                 eventForm={eventForm}
+                 setEventForm={setEventForm}
+                 formData={formData}
+                 setFormData={setFormData}
+                 setShowEditModal={setShowEditModal}/>
+              {showModal?
+                 <Modal
+                    selectedEmployee={selectedEmployee}
+                    eventForm={eventForm}
+                    setEventForm={setEventForm}
+                    fetchSchedule={fetchSchedule}
+                    setShowModal={setShowModal}/>
+                 :null}
+               {showEditModal?
+                 <EmployeeEditModal
+                   setShowEditModal={setShowEditModal}
+                   selectedEmployee={selectedEmployee}
+                   setSelectedEmployee={setSelectedEmployee}/>
+               :null}
+               {showNewEmployeeModal?
+                 <NewEmployeeModal
+                   setShowNewEmployeeModal={setShowNewEmployeeModal}
+                   selectedEmployee={selectedEmployee}
+                   setSelectedEmployee={setSelectedEmployee}/>
+               :null}
+           </div>
             <div className="main-top">
                <div className="sideMenu">
                   <EmployeeList
@@ -48,20 +91,6 @@ const App = () => {
                      setEmployeeList={setEmployeeList}
                      setSelectedEmployee={setSelectedEmployee}
                      selectedEmployee={selectedEmployee}/>
-                  <AddEmployeeButton
-                     selectedEmployee={selectedEmployee}
-                     showNewEmployeeModal={showNewEmployeeModal}
-                     setShowNewEmployeeModal={setShowNewEmployeeModal}/>
-                 {showNewEmployeeModal?
-                   <NewEmployeeModal
-                     setShowNewEmployeeModal={setShowNewEmployeeModal}
-                     selectedEmployee={selectedEmployee}
-                     setSelectedEmployee={setSelectedEmployee}/>
-                 :null}
-                  <DetailsButton
-                     selectedEmployee={selectedEmployee}
-                     detailsView={detailsView}
-                     setDetailsView={setDetailsView}/>
                </div>
                <div className="quick-menu">
                   {selectedEmployee&&(
@@ -77,35 +106,7 @@ const App = () => {
                   )}
                </div>
             </div>
-            <div className="dashboard">
-               <Profile
-                  selectedEmployee={selectedEmployee}
-                  fetchSchedule={fetchSchedule}
-                  schedule={schedule}
-                  setSchedule={setSchedule}
-                  editMode={editMode}
-                  setEditMode={setEditMode}
-                  detailsView={detailsView}
-                  eventForm={eventForm}
-                  setEventForm={setEventForm}
-                  formData={formData}
-                  setFormData={setFormData}
-                  setShowEditModal={setShowEditModal}/>
-               {showModal?
-                  <Modal
-                     selectedEmployee={selectedEmployee}
-                     eventForm={eventForm}
-                     setEventForm={setEventForm}
-                     fetchSchedule={fetchSchedule}
-                     setShowModal={setShowModal}/>
-                  :null}
-                {showEditModal?
-                  <EmployeeEditModal
-                    setShowEditModal={setShowEditModal}
-                    selectedEmployee={selectedEmployee}
-                    setSelectedEmployee={setSelectedEmployee}/>
-                :null}
-            </div>
+
          </>)}
       </div>
    </>)

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 const AddEmployeeButton = (props) => {
    const [disabled, setDisabled] = useState(true)
-   const [buttonText, setButtonText] = useState("Add New Employee")
+   const [buttonText, setButtonText] = useState("New Employee")
 
    const checkButton = () => {
       if(props.selectedEmployee){
@@ -25,7 +25,7 @@ const AddEmployeeButton = (props) => {
    },[props.selectedEmployee])
 
    return(
-         <button id="details-btn" onClick={()=>{toggleButton()}} disabled={disabled}>
+         <button id="details-btn" className="header-btn" onClick={()=>{toggleButton()}} disabled={disabled}>
             {buttonText}
          </button>
    )

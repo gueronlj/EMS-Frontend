@@ -23,6 +23,13 @@ label{
 button{
   font-size: 1.2em;
 }
+
+.header{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .main{
    display: flex;
    flex-direction: row;
@@ -31,7 +38,7 @@ button{
 }
 
 .sideMenu{
-   margin-right: 1em;
+   margin-top: 1.5em;
    display: flex;
    flex-direction: column;
    font-size: 1em;
@@ -41,6 +48,7 @@ button{
 .sideMenu button{
    margin: .6em;
 }
+
 
 .dashboard{
    display: flex;
@@ -58,22 +66,22 @@ button{
    display: flex;
    flex-direction: row;
    width: 100vw;
+   justify-content: space-evenly;
 }
 
-.quickMenu{
+.quick-menu{
    display: flex;
    flex-direction: column;
+   padding: .25em;
 }
 
 li{
    list-style-type: none;
-   margin-bottom: .5em;
    font-size: 16px;
 }
 
 .employee-name{
-   padding: .3em;
-   margin-bottom: 0px;
+   padding: .5em;
    border-bottom: 1px solid white;
    font-size: 20px;
 }
@@ -118,6 +126,10 @@ h4, h5, h3  {
    font-weight: 100;
 }
 
+h1{
+  text-align: center;
+}
+
 table{
    width: 90vw;
    margin: .5em;
@@ -159,7 +171,7 @@ table{
    margin-top: 2em;
 }
 
-.submit-btn, .cancel-btn{
+.submit-btn, .cancel-btn, .edit-button{
   font-size: 1.5em;
 }
 
@@ -167,7 +179,7 @@ table{
    display: flex;
    flex-direction: row;
    margin-bottom: .5em;
-   justify-content: space-evenly;
+   justify-content: flex-start;
 }
 
 .quick-menu-shortcuts{
@@ -190,11 +202,7 @@ table{
 }
 
 .quick-menu button{
-   margin: 5px;
-}
-
-.quick-menu{
-   padding: .5em;
+   margin: 6px;
 }
 
 th{
@@ -251,14 +259,15 @@ button:disabled{
 
 .clock-in-btn{
    min-height: 5.5em;
-   min-width: 6.7em;
+   min-width: 100px;
    background: linear-gradient(129deg, rgba(118,201,76,1) 55%, rgba(195,255,164,1) 100%);
    color: var(--evening);
    border: 1px solid rgba(118,201,76,1);
+
 }
 .clock-out-btn{
    min-height: 5.5em;
-   min-width: 6.7em;
+   min-width: 100px;
    background: linear-gradient(145deg, rgba(191,81,73,1) 70%, rgba(255,166,166,1) 100%);
    color: white;
    border: 1px solid rgba(191,81,73,1);
