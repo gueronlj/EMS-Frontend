@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 {
   "name": "front-ems",
   "version": "0.1.0",
@@ -49,7 +49,7 @@
     ]
   }
 }
-=======
+
 {
   "name": "front-ems",
   "version": "0.1.0",
@@ -103,4 +103,3 @@
     ]
   }
 }
->>>>>>> 6db1040 (trying to fix clockout function)
