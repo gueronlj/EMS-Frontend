@@ -34,6 +34,7 @@ const QuickMenu = (props) => {
 
    const quickAddEvent = async (e) => {
       writeToDb(e)
+      setMessage(`Shift added to ${props.selectedEmployee.name}`)
    }
 
    const clockIn = async(e) => {

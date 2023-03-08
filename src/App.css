@@ -25,6 +25,11 @@ button{
   font-size: 1.2em;
 }
 
+.quick-message{
+  margin: 10px;
+  font-size: 18px;
+}
+
 .header{
   display:flex;
   flex-direction: row;
@@ -75,7 +80,7 @@ button{
    display: flex;
    flex-direction: row;
    width: 100vw;
-   justify-content: space-evenly;
+   justify-content: flex-start;
 }
 
 .quick-menu{
@@ -91,7 +96,7 @@ li{
 
 .employee-name{
    padding: .5em;
-   border-bottom: 1px solid white;
+   border-left: 1px solid var(--teal);
    font-size: 20px;
 }
 
@@ -198,6 +203,11 @@ table{
    flex-wrap: wrap;
 }
 
+.quick-menu-shortcuts button:hover, .header-btn:hover{
+  background-color: var(--teal);
+  color: var(--evening);
+}
+
 .details-card{
    display: flex;
    flex-wrap: wrap;
@@ -209,6 +219,11 @@ table{
 
 .details-card>*{
    margin: 5px;
+}
+
+.details-card li{
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .quick-menu button{
@@ -244,6 +259,7 @@ button:active{
 
 button:disabled{
    color: var(--stormy);
+   border: 1px solid var(--stormy);
 }
 
 .report-filters{
