@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root {
     --evening:#192231;
     --sunset:#985E6D;
@@ -321,3 +322,39 @@ button:disabled{
    color: white;
    background: var(--sunset);
 } */
+=======
+
+.main{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+}
+
+.sideMenu{
+   margin-right: 4em;
+   display: flex;
+   flex-direction: column;
+}
+
+.sideMenu button{
+   margin: .6em;
+}
+
+.dashboard{
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+}
+.employeeDetails{
+   margin-bottom: 2em;
+}
+
+.quickMenu{
+   display: flex;
+   flex-direction: column;
+}
+
+li{
+   list-style-type: none;
+}
+>>>>>>> 6db1040 (trying to fix clockout function)
