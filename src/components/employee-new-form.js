@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const NewEmployeeForm = (props) => {
   const [formData, setFormData] = useState({})
-  const URI = 'http://localhost:3001';
+  const URI = process.env.REACT_APP_DEV_URI;
   const handleInput = (e) => {
     setFormData({...formData, [e.target.name]:e.target.value})
   }

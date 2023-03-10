@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 
 const EmployeeEditForm = (props) => {
-  const URI = 'http://localhost:3001';
+  const URI = process.env.REACT_APP_DEV_URI;
   const [formData, setFormData] = useState({
     name:props.selectedEmployee.name,
     phone:props.selectedEmployee.phone,

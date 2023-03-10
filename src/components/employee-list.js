@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const EmployeeList = (props) => {
    const {isLoading} = useAuth0();
-   const TARGET_URI = 'http://localhost:3001';
+   const TARGET_URI = process.env.REACT_APP_DEV_URI;
    const updateEmployeeList = async() => {
       try{
          const response = await axios.get(`${TARGET_URI}/admin`);

@@ -6,7 +6,7 @@ const Profile = () => {
    const { user, isAuthenticated, isLoading} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState('636e927ece43e8354b80a56a')
-   const URI = 'http://localhost:3001';
+   const URI = process.env.REACT_APP_DEV_URI;
    const updateEmployeeList = async() => {
       try{
          const response = await fetch(`${URI}/admin`);

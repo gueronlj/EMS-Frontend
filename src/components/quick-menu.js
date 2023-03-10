@@ -9,7 +9,7 @@ const QuickMenu = (props) => {
    const [clockOutDisabled, setClockOutDisabled]= useState(false)
    const [clockInDisabled, setClockInDisabled]= useState(false)
    const LocalStorage = window.localStorage
-   const URI = 'http://localhost:3001';
+   const URI = process.env.REACT_APP_DEV_URI;
 
    const writeToDb = (e) => {
       let body={}

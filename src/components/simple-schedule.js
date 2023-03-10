@@ -4,7 +4,7 @@ import {format, parseISO} from 'date-fns'
 import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
 
 const Schedule = (props) => {
-  const URI = 'http://localhost:3001';
+  const URI = process.env.REACT_APP_DEV_URI;
    const toggleEdit = () => {
       props.editMode?props.setEditMode(false):props.setEditMode(true)
    }

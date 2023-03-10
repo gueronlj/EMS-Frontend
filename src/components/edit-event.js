@@ -10,7 +10,7 @@ const EditEvent = (props) => {
    const [startTime, setStartTime] = useState(props.formData.start);
    const [endTime, setEndTime] = useState(props.formData.end);
    const [date, setDate] = useState(props.formData.date);
-   const URI = 'http://localhost:3001';
+   const URI = process.env.DEV_URI;
    const handleInput=(e) => {
       props.setFormData({...props.formData, [e.target.name]:e.target.value})
    }

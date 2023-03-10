@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 
 const Details = (props) => {
    const [details, setDetails] = useState()
-   const TARGET_URI = 'http://localhost:3001';
+   const TARGET_URI = process.env.REACT_APP_DEV_URI;
    const fetchDetails = () => {
       axios
          .get(`${TARGET_URI}/admin/${props.selectedEmployee._id}`)

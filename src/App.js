@@ -14,7 +14,7 @@ import NewEmployeeModal from './components/employee-new-modal.js'
 import axios from 'axios'
 
 const App = () => {
-   const TARGET_URI = 'http://localhost:3001';
+   const TARGET_URI = process.env.REACT_APP_DEV_URI;
    const {isAuthenticated} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState(null)
