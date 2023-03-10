@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {parse, parseISO} from 'date-fns'
+import {parse} from 'date-fns'
 
 const EventForm = (props) => {
-
    const defaultForm = {
       date:'',
       period:'',
@@ -13,6 +12,7 @@ const EventForm = (props) => {
 
    const [formData, setFormData] = useState(defaultForm)
    const URI = 'http://localhost:3001';
+
    const handleInput = (e) => {
       setFormData({...formData, [e.target.name]:e.target.value})
    }
@@ -51,71 +51,69 @@ const EventForm = (props) => {
 
    return(
       <form onSubmit={handleSubmit}>
-               <div onChange={handleInput}>
-                  <label>
-                  <input
-                     name="period"
-                     type="radio"
-                     value="Lunch"
-                  />{' '}
-                  Lunch
-                  </label>
-                  <label>
-                  <input
-                     name="period"
-                     type="radio"
-                     value="Dinner"
-                  />{' '}
-                  Dinner
-                  </label>
-                  <label>
-                  <input
-                     name="period"
-                     type="radio"
-                     value="Double"
-                  />{' '}
-                  Double
-                  </label>
-               </div>
-               <div>
-                  <label>Day</label>
-                  <input
-                    name="date"
-                    type="date"
-                    placeholder="Date string"
-                    value={formData.date}
-                    onChange={handleInput}
-                  />
-               </div>
-               <div>
-                  <label>Starting time</label>
-                  <input
-                    name="start"
-                    type="time"
-                    value={formData.start}
-                    onChange={handleInput}
-                  />
-               </div>
-               <div>
-                  <label>Ending time</label>
-                  <input
-                    name="end"
-                    type="time"
-                    onChange={handleInput}
-                    value={formData.end}
-                  />
-               </div>
-               <div className="buttons">
-                  <button type="submit" className="submit-btn">
-                    Submit
-                  </button>
-                  <button
-                    onClick={handleCancelBtn} className="cancel-btn">Cancel
-                  </button>
-               </div>
-            </form>
-
+         <div onChange={handleInput}>
+            <label>
+            <input
+               name="period"
+               type="radio"
+               value="Lunch"
+            />{' '}
+            Lunch
+            </label>
+            <label>
+            <input
+               name="period"
+               type="radio"
+               value="Dinner"
+            />{' '}
+            Dinner
+            </label>
+            <label>
+            <input
+               name="period"
+               type="radio"
+               value="Double"
+            />{' '}
+            Double
+            </label>
+         </div>
+         <div>
+            <label>Day</label>
+            <input
+              name="date"
+              type="date"
+              placeholder="Date string"
+              value={formData.date}
+              onChange={handleInput}
+            />
+         </div>
+         <div>
+            <label>Starting time</label>
+            <input
+              name="start"
+              type="time"
+              value={formData.start}
+              onChange={handleInput}
+            />
+         </div>
+         <div>
+            <label>Ending time</label>
+            <input
+              name="end"
+              type="time"
+              onChange={handleInput}
+              value={formData.end}
+            />
+         </div>
+         <div className="buttons">
+            <button type="submit" className="submit-btn">
+              Submit
+            </button>
+            <button
+              onClick={handleCancelBtn} className="cancel-btn">Cancel
+            </button>
+         </div>
+      </form>
    )
 }
-
 export default EventForm

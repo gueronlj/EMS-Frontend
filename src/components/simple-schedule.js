@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React, {useEffect} from 'react'
 import {format, parseISO} from 'date-fns'
-import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler, useGridApiContext, } from "@mui/x-data-grid";
-import Paper from '@mui/material/Paper';
+import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
 
 const Schedule = (props) => {
   const URI = 'http://localhost:3001';
@@ -162,5 +161,4 @@ return(
    //    </table>
    // )
 }
-
 export default Schedule

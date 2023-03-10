@@ -5,7 +5,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { format, parseISO } from 'date-fns'
 
 const EditEvent = (props) => {
    const [startTime, setStartTime] = useState(props.formData.start);

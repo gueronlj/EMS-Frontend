@@ -3,7 +3,6 @@ import { useAuth0 } from '@auth0/auth0-react'
 import axios from 'axios'
 
 const EmployeeList = (props) => {
-
    const {isLoading} = useAuth0();
    const TARGET_URI = 'http://localhost:3001';
    const updateEmployeeList = async() => {
@@ -34,5 +33,4 @@ const EmployeeList = (props) => {
       </>
    )
 }
-
 export default EmployeeList

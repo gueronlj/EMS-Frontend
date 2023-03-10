@@ -1,6 +1,4 @@
-import {useState} from 'react'
 const EditProfileBtn = (props) => {
-
    const handleEditProfileBtn = () => {
       props.setShowEditModal(true)
    }

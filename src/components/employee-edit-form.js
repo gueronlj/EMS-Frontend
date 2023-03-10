@@ -53,7 +53,7 @@ const EmployeeEditForm = (props) => {
       </div>
       <div>
         <label>
-          Hourly Rate:
+          Hourly Rate: $
           <input
             name="perHour"
             type="text"
@@ -63,7 +63,7 @@ const EmployeeEditForm = (props) => {
       </div>
       <div>
         <label>
-          Daily Rate:
+          Daily Rate: $
           <input
             name="perDiem"
             type="text"

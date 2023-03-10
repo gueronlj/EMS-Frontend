@@ -2,8 +2,6 @@ import axios from 'axios'
 import {useState, useEffect} from 'react'
 import {parse} from 'date-fns'
 import AddEvent from './add-event.js'
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import Paper from '@mui/material/Paper';
 
 const QuickMenu = (props) => {
@@ -51,7 +49,6 @@ const QuickMenu = (props) => {
    }
 
    const clockOut = async() => {
-      //Get shift Id of shift we need to edit
       try{
          if (LocalStorage.getItem(props.selectedEmployee._id)){
             const res = await axios
@@ -131,5 +128,4 @@ const QuickMenu = (props) => {
       </>)
    )
 }
-
 export default QuickMenu

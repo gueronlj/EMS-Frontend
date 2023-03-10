@@ -1,9 +1,7 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
-import Paper from '@mui/material/Paper';
 
 const Details = (props) => {
-
    const [details, setDetails] = useState()
    const TARGET_URI = 'http://localhost:3001';
    const fetchDetails = () => {
@@ -29,5 +27,4 @@ const Details = (props) => {
          </div>
    )
 }
-
 export default  Details
