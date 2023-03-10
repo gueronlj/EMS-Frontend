@@ -6,8 +6,10 @@ const EmployeeList = (props) => {
    const {isLoading} = useAuth0();
    const TARGET_URI = process.env.REACT_APP_DEV_URI;
    const updateEmployeeList = async() => {
+
       try{
          const response = await axios.get(`${TARGET_URI}/admin`);
+         console.log(TARGET_URI);
          props.setEmployeeList(response.data);
       }catch(error){console.log(error)}
    }
@@ -25,9 +27,12 @@ const EmployeeList = (props) => {
       <>
          {props.employeeList.map( employee => {
             return(
-               <li key={employee._id} className="employee-name" onClick={() => {
-                  handleNameClick(employee);
-               }} >{employee.name}</li>
+               <li
+                  key={employee._id}
+                  className="employee-name"
+                  onClick={()=>{handleNameClick(employee)}}>
+                     {employee.name}
+               </li>
             )
          })}
       </>
