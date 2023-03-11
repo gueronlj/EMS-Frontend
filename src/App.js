@@ -26,6 +26,7 @@ const App = () => {
    const [showModal, setShowModal] = useState(false)
    const [showEditModal, setShowEditModal] = useState(false)
    const [showNewEmployeeModal,setShowNewEmployeeModal ] = useState(false)
+   const [message, setMessage] = useState('')
 
    const fetchSchedule = async () => {
       try{
@@ -92,10 +93,11 @@ const App = () => {
                         employeeList={employeeList}
                         setEmployeeList={setEmployeeList}
                         setSelectedEmployee={setSelectedEmployee}
-                        selectedEmployee={selectedEmployee}/>
+                        selectedEmployee={selectedEmployee}
+                        setMessage={setMessage}/>
                   </div>
                   <div className="quick-menu">
-                     {selectedEmployee&&(
+                     {selectedEmployee?(
                         <QuickMenu
                            selectedEmployee={selectedEmployee}
                            schedule={schedule}
@@ -104,8 +106,11 @@ const App = () => {
                            eventForm={eventForm}
                            setEventForm={setEventForm}
                            showModal={showModal}
-                           setShowModal={setShowModal}/>
-                     )}
+                           setShowModal={setShowModal}
+                           message={message}
+                           setMessage={setMessage}/>
+                        ):<p>Please select an employee from the list to get started.</p>
+                     }
                   </div>
                </div>
             </>}

@@ -5,7 +5,7 @@ const Login = () => {
    const { loginWithRedirect, isAuthenticated } = useAuth0()
    return(
       !isAuthenticated && (
-         <button onClick={() => {loginWithRedirect()} }>
+         <button id="logout-btn" onClick={() => {loginWithRedirect()} }>
             Log In
          </button>
       )

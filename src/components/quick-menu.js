@@ -5,7 +5,6 @@ import AddEvent from './add-event.js'
 import Paper from '@mui/material/Paper';
 
 const QuickMenu = (props) => {
-   const [message, setMessage] = useState('')
    const [clockOutDisabled, setClockOutDisabled]= useState(false)
    const [clockInDisabled, setClockInDisabled]= useState(false)
    const LocalStorage = window.localStorage
@@ -32,7 +31,7 @@ const QuickMenu = (props) => {
 
    const quickAddEvent = async (e) => {
       writeToDb(e)
-      setMessage(`Shift added to ${props.selectedEmployee.name}`)
+      props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
    }
 
    const clockIn = async(e) => {
@@ -42,7 +41,7 @@ const QuickMenu = (props) => {
                employeeName:props.selectedEmployee.name,
             }
             LocalStorage.setItem(props.selectedEmployee._id, JSON.stringify(token))
-            setMessage(`${props.selectedEmployee.name} has been clocked in.`)
+            props.setMessage(`${props.selectedEmployee.name} has been clocked in.`)
             writeToDb(e)
          }
       }catch(error){console.log(error);}
@@ -67,7 +66,7 @@ const QuickMenu = (props) => {
                   .put(`${URI}/schedule/${props.selectedEmployee._id}/edit/${body.id}`, body)
                   .then(() => {
                      props.fetchSchedule()
-                     setMessage(`${props.selectedEmployee.name} has been clocked out.`)
+                     props.setMessage(`${props.selectedEmployee.name} has been clocked out.`)
                      LocalStorage.removeItem(props.selectedEmployee._id)
                   })
                   .catch((error) => {console.log(error)})
@@ -87,13 +86,13 @@ const QuickMenu = (props) => {
 
    useEffect(() => {
       checkLocalStorage()
-   },[props.selectedEmployee, message])
+   },[props.selectedEmployee, props.message])
 
    return(
-      props.selectedEmployee &&(<>
+      <>
          <h1>{props.selectedEmployee.name}</h1>
          <div className="quick-message">
-            {message}
+            {props.message}
          </div>
          <Paper elevation={3}>
             <div className="quick-menu">
@@ -125,7 +124,7 @@ const QuickMenu = (props) => {
                </div>
             </div>
          </Paper>
-      </>)
+      </>
    )
 }
 export default QuickMenu
