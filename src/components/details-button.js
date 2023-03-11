@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 const DetailsButton = (props) => {
    const [disabled, setDisabled] = useState(true)
-   const [detailButtonText, setDetailButtonText] = useState("Show Details")
+   const [detailButtonText, setDetailButtonText] = useState("Schedule")
 
    const checkButton = () => {
       if(props.selectedEmployee){
@@ -15,10 +15,10 @@ const DetailsButton = (props) => {
    const toggleDetailsView = () => {
       if(props.detailsView){
          props.setDetailsView(false)
-         setDetailButtonText('Show Details')
+         // setDetailButtonText('Show Details')
       }else{
          props.setDetailsView(true)
-         setDetailButtonText('Hide Details')
+         // setDetailButtonText('Hide Details')
       }
    }
 

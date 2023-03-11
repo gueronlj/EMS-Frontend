@@ -21,7 +21,7 @@ const Profile = (props) => {
       props.selectedEmployee &&(
          <>
             {props.detailsView?<>
-                  <h1>{props.selectedEmployee.name}</h1>
+                  <h1>{props.selectedEmployee.name}'s schedule</h1>
                   <Schedule
                      selectedEmployee={props.selectedEmployee}
                      editTarget={editTarget}
@@ -68,6 +68,11 @@ const Profile = (props) => {
                      <EditProfileBtn
                         selectedEmployee={props.selectedEmployee}
                         setShowEditModal={props.setShowEditModal}/>
+                     <button
+                        className="cancel-btn"
+                        onClick={()=>props.setDetailsView(false)}>
+                        Close
+                     </button>
                   </div>
                </Paper>
             </>

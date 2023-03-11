@@ -24,7 +24,7 @@ const AddEmployeeButton = (props) => {
    },[props.selectedEmployee])
 
    return(
-         <button id="details-btn" className="header-btn" onClick={()=>{toggleButton()}} disabled={disabled}>
+         <button id="new-employee-btn" className="header-btn" onClick={()=>{toggleButton()}} disabled={disabled}>
             Add Employee
          </button>
    )

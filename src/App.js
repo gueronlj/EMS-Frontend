@@ -58,6 +58,7 @@ const App = () => {
                  editMode={editMode}
                  setEditMode={setEditMode}
                  detailsView={detailsView}
+                 setDetailsView={setDetailsView}
                  eventForm={eventForm}
                  setEventForm={setEventForm}
                  formData={formData}
