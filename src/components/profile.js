@@ -21,7 +21,7 @@ const Profile = () => {
       updateEmployeeList()
    },[])
 
-   if (isLoading) return <p>Loading...</p>
+   if (isLoading) return <h2>Loading...</h2>
 
    return (
       isAuthenticated && (

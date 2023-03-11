@@ -15,7 +15,7 @@ import axios from 'axios'
 
 const App = () => {
    const TARGET_URI = process.env.REACT_APP_DEV_URI;
-   const {isAuthenticated} = useAuth0();
+   const {isAuthenticated, isLoading} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState(null)
    const [editMode, setEditMode] =useState(false)
@@ -48,66 +48,67 @@ const App = () => {
           <Logout />
       </div>
       <div className="main">
-         {isAuthenticated &&(<>
-           <div className="dashboard">
-              <Profile
-                 selectedEmployee={selectedEmployee}
-                 fetchSchedule={fetchSchedule}
-                 schedule={schedule}
-                 setSchedule={setSchedule}
-                 editMode={editMode}
-                 setEditMode={setEditMode}
-                 detailsView={detailsView}
-                 setDetailsView={setDetailsView}
-                 eventForm={eventForm}
-                 setEventForm={setEventForm}
-                 formData={formData}
-                 setFormData={setFormData}
-                 setShowEditModal={setShowEditModal}/>
-              {showModal?
-                 <Modal
+         {isAuthenticated && (<>
+           {isLoading?<h2>Loading...</h2>:<>
+              <div className="dashboard">
+                 <Profile
                     selectedEmployee={selectedEmployee}
+                    fetchSchedule={fetchSchedule}
+                    schedule={schedule}
+                    setSchedule={setSchedule}
+                    editMode={editMode}
+                    setEditMode={setEditMode}
+                    detailsView={detailsView}
+                    setDetailsView={setDetailsView}
                     eventForm={eventForm}
                     setEventForm={setEventForm}
-                    fetchSchedule={fetchSchedule}
-                    setShowModal={setShowModal}/>
-                 :null}
-               {showEditModal?
-                 <EmployeeEditModal
-                   setShowEditModal={setShowEditModal}
-                   selectedEmployee={selectedEmployee}
-                   setSelectedEmployee={setSelectedEmployee}/>
-               :null}
-               {showNewEmployeeModal?
-                 <NewEmployeeModal
-                   setShowNewEmployeeModal={setShowNewEmployeeModal}
-                   selectedEmployee={selectedEmployee}
-                   setSelectedEmployee={setSelectedEmployee}/>
-               :null}
-           </div>
-            <div className="main-top">
-               <div className="sideMenu">
-                  <EmployeeList
-                     employeeList={employeeList}
-                     setEmployeeList={setEmployeeList}
-                     setSelectedEmployee={setSelectedEmployee}
-                     selectedEmployee={selectedEmployee}/>
+                    formData={formData}
+                    setFormData={setFormData}
+                    setShowEditModal={setShowEditModal}/>
+                 {showModal?
+                    <Modal
+                       selectedEmployee={selectedEmployee}
+                       eventForm={eventForm}
+                       setEventForm={setEventForm}
+                       fetchSchedule={fetchSchedule}
+                       setShowModal={setShowModal}/>
+                    :null}
+                  {showEditModal?
+                    <EmployeeEditModal
+                      setShowEditModal={setShowEditModal}
+                      selectedEmployee={selectedEmployee}
+                      setSelectedEmployee={setSelectedEmployee}/>
+                  :null}
+                  {showNewEmployeeModal?
+                    <NewEmployeeModal
+                      setShowNewEmployeeModal={setShowNewEmployeeModal}
+                      selectedEmployee={selectedEmployee}
+                      setSelectedEmployee={setSelectedEmployee}/>
+                  :null}
                </div>
-               <div className="quick-menu">
-                  {selectedEmployee&&(
-                     <QuickMenu
-                        selectedEmployee={selectedEmployee}
-                        schedule={schedule}
-                        fetchSchedule={fetchSchedule}
-                        formData={formData}
-                        eventForm={eventForm}
-                        setEventForm={setEventForm}
-                        showModal={showModal}
-                        setShowModal={setShowModal}/>
-                  )}
+               <div className="main-top">
+                  <div className="sideMenu">
+                     <EmployeeList
+                        employeeList={employeeList}
+                        setEmployeeList={setEmployeeList}
+                        setSelectedEmployee={setSelectedEmployee}
+                        selectedEmployee={selectedEmployee}/>
+                  </div>
+                  <div className="quick-menu">
+                     {selectedEmployee&&(
+                        <QuickMenu
+                           selectedEmployee={selectedEmployee}
+                           schedule={schedule}
+                           fetchSchedule={fetchSchedule}
+                           formData={formData}
+                           eventForm={eventForm}
+                           setEventForm={setEventForm}
+                           showModal={showModal}
+                           setShowModal={setShowModal}/>
+                     )}
+                  </div>
                </div>
-            </div>
-
+            </>}
          </>)}
       </div>
    </>)
