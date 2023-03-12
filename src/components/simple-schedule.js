@@ -1,10 +1,9 @@
 import axios from 'axios'
 import React, {useEffect} from 'react'
 import {format, parseISO} from 'date-fns'
-import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
-
+// import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
 const Schedule = (props) => {
-  const URI = process.env.REACT_APP_DEV_URI;
+   const URI = process.env.REACT_APP_DEV_URI;
    const toggleEdit = () => {
       props.editMode?props.setEditMode(false):props.setEditMode(true)
    }
@@ -22,7 +21,9 @@ const Schedule = (props) => {
       //TODO:Add confirmation popup
       try{
          let response = await axios
-            .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.dataset.id}`)
+            /*for when using MuiDataGrid, needs different selector*/
+            // .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.dataset.id}`)
+            .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.id}`)
             .then(() => {
                props.fetchSchedule()
             })
@@ -58,107 +59,111 @@ const Schedule = (props) => {
          return prettyDate
       }
    }
-//===== Doesnt like .map here .WHHY???
-   const generateGridRows = () => {
-      if(props.schedule){
-         const rows =[]
-         props.schedule.forEach((shift) => {
-            let obj ={
-                id:shift.id,
-                date:butifyDate(shift.date),
-                start:butifyTime(shift.start),
-                end:butifyTime(shift.end),
-                period:shift.period,
-                delete:'-'
-             }
-             rows.push(obj)
-         })
-         return rows
-      }
-   }
-
-   const handleEvent: GridEventListener<'cellClick'> = (
-      params,  // GridCellParams
-      event,   // MuiEvent<React.MouseEvent<HTMLElement>>
-      details, // GridCallbackDetails
-   ) => {
-         toggleEdit()
-         props.setEditTarget({id:event.target.parentElement.dataset.id})
-         let shiftId = event.target.parentElement.dataset.id
-         let fieldValue = event.target.innerText
-         let fieldName = event.target.dataset.field
-         if(fieldName === 'delete'){
-            console.log('deleting');
-            handleDelete(event)
-         }else{
-            props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
-            fetchShiftInfo()
-         }
-      }
-
-   useGridApiEventHandler('cellClick', handleEvent);
-   const rows: GridRowsProp = generateGridRows()
-   const columns: GridColDef[] = [
-      { field: "id", hide: true },
-      { field: "date", headerName: "Date", width: 85 },
-      { field: "start", headerName: "Clocked-in", width: 95 },
-      { field: "end", headerName: "Clocked-out", width: 95 },
-      { field: "period", headerName: "L/D", width: 65 },
-      { field: "delete", headerName: "-", width: 10},
-   ];
 
    useEffect(() => {
       props.fetchSchedule()
    },[])
 
-return(
-   props.schedule && (<>
-      <div className='data-grid' style={{ height: 260, width: "100%"}}>
-         <DataGrid
-            rows={rows}
-            columns={columns}
-            onCellClick={handleEvent}
-            hideFooter={true}
-            sx={{m:0,
-                border: 1,
-                borderColor: 'white',
-                '& .MuiDataGrid-cell': {
-                  color: 'white',
-                  padding: '5px'
-                },
-                '& .MuiDataGrid-columnHeaders': {
-                  color: "#56f4de",
-                },
-            }}/>
-      </div>
-   </>)
-)
-   // return(
-   //    <table>
-   //       {props.schedule.length ?
-   //          <thead>
-   //             <tr>
-   //                <th>Date</th>
-   //                <th>Start</th>
-   //                <th>End</th>
-   //                <th>L/D</th>
-   //             </tr>
-   //          </thead>:
-   //          <p>No schedule found</p>
+   return(
+      <table>
+         {props.schedule.length ?
+            <thead>
+               <tr>
+                  <th>Date</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>L/D</th>
+                  <th>Delete</th>
+               </tr>
+            </thead>:
+            <p>No schedule found</p>
+         }
+         <tbody>
+            {props.schedule.map((shift) => {
+               return(
+                  <tr key={shift.id} id={shift.id}>
+                     <td onClick={handleClick} id="date">{butifyDate(shift.date)}</td>
+                     <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
+                     <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
+                     <td onClick={handleClick} id="period">{shift.period}</td>
+                     <td className="delete-shift" onClick={handleDelete} >x</td>
+                  </tr>
+               )})}
+         </tbody>
+      </table>
+   )
+/*===============FOR MuiDataGrid*======================/
+//===== Doesnt like .map here .WHHY???
+   // const generateGridRows = () => {
+   //    if(props.schedule){
+   //       const rows =[]
+   //       props.schedule.forEach((shift) => {
+   //          let obj ={
+   //              id:shift.id,
+   //              date:butifyDate(shift.date),
+   //              start:butifyTime(shift.start),
+   //              end:butifyTime(shift.end),
+   //              period:shift.period,
+   //              delete:'-'
+   //           }
+   //           rows.push(obj)
+   //       })
+   //       return rows
+   //    }
+   // }
+   //
+   // const handleEvent: GridEventListener<'cellClick'> = (
+   //    params,  // GridCellParams
+   //    event,   // MuiEvent<React.MouseEvent<HTMLElement>>
+   //    details, // GridCallbackDetails
+   // ) => {
+   //       toggleEdit()
+   //       props.setEditTarget({id:event.target.parentElement.dataset.id})
+   //       let shiftId = event.target.parentElement.dataset.id
+   //       let fieldValue = event.target.innerText
+   //       let fieldName = event.target.dataset.field
+   //       if(fieldName === 'delete'){
+   //          console.log('deleting');
+   //          handleDelete(event)
+   //       }else{
+   //          props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
+   //          fetchShiftInfo()
    //       }
-   //       <tbody>
-   //          {props.schedule.map((shift) => {
-   //             return(
-   //                <tr key={shift.id} id={shift.id}>
-   //                   <td onClick={handleClick} id="date">{butifyDate(shift.date)}</td>
-   //                   <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
-   //                   <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
-   //                   <td onClick={handleClick} id="period">{shift.period}</td>
-   //                   <td onClick={handleDelete} >--</td>
-   //                </tr>
-   //             )})}
-   //       </tbody>
-   //    </table>
-   // )
+   //    }
+   // useGridApiEventHandler('cellClick', handleEvent);
+   // const rows: GridRowsProp = generateGridRows()
+   // const columns: GridColDef[] = [
+   //    { field: "id", hide: true },
+   //    { field: "date", headerName: "Date", width: 85 },
+   //    { field: "start", headerName: "Clocked-in", width: 95 },
+   //    { field: "end", headerName: "Clocked-out", width: 95 },
+   //    { field: "period", headerName: "L/D", width: 65 },
+   //    { field: "delete", headerName: "-", width: 10},
+   // ];
+
+/* Mui data grid is too difficult to click, must click cell and NOT cell contents */
+// return(
+//    props.schedule && (<>
+//       <div className='data-grid' style={{ height: 260, width: "100%"}}>
+//          <DataGrid
+//             rows={rows}
+//             columns={columns}
+//             onCellClick={handleEvent}
+//             hideFooter={true}
+//             sx={{m:0,
+//                 border: 1,
+//                 borderColor: 'white',
+//                 '& .MuiDataGrid-cell': {
+//                   color: 'white',
+//                   padding: '5px'
+//                 },
+//                 '& .MuiDataGrid-columnHeaders': {
+//                   color: "#56f4de",
+//                 },
+//             }}/>
+//       </div>
+//    </>)
+// )
+/*===============END of MuiDataGrid code====================*/
 }
 export default Schedule

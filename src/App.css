@@ -97,7 +97,7 @@ button{
 
 li{
    list-style-type: none;
-   font-size: 16px;
+   font-size: 14px;
 }
 
 .employee-name{
@@ -145,6 +145,7 @@ h4, h5, h3  {
 h1{
   text-align: center;
   margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 table{
@@ -193,13 +194,18 @@ table{
    display: flex;
    flex-direction: row;
    margin-bottom: .5em;
-   justify-content: flex-start;
+   justify-content: center;
 }
 
 .quick-menu-shortcuts{
    display: flex;
    flex-direction: row;
    flex-wrap: wrap;
+   justify-content: center;
+}
+
+.quick-menu h4{
+   text-align: center;
 }
 
 .quick-menu-shortcuts button:hover, .header-btn:hover, .edit-button:hover, .apply-btn:hover{
@@ -236,10 +242,17 @@ th{
    border-right: solid black 1px;
    font-weight: normal;
    color: var(--teal);
+   font-size: 14px;
 }
 
-table tr{
+.delete-shift{
+   text-align: center;
+}
+
+tr{
    margin-bottom: .5em;
+   margin-top: .5em;
+   font-size: 14px;
 }
 
 button{
@@ -265,18 +278,27 @@ button:disabled{
 }
 
 .edit-form{
-   background-color: white;
+   background-color: var(--midnight);
    display: flex;
    justify-content: center;
    border-radius: 4px;
-   max-width: 120px;
-   max-height: 45px;
+   max-width: 150px;
    align-self: center;
+}
+
+.edit-form input{
+   text-align: center;
+   background-color: white;
+   max-height: 20px;
 }
 
 .edit-button{
    max-height: 2.3em;
    color: var(--teal);
+}
+
+.MuiClockNumber-root, .PrivatePickersToolbarText-root{
+   color: white;
 }
 
 .clock-in-btn{

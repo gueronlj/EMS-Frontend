@@ -30,8 +30,6 @@ const EventForm = (props) => {
       let startISO=parse(formData.start, 'k:mm', new Date())
       //fornt end;
       let endISO=parse(formData.end, 'k:mm', new Date())
-      console.log(formData);
-      console.log(dateISO, startISO, endISO);
       let body = {
          date:dateISO,
          period:formData.period,
@@ -42,6 +40,7 @@ const EventForm = (props) => {
          .put(`${URI}/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
             props.fetchSchedule()
+            props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
          })
          .then(() => {
             props.setShowModal(false)

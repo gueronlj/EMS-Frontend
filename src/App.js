@@ -72,7 +72,8 @@ const App = () => {
                        eventForm={eventForm}
                        setEventForm={setEventForm}
                        fetchSchedule={fetchSchedule}
-                       setShowModal={setShowModal}/>
+                       setShowModal={setShowModal}
+                       setMessage={setMessage}/>
                     :null}
                   {showEditModal?
                     <EmployeeEditModal

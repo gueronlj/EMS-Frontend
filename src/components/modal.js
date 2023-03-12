@@ -11,7 +11,8 @@ const Modal = (props) => {
               eventForm={props.eventForm}
               setEventForm={props.setEventForm}
               fetchSchedule={props.fetchSchedule}
-              setShowModal={props.setShowModal}/>
+              setShowModal={props.setShowModal}
+              setMessage={props.setMessage}/>
         </div>
       </div>
     </div>
