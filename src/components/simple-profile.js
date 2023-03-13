@@ -21,62 +21,54 @@ const Profile = (props) => {
       props.selectedEmployee &&(
          <>
             {props.detailsView?<>
-                  <h1>{props.selectedEmployee.name}'s schedule</h1>
+                  <h1>{props.selectedEmployee.name}'s Time Sheet</h1>
+                  <Paper elevation={3}>
+                     <div className = "details-card">
+                        <div className="report-filters">
+                           <ReportFilters
+                              setSchedule={props.setSchedule}
+                              schedule={props.schedule}
+                              selectedEmployee={props.selectedEmployee}
+                              setTotalDays={setTotalDays}
+                              setTotalHours={setTotalHours}
+                              setTotalHourlyWages={setTotalHourlyWages}
+                              setTotalDailyWages={setTotalDailyWages}/>
+                        </div>
+                        <Details
+                           selectedEmployee={props.selectedEmployee}
+                           setSchedule={props.setSchedule}/>
+                        <GenerateReport
+                           fetchSchedule={props.fetchSchedule}
+                           setSchedule={props.setSchedule}
+                           schedule={props.schedule}
+                           selectedEmployee={props.selectedEmployee}
+                           totalDays={totalDays}
+                           totalHours={totalHours}
+                           totalHourlyWages={totalHourlyWages}
+                           totalDailyWages={totalDailyWages}/>
+                        <div className = 'buttons'>
+                           <EditProfileBtn
+                              selectedEmployee={props.selectedEmployee}
+                              setShowEditModal={props.setShowEditModal}/>
+                           <button
+                              className="cancel-btn"
+                              onClick={()=>props.setDetailsView(false)}>
+                              Close
+                           </button>
+                        </div>
+                     </div>
+                  </Paper>
                   <Schedule
                      selectedEmployee={props.selectedEmployee}
                      editTarget={editTarget}
                      setEditTarget={setEditTarget}
                      setEditMode={props.setEditMode}
                      editMode={props.editMode}
+                     formData={props.formData}
                      setFormData={props.setFormData}
                      schedule={props.schedule}
                      fetchSchedule={props.fetchSchedule}/>
-                  {props.editMode?
-                     <EditEvent
-                        editTarget={editTarget}
-                        editMode={props.editMode}
-                        setEditMode={props.setEditMode}
-                        formData={props.formData}
-                        setFormData={props.setFormData}
-                        selectedEmployee={props.selectedEmployee}
-                        fetchSchedule={props.fetchSchedule}/>
-                  :<></>}
-               <Paper elevation={3}>
-                  <div className = "details-card">
-                     <div className="report-filters">
-                        <ReportFilters
-                           setSchedule={props.setSchedule}
-                           schedule={props.schedule}
-                           selectedEmployee={props.selectedEmployee}
-                           setTotalDays={setTotalDays}
-                           setTotalHours={setTotalHours}
-                           setTotalHourlyWages={setTotalHourlyWages}
-                           setTotalDailyWages={setTotalDailyWages}/>
-                     </div>
-                     <Details
-                        selectedEmployee={props.selectedEmployee}
-                        setSchedule={props.setSchedule}/>
-                     <GenerateReport
-                        fetchSchedule={props.fetchSchedule}
-                        setSchedule={props.setSchedule}
-                        schedule={props.schedule}
-                        selectedEmployee={props.selectedEmployee}
-                        totalDays={totalDays}
-                        totalHours={totalHours}
-                        totalHourlyWages={totalHourlyWages}
-                        totalDailyWages={totalDailyWages}/>
-                     <EditProfileBtn
-                        selectedEmployee={props.selectedEmployee}
-                        setShowEditModal={props.setShowEditModal}/>
-                     <button
-                        className="cancel-btn"
-                        onClick={()=>props.setDetailsView(false)}>
-                        Close
-                     </button>
-                  </div>
-               </Paper>
-            </>
-            :<></>}
+            </>:null}
          </>
       )
    )

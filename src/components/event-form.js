@@ -18,17 +18,13 @@ const EventForm = (props) => {
    }
 
    const handleCancelBtn = () => {
-     // props.setEventForm(false)
      props.setShowModal(false)
    }
 
    const handleSubmit = (e) => {
       e.preventDefault()
-      //format date
       let dateISO=parse(formData.date, 'yyyy-mm-dd', new Date())
-      //format start time
       let startISO=parse(formData.start, 'k:mm', new Date())
-      //fornt end;
       let endISO=parse(formData.end, 'k:mm', new Date())
       let body = {
          date:dateISO,

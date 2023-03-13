@@ -11,10 +11,12 @@ body{
    color: white;
    margin: 0;
 }
+
 input, select{
     padding: .3em;
     border-radius: 4px;
     margin-right: 1em;
+    max-height: 15px;
 }
 
 label{
@@ -149,7 +151,7 @@ h1{
 }
 
 table{
-   width: 90vw;
+   width: 100%;
    margin: .5em;
 }
 
@@ -187,6 +189,7 @@ table{
    display: flex;
    flex-direction: row;
    justify-content: space-between;
+   align-items: flex-end;
    margin-top: 2em;
 }
 
@@ -218,7 +221,6 @@ table{
    display: flex;
    flex-wrap: wrap;
    justify-content: space-between;
-   align-items: flex-start;
    padding: .5em;
    color: white;
    width:100;
@@ -231,6 +233,10 @@ table{
 .details-card li{
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+.buttons >*{
+   margin: 5px;
 }
 
 .quick-menu button{
@@ -293,7 +299,6 @@ button:disabled{
 }
 
 .edit-button{
-   max-height: 2.3em;
    color: var(--teal);
 }
 

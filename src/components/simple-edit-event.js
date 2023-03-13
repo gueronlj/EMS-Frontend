@@ -1,28 +1,31 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import TextField from '@mui/material/TextField';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import {format, parseISO, parse} from 'date-fns'
 
 const EditEvent = (props) => {
-   const [startTime, setStartTime] = useState(props.formData.start);
-   const [endTime, setEndTime] = useState(props.formData.end);
-   const [date, setDate] = useState(props.formData.date);
+   const [formData, setFormData] = useState(props.shiftData.current)
    const URI = process.env.REACT_APP_DEV_URI;
-   const handleInput=(e) => {
-      props.setFormData({...props.formData, [e.target.name]:e.target.value})
-   }
 
+   const handleInput = (e) => {
+      console.log(formData);
+      setFormData({...formData, [e.target.name]:e.target.value})
+      console.log(formData);
+   }
    const handleSubmit=(e) => {
-      e && e.preventDefault()
+      e.preventDefault()
       const body ={
-         date:date,
-         period:props.formData.period,
-         start:startTime,
-         end:endTime
+         date:parse(formData.date, 'yyyy-mm-dd', new Date()),
+         start:parse(formData.start, 'k:mm', new Date()),
+         end:parse(formData.end, 'k:mm', new Date()),
+         period:formData.period
       }
+      console.log(body);
+      // const body ={
+      //    date:parse(props.shiftData.current.date, 'yyyy-mm-dd', new Date()),
+      //    start:parse(props.shiftData.current.start, 'k:mm', new Date()),
+      //    end:parse(props.shiftData.current.end, 'k:mm', new Date()),
+      //    period:props.shiftData.current.period
+      // }
       axios
          .put(`${URI}/schedule/${props.selectedEmployee._id}/edit/${props.editTarget.id}`, body)
          .then((response) => {
@@ -31,29 +34,87 @@ const EditEvent = (props) => {
          })
          .catch((error) => {console.log(error)})
    }
-
-   const renderEditForm = () => {
-      return(
-         <form>
-            <label>
-               Date:
-               <input type="date"/>
-            </label>
-            <label>
-               Start Time:
-            </label>
-            <label>
-               End Time:
-            </label>
-            <label>
-               Period:
-            </label>
-         </form>
-      )
+   const handleCancel = () => {
+      props.setEditMode(false)
    }
-
+   // const butifyDate = (dateObj) => {
+   //    if(dateObj!=null){
+   //       let dateISO = new Date(dateObj)
+   //       let prettyDate = format(dateISO, 'yyyy-MM-d', new Date())
+   //       return prettyDate
+   //    }
+   // }
+   // const butifyTime = (timeObj) => {
+   //    if(timeObj!= null){
+   //       let timeISO = parseISO(timeObj)
+   //       let prettyTime = format(timeISO, 'pp', new Date())
+   //       return prettyTime
+   //    }
+   //}
    return(
-      props.editMode && renderEditForm()
+      <form onSubmit={handleSubmit}>
+         <label>
+            Date:
+            <input
+               type="date"
+               name="date"
+               onChange={handleInput}/>
+         </label>
+         <label>
+            Start Time:
+            <input
+               type="time"
+               name="start"
+               required
+               onChange={handleInput}/>
+         </label>
+         <label>
+            End Time:
+            <input
+               type="time"
+               name="end"
+               required
+               onChange={handleInput}/>
+         </label>
+         <div className="radios" onChange={handleInput}>
+            <label>
+               <input
+                  name="period"
+                  type="radio"
+                  value="Lunch"
+               />{' '}
+               Lunch
+            </label>
+            <label>
+               <input
+                  name="period"
+                  type="radio"
+                  value="Dinner"
+               />{' '}
+               Dinner
+            </label>
+            <label>
+               <input
+                  name="period"
+                  type="radio"
+                  value="Double"
+               />{' '}
+               Double
+            </label>
+         </div>
+         <div className="edit-buttons">
+            <button
+               type='submit'
+               className="submit-btn">
+               Submit
+            </button>
+            <button
+               onClick={handleCancel}
+               className="cancel-btn">
+               Cancel
+            </button>
+         </div>
+      </form>
    )
 }
 export default EditEvent

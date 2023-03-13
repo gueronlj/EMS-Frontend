@@ -1,19 +1,28 @@
 import axios from 'axios'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {format, parseISO} from 'date-fns'
+import EditEvent from './simple-edit-event.js'
 // import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
 const Schedule = (props) => {
    const URI = process.env.REACT_APP_DEV_URI;
+   const [formData, setFormData] = useState(null)
+   let shiftData = useRef(null)
    const toggleEdit = () => {
       props.editMode?props.setEditMode(false):props.setEditMode(true)
    }
+   /*for when using MuiDataGrid, needs different handleCLick*/
+   // const handleClick = (e) => {
+   //    toggleEdit()
+   //    let shiftId = e.target.parentElement.id
+   //    let fieldValue = e.target.innerText
+   //    let fieldName = e.target.id
+   //    props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
+   //    fetchShiftInfo()
+   // }
 
    const handleClick = (e) => {
       toggleEdit()
-      let shiftId = e.target.parentElement.id
-      let fieldValue = e.target.innerText
-      let fieldName = e.target.id
-      props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
+      props.setEditTarget({id:e.target.parentElement.id})
       fetchShiftInfo()
    }
 
@@ -34,13 +43,16 @@ const Schedule = (props) => {
       try{
          let response = await axios
             .get(`${URI}/schedule/${props.selectedEmployee._id}/${props.editTarget.id}`)
-            let formData = {
-               date:response.data.date,
-               start:response.data.start,
-               end:response.data.end,
-               period:response.data.period
-            }
-            props.setFormData(formData)
+            .then((response) => {
+               let data = {
+                  date:response.data.date,
+                  start:response.data.start,
+                  end:response.data.end,
+                  period:response.data.period
+               }
+               shiftData.current = data
+               console.log(shiftData.current);
+            })
       }catch(error){console.log(error)}
    }
 
@@ -65,32 +77,42 @@ const Schedule = (props) => {
    },[])
 
    return(
-      <table>
-         {props.schedule.length ?
-            <thead>
-               <tr>
-                  <th>Date</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th>L/D</th>
-                  <th>Delete</th>
-               </tr>
-            </thead>:
-            <p>No schedule found</p>
+      <>
+         {props.editMode &&
+            <EditEvent
+               setEditMode={props.setEditMode}
+               selectedEmployee={props.selectedEmployee}
+               editTarget={props.editTarget}
+               fetchSchedule={props.fetchSchedule}
+               shiftData={shiftData}/>
          }
-         <tbody>
-            {props.schedule.map((shift) => {
-               return(
-                  <tr key={shift.id} id={shift.id}>
-                     <td onClick={handleClick} id="date">{butifyDate(shift.date)}</td>
-                     <td onClick={handleClick} id="start">{butifyTime(shift.start)}</td>
-                     <td onClick={handleClick} id="end">{butifyTime(shift.end)}</td>
-                     <td onClick={handleClick} id="period">{shift.period}</td>
-                     <td className="delete-shift" onClick={handleDelete} >x</td>
+         <table>
+            {props.schedule.length ?
+               <thead>
+                  <tr>
+                     <th>Date</th>
+                     <th>Start</th>
+                     <th>End</th>
+                     <th>L/D</th>
                   </tr>
-               )})}
-         </tbody>
-      </table>
+               </thead>:
+               <p>No shifts were found. Try expanding the date range.</p>
+            }
+            <tbody>
+               {props.schedule.map((shift) => {
+                  return(
+                     <tr key={shift.id} id={shift.id}>
+                        <td id="date">{butifyDate(shift.date)}</td>
+                        <td id="start">{butifyTime(shift.start)}</td>
+                        <td id="end">{butifyTime(shift.end)}</td>
+                        <td id="period">{shift.period}</td>
+                        <td className="edit-shift" onClick={handleClick}>Edit</td>
+                     </tr>
+                  )
+               })}
+            </tbody>
+         </table>
+      </>
    )
 /*===============FOR MuiDataGrid*======================/
 //===== Doesnt like .map here .WHHY???

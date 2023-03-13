@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 const DetailsButton = (props) => {
    const [disabled, setDisabled] = useState(true)
-   const [detailButtonText, setDetailButtonText] = useState("Schedule")
+   const [detailButtonText, setDetailButtonText] = useState("Details")
 
    const checkButton = () => {
       if(props.selectedEmployee){
