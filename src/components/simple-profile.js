@@ -67,7 +67,8 @@ const Profile = (props) => {
                      formData={props.formData}
                      setFormData={props.setFormData}
                      schedule={props.schedule}
-                     fetchSchedule={props.fetchSchedule}/>
+                     fetchSchedule={props.fetchSchedule}
+                     setMessage={props.setMessage}/>
             </>:null}
          </>
       )
