@@ -35,7 +35,7 @@ button{
 .header{
   display:flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   background-color: var(--stormy);
   margin: 0px;
 }
@@ -66,7 +66,7 @@ button{
    flex-direction: column;
    flex-wrap: wrap;
    align-items: center;
-   max-width: 505px;
+   max-width: 485px;
    margin-right: 10px;
    margin-left: 10px;
 }
@@ -79,9 +79,7 @@ button{
 .main-top{
    display: flex;
    flex-direction: row;
-   justify-content: center;
-   min-width: 390px;
-   max-width: 650px;
+   justify-content: space-between;
 }
 
 .quick-menu{
@@ -148,6 +146,7 @@ h1{
   text-align: center;
   margin-bottom: 5px;
   margin-top: 5px;
+  margin-right: 5%;
 }
 
 table{
@@ -243,6 +242,20 @@ table{
    margin: 6px;
 }
 
+.quick-menu-header{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-end;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(25,34,49,1) 0%, rgba(73,78,107,1) 100%, rgba(152,135,143,1) 100%);
+}
+
+ .details-btn{
+   justify-content: flex-end;
+   border: none;
+ }
+
 th{
    text-align: left;
    border-right: solid black 1px;
@@ -251,13 +264,12 @@ th{
    font-size: 14px;
 }
 
-.delete-shift{
+.edit-shift{
    text-align: center;
+   color: var(--teal);
 }
 
 tr{
-   margin-bottom: .5em;
-   margin-top: .5em;
    font-size: 14px;
 }
 
@@ -354,6 +366,7 @@ button:disabled{
 
 .quick-message{
    color: var(--sunset);
+   text-align: center;
 }
 
 .report-filters{
@@ -366,16 +379,20 @@ button:disabled{
 
 .header button{
    font-size: 14px;
+   margin-right: 10px;
+   margin-top: 5px;
+   margin-bottom: 5px;
 }
-#details-btn, #new-employee-btn, #logout-btn{
+
+#new-employee-btn, #logout-btn{
    color: var(--teal);
    border: none;
    border-radius: 0px;
 }
 
-#details-btn:hover, #new-employee-btn:hover, #logout-btn:hover{
+#new-employee-btn:hover, #logout-btn:hover{
    border: none;
-   color: white;
+   color: var(--evening);
    background: var(--teal);
    border-radius: 0px;
 }

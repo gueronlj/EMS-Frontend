@@ -42,10 +42,6 @@ const App = () => {
                selectedEmployee={selectedEmployee}
                showNewEmployeeModal={showNewEmployeeModal}
                setShowNewEmployeeModal={setShowNewEmployeeModal}/>
-            <DetailsButton
-               selectedEmployee={selectedEmployee}
-               detailsView={detailsView}
-               setDetailsView={setDetailsView}/>
              <Login />
              <Logout />
          </div>
@@ -112,7 +108,9 @@ const App = () => {
                                     showModal={showModal}
                                     setShowModal={setShowModal}
                                     message={message}
-                                    setMessage={setMessage}/>
+                                    setMessage={setMessage}
+                                    detailsView={detailsView}
+                                    setDetailsView={setDetailsView}/>
                                  :
                                  <p>Select an employee to to clock in and out.</p>
                               }

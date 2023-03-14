@@ -3,6 +3,8 @@ import {useState, useEffect} from 'react'
 import {parse} from 'date-fns'
 import AddEvent from './add-event.js'
 import Paper from '@mui/material/Paper';
+import DetailsButton from './details-button.js'
+import EmployeeDeleteButton from './employee-delete-button.js'
 
 const QuickMenu = (props) => {
    const [clockOutDisabled, setClockOutDisabled]= useState(false)
@@ -84,13 +86,27 @@ const QuickMenu = (props) => {
       }
    }
 
+   const handleEmployeeDelete = () => {
+     console.log(`${props.selectedEmployee.name} has been removed.`)
+   }
+
    useEffect(() => {
       checkLocalStorage()
    },[props.selectedEmployee, props.message])
 
    return(
       <>
-         <h1>{props.selectedEmployee.name}</h1>
+         <div className='quick-menu-header'>
+           <h1>{props.selectedEmployee.name}</h1>
+           <DetailsButton
+              selectedEmployee={props.selectedEmployee}
+              detailsView={props.detailsView}
+              setDetailsView={props.setDetailsView}/>
+            <EmployeeDeleteButton
+              selectedEmployee={props.selectedEmployee}
+              handleEmployeeDelete={handleEmployeeDelete}
+              setMessage={props.setMessage}/>
+         </div>
          <div className="quick-message">
             {props.message}
          </div>
