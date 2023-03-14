@@ -1,25 +1,52 @@
 import React, {useState} from 'react'
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import axios from 'axios'
 import {format, parseISO, parse} from 'date-fns'
 
 const EditEvent = (props) => {
-   const [formData, setFormData] = useState(props.shiftData.current)
+   const defaultForm = {
+      date:'',
+      period:'',
+      start:'',
+      end:''
+   }
+   const [formData, setFormData] = useState(defaultForm)
+   const [date, setDate] = useState();
    const URI = process.env.REACT_APP_DEV_URI;
 
-   const handleInput = (e) => {
-      console.log(formData);
+   const handleInput=(e) => {
       setFormData({...formData, [e.target.name]:e.target.value})
-      console.log(formData);
+   }
+   const handleCancel=() => {
+      props.setEditMode(false)
+   }
+   const handleDelete = async(e) => {
+      //TODO:Add confirmation popup
+      try{
+         let response = await axios
+            .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${props.editTarget.id}`)
+            .then(() => {
+               props.fetchSchedule()
+               props.setEditMode(false)
+               props.setMessage('Shift has been deleted')
+            })
+      }catch(error){console.log(error)}
    }
    const handleSubmit=(e) => {
       e.preventDefault()
-      const body ={
-         date:parse(formData.date, 'yyyy-mm-dd', new Date()),
-         start:parse(formData.start, 'k:mm', new Date()),
-         end:parse(formData.end, 'k:mm', new Date()),
-         period:formData.period
+      // let dateISO=parse(formData.date, 'yyyy-mm-dd', new Date())
+      let startISO=parse(formData.start, 'k:mm', new Date())
+      let endISO=parse(formData.end, 'k:mm', new Date())
+      let body = {
+         date:date,
+         start:startISO,
+         end:endISO,
+         period:formData.period,
       }
-      console.log(body);
       // const body ={
       //    date:parse(props.shiftData.current.date, 'yyyy-mm-dd', new Date()),
       //    start:parse(props.shiftData.current.start, 'k:mm', new Date()),
@@ -33,9 +60,6 @@ const EditEvent = (props) => {
             props.setEditMode(false)
          })
          .catch((error) => {console.log(error)})
-   }
-   const handleCancel = () => {
-      props.setEditMode(false)
    }
    // const butifyDate = (dateObj) => {
    //    if(dateObj!=null){
@@ -53,13 +77,14 @@ const EditEvent = (props) => {
    //}
    return(
       <form onSubmit={handleSubmit}>
-         <label>
-            Date:
-            <input
-               type="date"
-               name="date"
-               onChange={handleInput}/>
-         </label>
+         <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <MobileDatePicker
+             label="New date"
+             value={date}
+             onChange={(newValue) => {setDate(newValue)}}
+             renderInput={(params) => <TextField {...params}/>}
+            />
+         </LocalizationProvider>
          <label>
             Start Time:
             <input
@@ -113,6 +138,7 @@ const EditEvent = (props) => {
                className="cancel-btn">
                Cancel
             </button>
+            <button onClick={handleDelete}>Delete Shift</button>
          </div>
       </form>
    )

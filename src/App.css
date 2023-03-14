@@ -87,7 +87,6 @@ button{
    flex-direction: column;
    justify-content: center;
    padding: .25em;
-   margin-right: 10px;
 }
 
 .main p{
@@ -112,13 +111,24 @@ li{
 }
 
 .MuiPaper-root{
-   background: rgb(25,34,49);
    background: linear-gradient(90deg, rgba(25,34,49,1) 0%, rgba(73,78,107,1) 100%, rgba(152,135,143,1) 100%);
-   color: white;
 }
 
+.MuiTextField-root{
+   background: white;
+   border-radius: 4px;
+   max-width: 120px;
+}
 
-.MuiList-root{
+.MuiInputBase-root{
+   background: white;
+   border-radius: 4px;
+   max-width: 120px;
+   max-height: 45px;
+   padding: 5px;
+}
+
+.MuiList-root, .MuiTypography-root, .MuiPickersCalendarHeader-label, .MuiDayPicker-weekDayLabel, .MuiButton-root{
    color: white;
 }
 

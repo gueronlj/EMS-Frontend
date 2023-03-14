@@ -64,7 +64,8 @@ const App = () => {
                              setEventForm={setEventForm}
                              formData={formData}
                              setFormData={setFormData}
-                             setShowEditModal={setShowEditModal}/>
+                             setShowEditModal={setShowEditModal}
+                             setMessage={setMessage}/>
                            {showModal?
                               <Modal
                                 selectedEmployee={selectedEmployee}

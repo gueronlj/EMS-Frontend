@@ -84,7 +84,8 @@ const Schedule = (props) => {
                selectedEmployee={props.selectedEmployee}
                editTarget={props.editTarget}
                fetchSchedule={props.fetchSchedule}
-               shiftData={shiftData}/>
+               shiftData={shiftData}
+               setMessage={props.setMessage}/>
          }
          <table>
             {props.schedule.length ?

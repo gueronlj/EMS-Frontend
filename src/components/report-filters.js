@@ -13,6 +13,7 @@ const ReportFilters = (props) => {
    const handleSubmit = async () => {
       let startISO = startLimit.toISOString()
       let endISO = endLimit.toISOString()
+      console.log(`${URI}/report/${props.selectedEmployee._id}/${startISO}/${endISO}`);
       try{
         const res = await axios
           .get(`${URI}/report/${props.selectedEmployee._id}/${startISO}/${endISO}`)
