@@ -1,11 +1,10 @@
 import React, {useState} from 'react'
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import axios from 'axios'
-import {format, parseISO, parse} from 'date-fns'
+import {parse} from 'date-fns'
 
 const EditEvent = (props) => {
    const defaultForm = {
@@ -17,7 +16,7 @@ const EditEvent = (props) => {
    const [formData, setFormData] = useState(defaultForm)
    const [date, setDate] = useState();
    const URI = process.env.REACT_APP_DEV_URI;
-
+   
    const handleInput=(e) => {
       setFormData({...formData, [e.target.name]:e.target.value})
    }
@@ -27,7 +26,7 @@ const EditEvent = (props) => {
    const handleDelete = async(e) => {
       //TODO:Add confirmation popup
       try{
-         let response = await axios
+         await axios
             .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${props.editTarget.id}`)
             .then(() => {
                props.fetchSchedule()

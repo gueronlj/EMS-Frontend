@@ -26,6 +26,12 @@ label{
 button{
   font-size: 1.2em;
 }
+.loading-text{
+  text-align: center;
+  font: 16px "Fira Sans", sans-serif;
+  margin-top: 40%;
+  color: var(--stormy);
+}
 
 .quick-message{
   margin: 10px;
@@ -156,7 +162,8 @@ h1{
   text-align: center;
   margin-bottom: 5px;
   margin-top: 5px;
-  margin-right: 5%;
+  margin-right: 2%;
+  margin-left: 5px;
 }
 
 table{

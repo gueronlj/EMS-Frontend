@@ -1,47 +1,22 @@
 import axios from 'axios'
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect,useRef} from 'react'
 import {format, parseISO} from 'date-fns'
 import EditEvent from './simple-edit-event.js'
 // import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
 const Schedule = (props) => {
    const URI = process.env.REACT_APP_DEV_URI;
-   const [formData, setFormData] = useState(null)
    let shiftData = useRef(null)
    const toggleEdit = () => {
       props.editMode?props.setEditMode(false):props.setEditMode(true)
    }
-   /*for when using MuiDataGrid, needs different handleCLick*/
-   // const handleClick = (e) => {
-   //    toggleEdit()
-   //    let shiftId = e.target.parentElement.id
-   //    let fieldValue = e.target.innerText
-   //    let fieldName = e.target.id
-   //    props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
-   //    fetchShiftInfo()
-   // }
-
    const handleClick = (e) => {
       toggleEdit()
       props.setEditTarget({id:e.target.parentElement.id})
       fetchShiftInfo()
    }
-
-   const handleDelete = async(e) => {
-      //TODO:Add confirmation popup
-      try{
-         let response = await axios
-            /*for when using MuiDataGrid, needs different selector*/
-            // .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.dataset.id}`)
-            .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.id}`)
-            .then(() => {
-               props.fetchSchedule()
-            })
-      }catch(error){console.log(error)}
-   }
-
    const fetchShiftInfo = async () => {
       try{
-         let response = await axios
+         await axios
             .get(`${URI}/schedule/${props.selectedEmployee._id}/${props.editTarget.id}`)
             .then((response) => {
                let data = {
@@ -55,7 +30,6 @@ const Schedule = (props) => {
             })
       }catch(error){console.log(error)}
    }
-
    const butifyTime = (timeObj) => {
       if(timeObj!= null){
          let timeISO = parseISO(timeObj)
@@ -63,7 +37,6 @@ const Schedule = (props) => {
          return prettyTime
       }
    }
-
    const butifyDate = (dateObj) => {
       if(dateObj!=null){
          let dateISO = parseISO(dateObj)
@@ -71,7 +44,28 @@ const Schedule = (props) => {
          return prettyDate
       }
    }
+   /*for when using MuiDataGrid, needs different handleCLick*/
+   // const handleClick = (e) => {
+   //    toggleEdit()
+   //    let shiftId = e.target.parentElement.id
+   //    let fieldValue = e.target.innerText
+   //    let fieldName = e.target.id
+   //    props.setEditTarget({id:shiftId, name:fieldName, value:fieldValue})
+   //    fetchShiftInfo()
+   // }
 
+   // const handleDelete = async(e) => {
+   //    //TODO:Add confirmation popup
+   //    try{
+   //       let response = await axios
+   //          /*for when using MuiDataGrid, needs different selector*/
+   //          // .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.dataset.id}`)
+   //          .put(`${URI}/schedule/${props.selectedEmployee._id}/remove/${e.target.parentElement.id}`)
+   //          .then(() => {
+   //             props.fetchSchedule()
+   //          })
+   //    }catch(error){console.log(error)}
+   // }
    useEffect(() => {
       props.fetchSchedule()
    },[])

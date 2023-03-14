@@ -1,16 +1,18 @@
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import axios from 'axios'
 
 const EmployeeList = (props) => {
    const {isLoading} = useAuth0();
    const TARGET_URI = process.env.REACT_APP_DEV_URI;
-   const updateEmployeeList = async() => {
+   const [loading, setLoading] = useState(true)
 
+   const updateEmployeeList = async() => {
+      setLoading(true)
       try{
          const response = await axios.get(`${TARGET_URI}/admin`);
-         console.log(TARGET_URI);
          props.setEmployeeList(response.data);
+         setLoading(false)
       }catch(error){console.log(error)}
    }
 
@@ -23,7 +25,7 @@ const EmployeeList = (props) => {
       updateEmployeeList()
    },[])
 
-   if (isLoading) return <p>Loading employee info...</p>
+   if (loading) return <p>Loading employee info...</p>
    return (
       <>
          {props.employeeList.map( employee => {

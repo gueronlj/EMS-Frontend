@@ -5,7 +5,6 @@ import Login from './components/login.js'
 import Logout from './components/logoutButton.js'
 import Profile from './components/simple-profile.js'
 import EmployeeList from './components/employee-list.js'
-import DetailsButton from './components/details-button.js'
 import QuickMenu from './components/quick-menu.js'
 import Modal from './components/modal.js'
 import EmployeeEditModal from './components/employee-edit-modal.js'
@@ -45,83 +44,83 @@ const App = () => {
              <Login />
              <Logout />
          </div>
-         <div className="main">
-            {isAuthenticated && (
-               <>
-                  {isLoading?<h2>Loading...</h2>:
-                     <>
-                        <div className="dashboard">
-                           <Profile
-                             selectedEmployee={selectedEmployee}
-                             fetchSchedule={fetchSchedule}
-                             schedule={schedule}
-                             setSchedule={setSchedule}
-                             editMode={editMode}
-                             setEditMode={setEditMode}
-                             detailsView={detailsView}
-                             setDetailsView={setDetailsView}
-                             eventForm={eventForm}
-                             setEventForm={setEventForm}
-                             formData={formData}
-                             setFormData={setFormData}
+         {isLoading?<h3 className="loading-text">Loading...</h3>:
+            <>
+              <div className="main">
+                {isAuthenticated && (
+                  <>
+                    <div className="dashboard">
+                       <Profile
+                         selectedEmployee={selectedEmployee}
+                         fetchSchedule={fetchSchedule}
+                         schedule={schedule}
+                         setSchedule={setSchedule}
+                         editMode={editMode}
+                         setEditMode={setEditMode}
+                         detailsView={detailsView}
+                         setDetailsView={setDetailsView}
+                         eventForm={eventForm}
+                         setEventForm={setEventForm}
+                         formData={formData}
+                         setFormData={setFormData}
+                         setShowEditModal={setShowEditModal}
+                         setMessage={setMessage}/>
+                       {showModal?
+                          <Modal
+                            selectedEmployee={selectedEmployee}
+                            eventForm={eventForm}
+                            setEventForm={setEventForm}
+                            fetchSchedule={fetchSchedule}
+                            setShowModal={setShowModal}
+                            setMessage={setMessage}/>
+                       :null}
+                       {showEditModal?
+                          <EmployeeEditModal
                              setShowEditModal={setShowEditModal}
+                             selectedEmployee={selectedEmployee}
+                             setSelectedEmployee={setSelectedEmployee}/>
+                       :null}
+                       {showNewEmployeeModal?
+                          <NewEmployeeModal
+                             setShowNewEmployeeModal={setShowNewEmployeeModal}
+                             selectedEmployee={selectedEmployee}
+                             setSelectedEmployee={setSelectedEmployee}/>
+                       :null}
+                    </div>
+                    <div className="main-top">
+                       <div className="sideMenu">
+                          <EmployeeList
+                             employeeList={employeeList}
+                             setEmployeeList={setEmployeeList}
+                             setSelectedEmployee={setSelectedEmployee}
+                             selectedEmployee={selectedEmployee}
                              setMessage={setMessage}/>
-                           {showModal?
-                              <Modal
+                       </div>
+                       <div className="quick-menu">
+                          {selectedEmployee?
+                             <QuickMenu
                                 selectedEmployee={selectedEmployee}
+                                schedule={schedule}
+                                fetchSchedule={fetchSchedule}
+                                formData={formData}
                                 eventForm={eventForm}
                                 setEventForm={setEventForm}
-                                fetchSchedule={fetchSchedule}
+                                showModal={showModal}
                                 setShowModal={setShowModal}
-                                setMessage={setMessage}/>
-                              :null}
-                           {showEditModal?
-                              <EmployeeEditModal
-                                 setShowEditModal={setShowEditModal}
-                                 selectedEmployee={selectedEmployee}
-                                 setSelectedEmployee={setSelectedEmployee}/>
-                           :null}
-                           {showNewEmployeeModal?
-                              <NewEmployeeModal
-                                 setShowNewEmployeeModal={setShowNewEmployeeModal}
-                                 selectedEmployee={selectedEmployee}
-                                 setSelectedEmployee={setSelectedEmployee}/>
-                           :null}
-                        </div>
-                        <div className="main-top">
-                           <div className="sideMenu">
-                              <EmployeeList
-                                 employeeList={employeeList}
-                                 setEmployeeList={setEmployeeList}
-                                 setSelectedEmployee={setSelectedEmployee}
-                                 selectedEmployee={selectedEmployee}
-                                 setMessage={setMessage}/>
-                           </div>
-                           <div className="quick-menu">
-                              {selectedEmployee?
-                                 <QuickMenu
-                                    selectedEmployee={selectedEmployee}
-                                    schedule={schedule}
-                                    fetchSchedule={fetchSchedule}
-                                    formData={formData}
-                                    eventForm={eventForm}
-                                    setEventForm={setEventForm}
-                                    showModal={showModal}
-                                    setShowModal={setShowModal}
-                                    message={message}
-                                    setMessage={setMessage}
-                                    detailsView={detailsView}
-                                    setDetailsView={setDetailsView}/>
-                                 :
-                                 <p>Select an employee to to clock in and out.</p>
-                              }
-                           </div>
-                        </div>
-                     </>
-                  }
-               </>
-            )}
-         </div>
+                                message={message}
+                                setMessage={setMessage}
+                                detailsView={detailsView}
+                                setDetailsView={setDetailsView}/>
+                             :
+                             <p>Select an employee to to clock in and out.</p>
+                          }
+                       </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </>
+          }
       </>
    )
 }

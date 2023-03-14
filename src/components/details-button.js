@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 const DetailsButton = (props) => {
-   const [detailButtonText, setDetailButtonText] = useState("Details")
+   const [detailButtonText, setDetailButtonText] = useState("Time sheet")
    const toggleDetailsView = () => {
       if(props.detailsView){
          props.setDetailsView(false)
