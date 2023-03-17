@@ -1,5 +1,5 @@
 import './App.css'
-import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0} from '@auth0/auth0-react'
 import React, {useState} from 'react'
 import Login from './components/login.js'
 import Logout from './components/logoutButton.js'
@@ -14,7 +14,7 @@ import axios from 'axios'
 
 const App = () => {
    const TARGET_URI = process.env.REACT_APP_DEV_URI;
-   const {isAuthenticated, isLoading} = useAuth0();
+   const {isAuthenticated, isLoading, user} = useAuth0();
    const [employeeList, setEmployeeList] = useState([])
    const [selectedEmployee, setSelectedEmployee] = useState(null)
    const [editMode, setEditMode] =useState(false)
@@ -37,12 +37,13 @@ const App = () => {
    return (
       <>
          <div className="header">
-            <AddEmployeeButton
-               selectedEmployee={selectedEmployee}
-               showNewEmployeeModal={showNewEmployeeModal}
-               setShowNewEmployeeModal={setShowNewEmployeeModal}/>
-             <Login />
-             <Logout />
+          {user && <h4 className="user-name">Hello, {user.name}</h4>}
+          <AddEmployeeButton
+             selectedEmployee={selectedEmployee}
+             showNewEmployeeModal={showNewEmployeeModal}
+             setShowNewEmployeeModal={setShowNewEmployeeModal}/>
+           <Login />
+           <Logout />
          </div>
          {isLoading?<h3 className="loading-text">Loading...</h3>:
             <>

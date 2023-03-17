@@ -33,6 +33,9 @@ button{
   color: var(--stormy);
 }
 
+.user-name{
+  font: 16px "Fira Sans", sans-serif;
+}
 .quick-message{
   margin: 10px;
   font-size: 18px;
@@ -42,6 +45,7 @@ button{
   display:flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: baseline;
   background-color: var(--stormy);
   margin: 0px;
 }
@@ -65,7 +69,6 @@ button{
 .sideMenu button{
    margin: .6em;
 }
-
 
 .dashboard{
    display: flex;
