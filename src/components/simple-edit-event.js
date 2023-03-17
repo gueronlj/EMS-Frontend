@@ -16,7 +16,7 @@ const EditEvent = (props) => {
    const [formData, setFormData] = useState(defaultForm)
    const [date, setDate] = useState();
    const URI = process.env.REACT_APP_DEV_URI;
-   
+
    const handleInput=(e) => {
       setFormData({...formData, [e.target.name]:e.target.value})
    }
@@ -102,40 +102,41 @@ const EditEvent = (props) => {
          </label>
          <div className="radios" onChange={handleInput}>
             <label>
-               <input
-                  name="period"
-                  type="radio"
-                  value="Lunch"
-               />{' '}
-               Lunch
+              <input
+                name="period"
+                type="radio"
+                value="Lunch"
+              />{' '}
+              Lunch
             </label>
             <label>
-               <input
-                  name="period"
-                  type="radio"
-                  value="Dinner"
-               />{' '}
-               Dinner
+              <input
+                name="period"
+                type="radio"
+                value="Dinner"
+              />{' '}
+              Dinner
             </label>
             <label>
-               <input
-                  name="period"
-                  type="radio"
-                  value="Double"
-               />{' '}
-               Double
+              <input
+                name="period"
+                type="radio"
+                value="Double"
+              />{' '}
+              Double
             </label>
          </div>
          <div className="edit-buttons">
             <button
-               type='submit'
-               className="submit-btn">
-               Submit
+              type='submit'
+              className="submit-btn">
+              Submit
             </button>
             <button
-               onClick={handleCancel}
-               className="cancel-btn">
-               Cancel
+              type="button"
+              onClick={handleCancel}
+              className="cancel-btn">
+              Cancel
             </button>
             <button onClick={handleDelete}>Delete Shift</button>
          </div>
