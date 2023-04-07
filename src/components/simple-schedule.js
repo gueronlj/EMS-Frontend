@@ -68,7 +68,7 @@ const Schedule = (props) => {
    // }
    useEffect(() => {
       props.fetchSchedule()
-   },[])
+   },[props.selectedEmployee])
 
    return(
       <>

@@ -1,30 +1,19 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
+import {useAxiosRequest} from './hooks/useAxiosRequest.js'
 
 const Details = (props) => {
-   const [details, setDetails] = useState()
-   const TARGET_URI = process.env.REACT_APP_DEV_URI;
-   const fetchDetails = () => {
-      axios
-         .get(`${TARGET_URI}/admin/${props.selectedEmployee._id}`)
-         .then((response) => {
-            setDetails(response.data)
-            props.setSchedule(response.data.schedule)
-         })
-         .catch((error) => {console.log(error)})
-   }
+  const TARGET_URI = process.env.REACT_APP_DEV_URI;
+  const {data, error, loading} = useAxiosRequest('get', `${process.env.REACT_APP_DEV_URI}/admin/${props.selectedEmployee._id}`)
 
-   useEffect(() => {
-      fetchDetails()
-   },[props.selectedEmployee])
-
-   return(
-      details &&
-         <div className="employeeDetails">
-               <li>Phone: {details.phone}</li>
-               <li>Hourly Rate: ${details.perHour}</li>
-               <li>Daily Rate: ${details.perDiem}</li>
-         </div>
-   )
+  if (loading) return <p>Loading...</p>
+  return(
+    data &&
+      <div className="employeeDetails">
+        <li>Phone: {data.phone}</li>
+        <li>Hourly Rate: ${data.perHour}</li>
+        <li>Daily Rate: ${data.perDiem}</li>
+      </div>
+  )
 }
 export default  Details
