@@ -37,9 +37,11 @@ const EventForm = (props) => {
       console.log(body);
       axios
          .put(`${URI}/schedule/${props.selectedEmployee._id}/new-shift`, body)
-         .then((response) => {
+         .then(() => {
             props.fetchSchedule()
-            props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
+         })
+         .then(() => {
+           props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
          })
          .then(() => {
             props.setShowModal(false)

@@ -7,9 +7,10 @@ import Profile from './components/simple-profile.js'
 import EmployeeList from './components/employee-list.js'
 import QuickMenu from './components/quick-menu.js'
 import Modal from './components/modal.js'
-import EmployeeEditModal from './components/employee-edit-modal.js'
 import AddEmployeeButton from './components/new-employee-button.js'
-import NewEmployeeModal from './components/employee-new-modal.js'
+import EventForm from './components/event-form.js'
+import EmployeeEditForm from './components/employee-edit-form.js'
+import NewEmployeeForm from './components/employee-new-form.js'
 import axios from 'axios'
 
 const App = () => {
@@ -67,25 +68,31 @@ const App = () => {
                          setShowEditModal={setShowEditModal}
                          setMessage={setMessage}/>
                        {showModal?
-                          <Modal
-                            selectedEmployee={selectedEmployee}
-                            eventForm={eventForm}
-                            setEventForm={setEventForm}
-                            fetchSchedule={fetchSchedule}
-                            setShowModal={setShowModal}
-                            setMessage={setMessage}/>
+                          <Modal>
+                            <EventForm
+                               selectedEmployee={selectedEmployee}
+                               eventForm={eventForm}
+                               setEventForm={setEventForm}
+                               fetchSchedule={fetchSchedule}
+                               setShowModal={setShowModal}
+                               setMessage={setMessage}/>
+                          </Modal>
                        :null}
                        {showEditModal?
-                          <EmployeeEditModal
-                             setShowEditModal={setShowEditModal}
-                             selectedEmployee={selectedEmployee}
-                             setSelectedEmployee={setSelectedEmployee}/>
+                         <Modal>
+                            <EmployeeEditForm
+                               setShowEditModal={setShowEditModal}
+                               selectedEmployee={selectedEmployee}
+                               setSelectedEmployee={setSelectedEmployee}/>
+                         </Modal>
                        :null}
                        {showNewEmployeeModal?
-                          <NewEmployeeModal
-                             setShowNewEmployeeModal={setShowNewEmployeeModal}
-                             selectedEmployee={selectedEmployee}
-                             setSelectedEmployee={setSelectedEmployee}/>
+                         <Modal>
+                           <NewEmployeeForm
+                              setShowNewEmployeeModal={setShowNewEmployeeModal}
+                              selectedEmployee={selectedEmployee}
+                              setSelectedEmployee={setSelectedEmployee}/>
+                         </Modal>
                        :null}
                     </div>
                     <div className="main-top">
