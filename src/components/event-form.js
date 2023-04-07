@@ -23,15 +23,18 @@ const EventForm = (props) => {
 
    const handleSubmit = (e) => {
       e.preventDefault()
-      let dateISO=parse(formData.date, 'yyyy-mm-dd', new Date())
+      console.log(formData);
+      let dateISO=parse(formData.date, 'yyyy-MM-dd', new Date())
       let startISO=parse(formData.start, 'k:mm', new Date())
       let endISO=parse(formData.end, 'k:mm', new Date())
+      console.log(dateISO);
       let body = {
          date:dateISO,
          period:formData.period,
          start:startISO,
          end:endISO,
       }
+      console.log(body);
       axios
          .put(`${URI}/schedule/${props.selectedEmployee._id}/new-shift`, body)
          .then((response) => {
@@ -77,7 +80,6 @@ const EventForm = (props) => {
             <input
               name="date"
               type="date"
-              placeholder="Date string"
               value={formData.date}
               onChange={handleInput}
             />
