@@ -172,6 +172,7 @@ h1{
 table{
    width: 100%;
    margin: .5em;
+   border-spacing: 0 20px;
 }
 
 .modal-bg{
@@ -291,6 +292,7 @@ th{
 
 tr{
    font-size: 14px;
+   margin-bottom: 10px;
 }
 
 button{

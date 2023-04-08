@@ -1,19 +1,23 @@
 import axios from 'axios'
 import React, {useEffect,useRef} from 'react'
 import {format, parseISO} from 'date-fns'
+import Modal from  './modal.js'
 import EditEvent from './simple-edit-event.js'
 // import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
 const Schedule = (props) => {
    const URI = process.env.REACT_APP_DEV_URI;
    let shiftData = useRef(null)
+
    const toggleEdit = () => {
       props.editMode?props.setEditMode(false):props.setEditMode(true)
    }
+
    const handleClick = (e) => {
       toggleEdit()
       props.setEditTarget({id:e.target.parentElement.id})
       fetchShiftInfo()
    }
+
    const fetchShiftInfo = async () => {
       try{
          await axios
@@ -30,6 +34,7 @@ const Schedule = (props) => {
             })
       }catch(error){console.log(error)}
    }
+
    const butifyTime = (timeObj) => {
       if(timeObj!= null){
          let timeISO = parseISO(timeObj)
@@ -37,6 +42,7 @@ const Schedule = (props) => {
          return prettyTime
       }
    }
+
    const butifyDate = (dateObj) => {
       if(dateObj!=null){
          let dateISO = parseISO(dateObj)
@@ -66,49 +72,52 @@ const Schedule = (props) => {
    //          })
    //    }catch(error){console.log(error)}
    // }
-   useEffect(() => {
-      props.fetchSchedule()
-   },[])
+  useEffect(() => {
+    props.fetchSchedule()
+  },[])
 
-   return(
-      <>
-         {props.editMode &&
-            <EditEvent
-               setEditMode={props.setEditMode}
-               selectedEmployee={props.selectedEmployee}
-               editTarget={props.editTarget}
-               fetchSchedule={props.fetchSchedule}
-               shiftData={shiftData}
-               setMessage={props.setMessage}/>
-         }
-         <table>
-            {props.schedule.length ?
-               <thead>
-                  <tr>
-                     <th>Date</th>
-                     <th>Start</th>
-                     <th>End</th>
-                     <th>L/D</th>
-                  </tr>
-               </thead>:
-               <p>No shifts were found. Try expanding the date range.</p>
-            }
-            <tbody>
-               {props.schedule.map((shift) => {
-                  return(
-                     <tr key={shift.id} id={shift.id}>
-                        <td id="date">{butifyDate(shift.date)}</td>
-                        <td id="start">{butifyTime(shift.start)}</td>
-                        <td id="end">{butifyTime(shift.end)}</td>
-                        <td id="period">{shift.period}</td>
-                        <td className="edit-shift" onClick={handleClick}>Edit</td>
-                     </tr>
-                  )
-               })}
-            </tbody>
-         </table>
-      </>
-   )
+  return(
+    <>
+      {props.editMode &&
+        <Modal>
+          <EditEvent
+            setEditMode={props.setEditMode}
+            selectedEmployee={props.selectedEmployee}
+            editTarget={props.editTarget}
+            fetchSchedule={props.fetchSchedule}
+            shiftData={shiftData}
+            setMessage={props.setMessage}/>
+        </Modal>
+      }
+      <table>
+        {props.schedule.length ?
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>L/D</th>
+            </tr>
+          </thead>
+        :
+          <p>No shifts were found. Try expanding the date range.</p>
+        }
+        <tbody>
+          {props.schedule.map((shift) => {
+            return(
+              <tr key={shift.id} id={shift.id}>
+                <td id="date">{butifyDate(shift.date)}</td>
+                  <td id="start">{butifyTime(shift.start)}</td>
+                  <td id="end">{butifyTime(shift.end)}</td>
+                  <td id="period">{shift.period}</td>
+                  <td className="edit-shift" onClick={handleClick}>Edit</td>
+                </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </>
+  )
 /*===============FOR MuiDataGrid*======================/
 //===== Doesnt like .map here .WHHY???
    // const generateGridRows = () => {
