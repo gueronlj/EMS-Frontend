@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, {useEffect,useRef} from 'react'
 import {format, parseISO} from 'date-fns'
-import Modal from  './modal.js'
+import Modal from  '@components/modal.js'
 import EditEvent from './simple-edit-event.js'
 // import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
 const Schedule = (props) => {

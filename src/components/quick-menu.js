@@ -1,10 +1,10 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import {parse} from 'date-fns'
-import AddEvent from './add-event.js'
+import AddEvent from '@components/Buttons/add-event.js'
 import Paper from '@mui/material/Paper';
-import DetailsButton from './details-button.js'
-import EmployeeDeleteButton from './employee-delete-button.js'
+import DetailsButton from '@components/Buttons/details-button.js'
+import EmployeeDeleteButton from '@components/Buttons/employee-delete-button.js'
 
 const QuickMenu = (props) => {
    const [clockOutDisabled, setClockOutDisabled]= useState(false)

@@ -1,11 +1,11 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import {useState} from 'react'
-import Details from './employee-details.js'
-import Schedule from './simple-schedule.js'
-import GenerateReport from './generate-report.js'
+import Details from '@components/Employees/employee-details.js'
+import Schedule from '@components/Schedule/simple-schedule.js'
+import GenerateReport from '@components/Report/generate-report.js'
 import Paper from '@mui/material/Paper'
-import ReportFilters from './report-filters.js'
-import EditProfileBtn from './edit-profile-button.js'
+import ReportFilters from '@components/Report/report-filters.js'
+import EditProfileBtn from '@components/Buttons/edit-profile-button.js'
 
 const Profile = (props) => {
    const {isLoading} = useAuth0();
