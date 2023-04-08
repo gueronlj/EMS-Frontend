@@ -126,7 +126,7 @@ const EditEvent = (props) => {
               Double
             </label>
          </div>
-         <div className="edit-buttons">
+         <div className="buttons">
             <button
               type='submit'
               className="submit-btn">
