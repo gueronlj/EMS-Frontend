@@ -107,9 +107,6 @@ const QuickMenu = (props) => {
               handleEmployeeDelete={handleEmployeeDelete}
               setMessage={props.setMessage}/>
          </div>
-         <div className="quick-message">
-            {props.message}
-         </div>
          <Paper elevation={3}>
             <div className="quick-menu">
                <div className="clock-in-out">

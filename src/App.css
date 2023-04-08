@@ -271,6 +271,7 @@ form{
 .quick-menu-header{
   display: flex;
   flex-direction: row;
+  margin-bottom: 10px;
   align-items: baseline;
   justify-content: flex-end;
   border-radius: 3px;

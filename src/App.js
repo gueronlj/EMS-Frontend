@@ -1,6 +1,6 @@
 import './App.css'
 import { useAuth0} from '@auth0/auth0-react'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Login from '@components/Buttons/login.js'
 import Logout from '@components/Buttons/logoutButton.js'
 import Profile from '@components/simple-profile.js'
@@ -11,6 +11,9 @@ import AddEmployeeButton from '@components/Buttons/new-employee-button.js'
 import EventForm from '@components/Schedule/event-form.js'
 import EmployeeEditForm from '@components/Employees/employee-edit-form.js'
 import NewEmployeeForm from '@components/Employees/employee-new-form.js'
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
 import axios from 'axios'
 
 const App = () => {
@@ -27,6 +30,7 @@ const App = () => {
    const [showEditModal, setShowEditModal] = useState(false)
    const [showNewEmployeeModal,setShowNewEmployeeModal ] = useState(false)
    const [message, setMessage] = useState('')
+   const [feedbackAlert, setFeedbackAlert] = useState(false)
 
    const fetchSchedule = async () => {
       try{
@@ -34,6 +38,10 @@ const App = () => {
          setSchedule(response.data.schedule)
       } catch(error){console.log(error)}
    }
+
+   useEffect(() => {
+     setFeedbackAlert(true)
+   },[message])
 
    return (
       <>
@@ -126,6 +134,13 @@ const App = () => {
                     </div>
                   </>
                 )}
+                {feedbackAlert &&
+                  <Snackbar open={feedbackAlert} autoHideDuration={6000} onClose={() => setFeedbackAlert(false)}>
+                    <Alert onClose={() => setFeedbackAlert(false)} severity="success" sx={{ width: '100%', color:'#7cff40'}}>
+                      {message}
+                    </Alert>
+                  </Snackbar>
+                }
               </div>
             </>
           }
