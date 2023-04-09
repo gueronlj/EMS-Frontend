@@ -72,9 +72,15 @@ const Schedule = (props) => {
    //          })
    //    }catch(error){console.log(error)}
    // }
+<<<<<<<< HEAD:src/components/Schedule/simple-schedule.js
   useEffect(() => {
     props.fetchSchedule()
   },[])
+========
+   useEffect(() => {
+      props.fetchSchedule()
+   },[props.selectedEmployee])
+>>>>>>>> AuthorizedAccess:src/components/simple-schedule.js
 
   return(
     <>

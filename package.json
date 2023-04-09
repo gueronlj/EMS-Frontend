@@ -21,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-final-form": "^6.5.9",
     "react-scripts": "^5.0.1",
+    "request": "^2.88.2",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
