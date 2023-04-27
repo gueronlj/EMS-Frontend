@@ -1,59 +1,72 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import {parse} from 'date-fns'
+import { useAuth0 } from '@auth0/auth0-react';
 import AddEvent from '@components/Buttons/add-event.js'
 import Paper from '@mui/material/Paper';
 import DetailsButton from '@components/Buttons/details-button.js'
 import EmployeeDeleteButton from '@components/Buttons/employee-delete-button.js'
 
 const QuickMenu = (props) => {
-   const [clockOutDisabled, setClockOutDisabled]= useState(false)
-   const [clockInDisabled, setClockInDisabled]= useState(false)
-   const LocalStorage = window.localStorage
-   const URI = process.env.REACT_APP_DEV_URI;
+  const { getAccessTokenSilently } = useAuth0()
+  const [clockOutDisabled, setClockOutDisabled]= useState(false)
+  const [clockInDisabled, setClockInDisabled]= useState(false)
+  const LocalStorage = window.localStorage
+  const URL = process.env.REACT_APP_DEV_URI;
 
-   const writeToDb = (e) => {
-      let body={}
-      let targetKey = e.target.attributes.innerText.value
-      body = {
-         date:new Date(),
-         [targetKey]:e.target.id
+  const writeToDb = async (e) => {
+    let targetKey = e.target.attributes.innerText.value
+    let body = {
+       date:new Date(),
+       [targetKey]:e.target.id
+    }
+    let startISO = parse(body.start, 'pp', new Date())
+    let endISO = parse(body.end, 'pp', new Date())
+    if(body.start){body.start = startISO}
+    if(body.end){body.end = endISO}
+    try{
+      const token = await getAccessTokenSilently()
+      const options = {
+        method: 'put',
+        url: `${URL}/schedule/${props.selectedEmployee._id}/new-shift`,
+        data: body,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
-      let startISO = parse(body.start, 'pp', new Date())
-      let endISO = parse(body.end, 'pp', new Date())
-      if(body.start){body.start = startISO}
-      if(body.end){body.end = endISO}
-      axios
-         .put(`${URI}/schedule/${props.selectedEmployee._id}/new-shift`, body)
-         .then((response) => {
-            props.fetchSchedule()
-         })
-         .catch((error) => {console.log(error)})
-   }
+      await axios(options)
+    }catch(error){
+      props.setMessage(error.message)
+    }finally{
+      props.fetchSchedule()
+    }
+  }
 
-   const quickAddEvent = async (e) => {
-      writeToDb(e)
-      props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
-   }
+  const quickAddEvent = async (e) => {
+    writeToDb(e)
+    props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
+  }
 
-   const clockIn = async(e) => {
-      try{
-         if(!LocalStorage.getItem(props.selectedEmployee._id)){
-            const token = {
-               employeeName:props.selectedEmployee.name,
-            }
-            LocalStorage.setItem(props.selectedEmployee._id, JSON.stringify(token))
-            props.setMessage(`${props.selectedEmployee.name} has been clocked in.`)
-            writeToDb(e)
-         }
-      }catch(error){console.log(error);}
-   }
+  const clockIn = async(e) => {
+    try{
+      if(!LocalStorage.getItem(props.selectedEmployee._id)){
+        const token = {
+          employeeName:props.selectedEmployee.name,
+        }
+        LocalStorage.setItem(props.selectedEmployee._id, JSON.stringify(token))
+        props.setMessage(`${props.selectedEmployee.name} has been clocked in.`)
+        writeToDb(e)
+      }
+    }catch(error){
+      props.setMessage(error.message)
+    }
+  }
 
    const clockOut = async() => {
       try{
          if (LocalStorage.getItem(props.selectedEmployee._id)){
             const res = await axios
-               .get(`${URI}/schedule/${props.selectedEmployee._id}/clockout`)
+               .get(`${URL}/schedule/${props.selectedEmployee._id}/clockout`)
                let time = new Date().toLocaleTimeString()
                let endTimeISO = parse(time, 'pp' , new Date())
                let body = {
@@ -65,7 +78,7 @@ const QuickMenu = (props) => {
                }
                console.log(body);
                await axios
-                  .put(`${URI}/schedule/${props.selectedEmployee._id}/edit/${body.id}`, body)
+                  .put(`${URL}/schedule/${props.selectedEmployee._id}/edit/${body.id}`, body)
                   .then(() => {
                      props.fetchSchedule()
                      props.setMessage(`${props.selectedEmployee.name} has been clocked out.`)
@@ -76,23 +89,23 @@ const QuickMenu = (props) => {
       }catch(error){console.log(error)}
    }
 
-   const checkLocalStorage = () => {
-      if(LocalStorage.getItem(props.selectedEmployee._id)){
-         setClockInDisabled(true)
-         setClockOutDisabled(false)
-      }else{
-         setClockInDisabled(false)
-         setClockOutDisabled(true)
-      }
-   }
+  const checkLocalStorage = () => {
+    if(LocalStorage.getItem(props.selectedEmployee._id)){
+       setClockInDisabled(true)
+       setClockOutDisabled(false)
+    }else{
+       setClockInDisabled(false)
+       setClockOutDisabled(true)
+    }
+  }
 
-   const handleEmployeeDelete = () => {
-     console.log(`${props.selectedEmployee.name} has been removed.`)
-   }
+  const handleEmployeeDelete = () => {
+    console.log(`${props.selectedEmployee.name} has been removed.`)
+  }
 
-   useEffect(() => {
-      checkLocalStorage()
-   },[props.selectedEmployee, props.message])
+  useEffect(() => {
+    checkLocalStorage()
+  },[props.selectedEmployee, props.message])
 
    return(
       <>

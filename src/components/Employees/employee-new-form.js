@@ -1,28 +1,43 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import { useAuth0 } from '@auth0/auth0-react';
 
 const NewEmployeeForm = (props) => {
+  const { getAccessTokenSilently } = useAuth0()
   const [formData, setFormData] = useState({})
-  const URI = process.env.REACT_APP_DEV_URI;
+  const URL = process.env.REACT_APP_DEV_URI;
+
   const handleInput = (e) => {
     setFormData({...formData, [e.target.name]:e.target.value})
   }
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post(`${URI}/admin/new-employee`, formData)
-      .then((response) => {
-        props.setSelectedEmployee(response.data)
+    try{
+      const token = await getAccessTokenSilently()
+      const options = {
+        method: 'post',
+        url: `${URL}/admin/new-employee`,
+        data: formData,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+      const response = await axios(options)
+      console.log(response.data);
+      props.fetchEmployeeList()
+      props.setSelectedEmployee(response.data)
+    } catch (error){
+        console.error(error);
+    } finally {
         props.setShowNewEmployeeModal(false)
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    }
   }
+
   const handleCancel = () => {
     props.setShowNewEmployeeModal(false)
   }
+
   return(
     <form onSubmit={handleSubmit}>
       <div>

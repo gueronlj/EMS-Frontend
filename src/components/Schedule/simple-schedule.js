@@ -3,10 +3,13 @@ import React, {useEffect,useRef} from 'react'
 import {format, parseISO} from 'date-fns'
 import Modal from  '@components/modal.js'
 import EditEvent from './simple-edit-event.js'
+import {useAxiosRequest} from '@components/hooks/useAxiosRequest.js'
+
 // import { DataGrid, GridRowsProp, GridColDef, useGridApiEventHandler } from "@mui/x-data-grid";
 const Schedule = (props) => {
    const URI = process.env.REACT_APP_DEV_URI;
    let shiftData = useRef(null)
+   const {data, error, loading} = useAxiosRequest('GET', `${URI}/schedule/${props.selectedEmployee._id}`)
 
    const toggleEdit = () => {
       props.editMode?props.setEditMode(false):props.setEditMode(true)
@@ -15,24 +18,7 @@ const Schedule = (props) => {
    const handleClick = (e) => {
       toggleEdit()
       props.setEditTarget({id:e.target.parentElement.id})
-      fetchShiftInfo()
-   }
-
-   const fetchShiftInfo = async () => {
-      try{
-         await axios
-            .get(`${URI}/schedule/${props.selectedEmployee._id}/${props.editTarget.id}`)
-            .then((response) => {
-               let data = {
-                  date:response.data.date,
-                  start:response.data.start,
-                  end:response.data.end,
-                  period:response.data.period
-               }
-               shiftData.current = data
-               console.log(shiftData.current);
-            })
-      }catch(error){console.log(error)}
+      shiftData.current = data
    }
 
    const butifyTime = (timeObj) => {
@@ -72,15 +58,10 @@ const Schedule = (props) => {
    //          })
    //    }catch(error){console.log(error)}
    // }
-<<<<<<<< HEAD:src/components/Schedule/simple-schedule.js
+
   useEffect(() => {
     props.fetchSchedule()
-  },[])
-========
-   useEffect(() => {
-      props.fetchSchedule()
-   },[props.selectedEmployee])
->>>>>>>> AuthorizedAccess:src/components/simple-schedule.js
+  },[props.selectedEmployee])
 
   return(
     <>
@@ -113,11 +94,11 @@ const Schedule = (props) => {
             return(
               <tr key={shift.id} id={shift.id}>
                 <td id="date">{butifyDate(shift.date)}</td>
-                  <td id="start">{butifyTime(shift.start)}</td>
-                  <td id="end">{butifyTime(shift.end)}</td>
-                  <td id="period">{shift.period}</td>
-                  <td className="edit-shift" onClick={handleClick}>Edit</td>
-                </tr>
+                <td id="start">{butifyTime(shift.start)}</td>
+                <td id="end">{butifyTime(shift.end)}</td>
+                <td id="period">{shift.period}</td>
+                <td className="edit-shift" onClick={handleClick}>Edit</td>
+              </tr>
             )
           })}
         </tbody>

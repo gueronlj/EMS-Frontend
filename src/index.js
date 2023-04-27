@@ -11,6 +11,8 @@ root.render(
   <Auth0Provider
       domain ={domain}
       clientId = {clientId}
+      scope = 'user:admin'
+      audience = 'http://localhost:3001/admin'
       redirectUri = {window.location.origin}>
       <App />
   </Auth0Provider>
