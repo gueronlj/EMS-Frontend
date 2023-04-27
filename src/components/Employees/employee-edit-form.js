@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import { useAuth0 } from '@auth0/auth0-react';
 
 const EmployeeEditForm = (props) => {
-  const URI = process.env.REACT_APP_DEV_URI;
+  const { getAccessTokenSilently } = useAuth0()
+  const URL = process.env.REACT_APP_DEV_URI;
   const [formData, setFormData] = useState({
     name:props.selectedEmployee.name,
     phone:props.selectedEmployee.phone,
@@ -12,22 +14,33 @@ const EmployeeEditForm = (props) => {
   const handleInput = (e) => {
     setFormData({...formData, [e.target.name]:e.target.value})
   }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    axios
-      .put(`${URI}/admin/${props.selectedEmployee._id}`, formData)
-      .then((response) => {
-        console.log(response.data);
-        props.setSelectedEmployee(response.data)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const token = await getAccessTokenSilently()
+      const options = {
+        method: 'put',
+        url: `${URL}/admin/${props.selectedEmployee._id}`,
+        data: formData,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+      const response = await axios(options)
+      console.log(response.data);
+      props.setSelectedEmployee(response.data)
+    } catch (error){
+        console.error(error);
+    } finally {
         props.setShowEditModal(false)
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    }
   }
+
   const handleCancelBtn = () => {
     props.setShowEditModal(false)
   }
+
   return(
     <form onSubmit={handleSubmit}>
       <div>
