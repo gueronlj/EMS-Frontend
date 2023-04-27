@@ -62,32 +62,44 @@ const QuickMenu = (props) => {
     }
   }
 
-   const clockOut = async() => {
-      try{
-         if (LocalStorage.getItem(props.selectedEmployee._id)){
-            const res = await axios
-               .get(`${URL}/schedule/${props.selectedEmployee._id}/clockout`)
-               let time = new Date().toLocaleTimeString()
-               let endTimeISO = parse(time, 'pp' , new Date())
-               let body = {
-                  id:res.data.id,
-                  date:res.data.date,
-                  start:res.data.start,
-                  end:endTimeISO,
-                  period:res.data.period
-               }
-               console.log(body);
-               await axios
-                  .put(`${URL}/schedule/${props.selectedEmployee._id}/edit/${body.id}`, body)
-                  .then(() => {
-                     props.fetchSchedule()
-                     props.setMessage(`${props.selectedEmployee.name} has been clocked out.`)
-                     LocalStorage.removeItem(props.selectedEmployee._id)
-                  })
-                  .catch((error) => {console.log(error)})
-         }
-      }catch(error){console.log(error)}
-   }
+  const clockOut = async() => {
+    try{
+      if (LocalStorage.getItem(props.selectedEmployee._id)){
+        const token = await getAccessTokenSilently()
+        const options = {
+          method: 'get',
+          url: `${URL}/schedule/${props.selectedEmployee._id}/clockout`,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+        const res = await axios(options)
+        let time = new Date().toLocaleTimeString()
+        let endTimeISO = parse(time, 'pp' , new Date())
+        let body = {
+          id:res.data.id,
+          date:res.data.date,
+          start:res.data.start,
+          end:endTimeISO,
+          period:res.data.period
+        }
+        const options2 = {
+          method: 'put',
+          url: `${URL}/schedule/${props.selectedEmployee._id}/edit/${body.id}`,
+          data: body,
+          headers: {
+           Authorization: `Bearer ${token}`
+          }
+        }
+        await axios(options2)
+        props.fetchSchedule()
+        props.setMessage(`${props.selectedEmployee.name} has been clocked out.`)
+        LocalStorage.removeItem(props.selectedEmployee._id)
+      }
+    }catch(error){
+      props.setMessage(error.message)
+    }
+  }
 
   const checkLocalStorage = () => {
     if(LocalStorage.getItem(props.selectedEmployee._id)){
