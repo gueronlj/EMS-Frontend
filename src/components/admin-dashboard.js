@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Profile from '@components/simple-profile.js'
 import EmployeeList from '@components/Employees/employee-list.js'
 import QuickMenu from '@components/quick-menu.js'
@@ -11,7 +11,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Login from '@components/Buttons/login.js'
 import Logout from '@components/Buttons/logoutButton.js'
-import { useAuth0} from '@auth0/auth0-react'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const AdminDashboard = ( props ) => {
   const [editMode, setEditMode] = useState(false)
@@ -20,7 +20,7 @@ const AdminDashboard = ( props ) => {
   const [formData, setFormData] = useState({})
   const [showModal, setShowModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
-  const {isAuthenticated, isLoading, user} = useAuth0();
+  const {isAuthenticated} = useAuth0();
 
   return (<>
     <div className="header">
@@ -33,7 +33,8 @@ const AdminDashboard = ( props ) => {
       <Logout />
     </div>
     <div className="main">
-      {props.isAuthenticated && (
+      {!isAuthenticated ? <p>You are not logged in.</p>
+        :
         <>
           <div className="dashboard">
             <Profile
@@ -111,7 +112,7 @@ const AdminDashboard = ( props ) => {
             </div>
           </div>
         </>
-      )}
+      }
       {props.feedbackAlert &&
         <Snackbar open={props.feedbackAlert} autoHideDuration={6000} onClose={() => props.setFeedbackAlert(false)}>
           <Alert onClose={() => props.setFeedbackAlert(false)} severity="success" sx={{ width: '100%', color:'#7cff40'}}>
@@ -120,7 +121,7 @@ const AdminDashboard = ( props ) => {
         </Snackbar>
       }
     </div>
-  </>);
+  </>)
 }
 
 export default AdminDashboard;

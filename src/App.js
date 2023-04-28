@@ -2,10 +2,7 @@ import './App.css'
 import { useAuth0 } from '@auth0/auth0-react'
 import React, {useState, useEffect} from 'react'
 import AdminDashboard from '@components/admin-dashboard.js'
-import CheckRoles from '@components/hooks/check-roles.js'
 import axios from 'axios'
-import {useAxiosRequest} from '@components/hooks/useAxiosRequest.js'
-// import {useAxiosRequest} from './components/hooks/useAxiosRequest.js'
 
 const App = () => {
   const TARGET_URI = process.env.REACT_APP_DEV_URI;
@@ -55,7 +52,7 @@ const App = () => {
   return (
     <>
       {isLoading?
-        <h3 className="loading-text">Loading...</h3>
+        <h2 className="loading-text">Loading...</h2>
       :
         <AdminDashboard
           isAuthenticated={isAuthenticated}

@@ -172,6 +172,7 @@ h1{
 table{
    width: 100%;
    margin: .5em;
+   padding: 7px;
    border-spacing: 0 20px;
 }
 
@@ -246,6 +247,7 @@ form{
    display: flex;
    flex-wrap: wrap;
    justify-content: space-between;
+   align-items: flex-end;
    padding: .5em;
    color: white;
    width:100;
@@ -378,12 +380,12 @@ button:disabled{
 }
 
 .cancel-btn{
-   color: rgba(191,81,73,1);
-   border: 1px solid rgba(191,81,73,1);
+   color: #FF5733;
+   border: 1px solid #FF5733;
 }
 
 .cancel-btn:hover{
-   background-color:rgba(191,81,73,1);
+   background-color: #FF5733;
    color:white;
 }
 
