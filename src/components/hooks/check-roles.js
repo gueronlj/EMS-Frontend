@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios'
 
@@ -6,15 +5,12 @@ const CheckRoles = ( userEmail ) => {
   const MANAGEMENT_API = process.env.REACT_APP_AUTH0_MANAGEMENT_API_ENDPOINT
   const ROLE_ID = 'rol_ROK8QCfQY4OhDzPA'
   const SERVER_URL = process.env.REACT_APP_DEV_URI
-  const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET
-  const CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID
 
   const { getAccessTokenSilently } = useAuth0();
 
   let adminArray = [];
 
   const fetchListofAdmins = async ()=>{
-    const envtoken = process.env.REACT_APP_AUTH0_MANAGEMENT_API_TOKEN
     try{
       const token = await getAccessTokenSilently({
         authorizationParams: {

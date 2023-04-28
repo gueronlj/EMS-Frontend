@@ -1,5 +1,3 @@
-import {useEffect, useState} from 'react'
-
 const EmployeeList = (props) => {
   const handleNameClick =(e) => {
     props.setSelectedEmployee(e)

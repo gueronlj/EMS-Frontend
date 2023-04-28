@@ -1,5 +1,3 @@
-import React, {useState, useEffect} from 'react'
-
 const AddEmployeeButton = (props) => {
    const toggleButton = () => {
       if(props.showNewEmployeeModal){
