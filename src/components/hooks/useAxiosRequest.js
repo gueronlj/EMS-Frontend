@@ -10,14 +10,7 @@ export const useAxiosRequest = (method, url) => {
 
   const fetchData =  async(method, url) => {
     try {
-      const token = await getAccessTokenSilently({
-            authorizationParams: {
-              audience: url,
-              scope: 'user:admin',
-            }
-          }
-      )
-      console.log(token);
+      const token = await getAccessTokenSilently();
       const options = {
         method: method,
         url: url,
@@ -27,23 +20,17 @@ export const useAxiosRequest = (method, url) => {
       }
       const response = await axios(options)
       console.log(response.data);
-      // const response = await fetch(url, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`
-      //   }
-      // });
-      // console.log(await response.json());
       setData(response.data);
     } catch (error) {
-      setError(error);
+        setError(error);
     } finally {
-      setLoading(false)
-    }
+        setLoading(false)
+      }
   }
 
   useEffect(() => {
     fetchData(method, url)
   }, []);
 
-  return { data, loading, error};
+  return { data, loading, error };
 }
