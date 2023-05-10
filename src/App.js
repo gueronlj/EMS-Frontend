@@ -3,6 +3,8 @@ import { useAuth0 } from '@auth0/auth0-react'
 import React, {useState, useEffect} from 'react'
 import AdminDashboard from '@components/admin-dashboard.js'
 import axios from 'axios'
+import { ColorRing } from  'react-loader-spinner'
+
 
 const App = () => {
   const TARGET_URI = process.env.REACT_APP_DEV_URI;
@@ -13,6 +15,7 @@ const App = () => {
   const [feedbackAlert, setFeedbackAlert] = useState(false)
   const [schedule, setSchedule] = useState([])
   const [employeeList, setEmployeeList] = useState([])
+  const [loadingEmployees, setLoadingEmployees] = useState(false)
 
   const fetchSchedule = async () => {
     try{
@@ -31,6 +34,7 @@ const App = () => {
 
   const fetchEmployeeList = async () => {
     try{
+      setLoadingEmployees(true)
       const token = await getAccessTokenSilently();
       const options = {
         method: 'GET',
@@ -41,6 +45,7 @@ const App = () => {
       }
       const response = await axios(options)
       setEmployeeList(response.data)
+      setLoadingEmployees(false)
     } catch (error) {console.error(error)}
   }
 
@@ -52,7 +57,17 @@ const App = () => {
   return (
     <>
       {isLoading?
-        <h2 className="loading-text">Loading...</h2>
+        <div className="loading-spinner">
+          <ColorRing
+            visible={true}
+            height="140"
+            width="140"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#192231', '#98878F', '#494E6B', '#56f4de', '#849b87']}
+          />
+        </div>
       :
         <AdminDashboard
           isAuthenticated={isAuthenticated}
@@ -70,7 +85,8 @@ const App = () => {
           fetchSchedule={fetchSchedule}
           fetchEmployeeList={fetchEmployeeList}
           employeeList={employeeList}
-          setEmployeeList={setEmployeeList}/>
+          setEmployeeList={setEmployeeList}
+          loadingEmployees={loadingEmployees}/>
       }
     </>
   )

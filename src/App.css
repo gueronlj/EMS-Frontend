@@ -58,6 +58,13 @@ button{
    align-items: center;
 }
 
+.loading-spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+
 .sideMenu{
    margin-top: 20px;
    margin-left: 10px;

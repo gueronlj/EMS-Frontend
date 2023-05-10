@@ -89,7 +89,8 @@ const AdminDashboard = ( props ) => {
                 setEmployeeList={props.setEmployeeList}
                 setSelectedEmployee={props.setSelectedEmployee}
                 selectedEmployee={props.selectedEmployee}
-                setMessage={props.setMessage}/>
+                setMessage={props.setMessage}
+                loadingEmployees={props.loadingEmployees}/>
             </div>
             <div className="quick-menu">
               {props.selectedEmployee?
