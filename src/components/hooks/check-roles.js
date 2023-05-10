@@ -51,7 +51,6 @@ const CheckRoles = ( userEmail ) => {
   const findUserOnAdminList = async ( userEmail ) => {
     for (const ele of adminArray){
       userEmail === ele.email &&
-        console.log('admin found');
         return(true)
     }
   }

@@ -9,12 +9,10 @@ const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Auth0Provider
-      domain ={domain}
-      clientId = {clientId}
-      scope = 'user:admin'
-      audience = 'http://localhost:3001/admin'
-      redirectUri = {window.location.origin}>
-      <App />
+    domain ={domain}
+    clientId = {clientId}
+    audience = "http://localhost:3001/admin">
+    <App />
   </Auth0Provider>
 );
 

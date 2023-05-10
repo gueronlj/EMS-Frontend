@@ -13,6 +13,7 @@ const App = () => {
   const [feedbackAlert, setFeedbackAlert] = useState(false)
   const [schedule, setSchedule] = useState([])
   const [employeeList, setEmployeeList] = useState([])
+  const [loadingEmployees, setLoadingEmployees] = useState(false)
 
   const fetchSchedule = async () => {
     try{
@@ -31,6 +32,7 @@ const App = () => {
 
   const fetchEmployeeList = async () => {
     try{
+      setLoadingEmployees(true)
       const token = await getAccessTokenSilently();
       const options = {
         method: 'GET',
@@ -41,6 +43,7 @@ const App = () => {
       }
       const response = await axios(options)
       setEmployeeList(response.data)
+      setLoadingEmployees(false)
     } catch (error) {console.error(error)}
   }
 
@@ -70,7 +73,8 @@ const App = () => {
           fetchSchedule={fetchSchedule}
           fetchEmployeeList={fetchEmployeeList}
           employeeList={employeeList}
-          setEmployeeList={setEmployeeList}/>
+          setEmployeeList={setEmployeeList}
+          loadingEmployees={loadingEmployees}/>
       }
     </>
   )

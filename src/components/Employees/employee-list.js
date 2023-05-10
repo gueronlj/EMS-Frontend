@@ -6,6 +6,7 @@ const EmployeeList = (props) => {
 
   return (
     <>
+      {props.loadingEmployees && <p>Loading spinne here..</p>}
       {props.employeeList.map( employee => {
         return(
           <li
