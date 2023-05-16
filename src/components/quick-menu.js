@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect} from 'react'
 import {parse} from 'date-fns'
 import { useAuth0 } from '@auth0/auth0-react';
 import AddEvent from '@components/Buttons/add-event.js'
@@ -43,8 +43,11 @@ const QuickMenu = (props) => {
   }
 
   const quickAddEvent = async (e) => {
-    writeToDb(e)
-    props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
+    try{
+      writeToDb(e)
+      props.setFeedbackAlert(true)
+      props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
+    } catch(error){console.log(error);}
   }
   /*This changes clockedIn status of employee on the server.*/
   const changeClockedInStatus = async (boolean) => {

@@ -27,13 +27,15 @@ const EmployeeEditForm = (props) => {
           Authorization: `Bearer ${token}`
         }
       }
-      const response = await axios(options)
+      const response = await axios(options);
       console.log(response.data);
-      props.setSelectedEmployee(response.data)
+      props.setSelectedEmployee(response.data);
+      props.setFeedbackAlert(true);
+      props.setMessage(`${props.selectedEmployee.name} has been updated.`);
     } catch (error){
         console.error(error);
     } finally {
-        props.setShowEditModal(false)
+        props.setShowEditModal(false);
     }
   }
 

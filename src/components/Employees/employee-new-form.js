@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const NewEmployeeForm = (props) => {
   const { getAccessTokenSilently } = useAuth0()
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({clockedIn:false})
   const URL = process.env.REACT_APP_DEV_URI;
 
   const handleInput = (e) => {
@@ -26,9 +26,13 @@ const NewEmployeeForm = (props) => {
       const response = await axios(options)
       console.log(response.data);
       props.fetchEmployeeList()
+      props.setFeedbackAlert(true)
+      props.setMessage(`${response.data.name} was added to employee list.`)
       props.setSelectedEmployee(response.data)
     } catch (error){
         console.error(error);
+        props.setFeedbackAlert(true)
+        props.setMessage(error.message)
     } finally {
         props.setShowNewEmployeeModal(false)
     }

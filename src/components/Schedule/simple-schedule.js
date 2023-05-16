@@ -1,4 +1,4 @@
-import React, {useEffect,useRef} from 'react'
+import {useEffect,useRef} from 'react'
 import {format, parseISO} from 'date-fns'
 import Modal from  '@components/modal.js'
 import EditEvent from './simple-edit-event.js'
@@ -73,6 +73,7 @@ const Schedule = (props) => {
               editTarget={props.editTarget}
               fetchSchedule={props.fetchSchedule}
               shiftData={shiftData}
+              setFeedbackAlert={props.setFeedbackAlert}
               setMessage={props.setMessage}/>
           </Modal>
         }
