@@ -3,7 +3,6 @@ import { ThreeDots } from  'react-loader-spinner'
 const EmployeeList = (props) => {
   const handleNameClick =(e) => {
     props.setSelectedEmployee(e)
-    props.setMessage('')
   }
 
   return (

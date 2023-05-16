@@ -38,6 +38,7 @@ const EditEvent = (props) => {
         }
       }
       await axios(options)
+      props.setFeedbackAlert(true)
       props.setMessage(`Shift was removed`)
     }catch(error) {
       props.setMessage(error.message)
@@ -70,8 +71,10 @@ const EditEvent = (props) => {
       const response = await axios(options)
       console.log(response.data);
       props.fetchSchedule()
+      props.setFeedbackAlert(true)
       props.setMessage(`Shift was updated`)
     } catch (error){
+        props.setFeedbackAlert(true)
         props.setMessage(`Error: ${error.message}`)
     } finally {
         props.setEditMode(false)

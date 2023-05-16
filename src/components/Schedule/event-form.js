@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import axios from 'axios'
 import {parse} from 'date-fns'
 import { useAuth0 } from '@auth0/auth0-react';
@@ -24,9 +24,9 @@ const EventForm = (props) => {
 
    const handleSubmit = async (e) => {
      e.preventDefault();
-     let dateISO=parse(formData.date, 'yyyy-MM-dd', new Date())
-     let startISO=parse(formData.start, 'k:mm', new Date())
-     let endISO=parse(formData.end, 'k:mm', new Date())
+     let dateISO = parse(formData.date, 'yyyy-MM-dd', new Date())
+     let startISO = parse(formData.start, 'k:mm', new Date())
+     let endISO = parse(formData.end, 'k:mm', new Date())
      let body = {
         date:dateISO,
         period:formData.period,
@@ -46,6 +46,7 @@ const EventForm = (props) => {
        const response = await axios(options)
        console.log(response.data);
        props.fetchSchedule()
+       props.setFeedbackAlert(true)
        props.setMessage(`Shift added to ${props.selectedEmployee.name}`)
      } catch (error){
          props.setMessage(`Error: ${error.message}`)
@@ -53,7 +54,7 @@ const EventForm = (props) => {
          props.setShowModal(false)
      }
    }
-   
+
    return(
       <form onSubmit={handleSubmit}>
          <div onChange={handleInput}>
