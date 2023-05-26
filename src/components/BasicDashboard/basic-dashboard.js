@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {parse} from 'date-fns'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react';
+import {EMPLOYEE_INFO} from '../../config.js'
 
 import Header from '@components/header.js';
 
@@ -9,7 +10,7 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
   const [clockOutDisabled, setClockOutDisabled] = useState(true)
   const [clockInDisabled, setClockInDisabled] = useState(false)
   const URL = process.env.REACT_APP_DEV_URI;
-  let EMPLOYEE_ID = '640b5ad33537b73b6b694755'
+  const EMPLOYEE_ID = '640b5ad33537b73b6b694755'
   const { getAccessTokenSilently } = useAuth0()
   //----------------------------------------
 
@@ -88,8 +89,15 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
     const result = await axiosRequest('put', endpoint, payload)
     console.log(result.data);
   }
-
   //----------------------------------------
+
+  const getEmployeeId = ( string ) => {
+    const array = EMPLOYEE_INFO
+    //find object in config.js where 'name' = name, return value of 'id'
+    let obj = array.find(o => o.email === string );
+    console.log(obj.id);
+    //return obj.id
+  }
 
   const clockIn = () => {
     addStartTimetoTimeSheet()
@@ -107,6 +115,7 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
 
   useEffect(() => {
     checkClockedInStatus()
+    getEmployeeId(user.email)
   },[])
 
   return (
