@@ -1,4 +1,5 @@
 import { ThreeDots } from  'react-loader-spinner'
+import AddEmployeeButton from '@components/Buttons/new-employee-button.js'
 
 const EmployeeList = (props) => {
   const handleNameClick =(e) => {
@@ -18,6 +19,9 @@ const EmployeeList = (props) => {
           wrapperClassName=""
           visible={true}/>
       }
+      <AddEmployeeButton
+        showNewEmployeeModal={props.showNewEmployeeModal}
+        setShowNewEmployeeModal={props.setShowNewEmployeeModal}/>
       {props.employeeList.map( employee => {
         return(
           <li

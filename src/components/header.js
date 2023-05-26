@@ -6,11 +6,6 @@ const Header = ( { isAdmin, user, showNewEmployeeModal, setShowNewEmployeeModal 
   return (
     <div className="header">
       <h4 className="user-name">Hello, {user.name}</h4>
-      {isAdmin &&
-        <AddEmployeeButton
-          showNewEmployeeModal={showNewEmployeeModal}
-          setShowNewEmployeeModal={setShowNewEmployeeModal}/>
-      }
       <Login />
       <Logout />
     </div>

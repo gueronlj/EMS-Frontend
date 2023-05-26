@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {parse} from 'date-fns'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react';
-import {EMPLOYEE_INFO} from '../../config.js'
+import { getEmployeeId } from './Helpers/getEmployeeId.js'
 
 import Header from '@components/header.js';
 
@@ -10,7 +10,7 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
   const [clockOutDisabled, setClockOutDisabled] = useState(true)
   const [clockInDisabled, setClockInDisabled] = useState(false)
   const URL = process.env.REACT_APP_DEV_URI;
-  const EMPLOYEE_ID = '640b5ad33537b73b6b694755'
+  const EMPLOYEE_ID = useRef('')
   const { getAccessTokenSilently } = useAuth0()
   //----------------------------------------
 
@@ -47,13 +47,13 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
     }
     const formatedTime = parse(payload.start, 'pp', new Date())
     payload.start = formatedTime
-    const endpoint = `${URL}/schedule/${EMPLOYEE_ID}/new-shift`
+    const endpoint = `${URL}/schedule/${EMPLOYEE_ID.current}/new-shift`
     axiosRequest('put', endpoint, payload)
   }
   //----------------------------------------
 
   const addEndTimetoTimeSheet = async () => {
-    let endpoint = `${URL}/schedule/${EMPLOYEE_ID}/clockout`
+    let endpoint = `${URL}/schedule/${EMPLOYEE_ID.current}/clockout`
     const shift = await axiosRequest('get', endpoint)
     const currentTime = new Date().toLocaleTimeString();
     const formattedTime = parse(currentTime, 'pp' , new Date());
@@ -64,13 +64,13 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
       end:formattedTime,
       perdiod: shift.data.period
     }
-    endpoint = `${URL}/schedule/${EMPLOYEE_ID}/edit/${newShiftData.id}`
+    endpoint = `${URL}/schedule/${EMPLOYEE_ID.current}/edit/${newShiftData.id}`
     const updatedShift = await axiosRequest('put', endpoint, newShiftData)
   }
   //----------------------------------------
 
   const checkClockedInStatus = async() => {
-    const endpoint = `${URL}/admin/${EMPLOYEE_ID}`;
+    const endpoint = `${URL}/admin/${EMPLOYEE_ID.current}`;
     const status = await axiosRequest('get', endpoint);
     const isClockedIn = status.data.clockedIn;
     if ( isClockedIn === false ) {
@@ -84,20 +84,12 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
   //----------------------------------------
 
   const changeClockedInStatus = async ( boolean ) => {
-    const endpoint = `${URL}/admin/${EMPLOYEE_ID}`
+    const endpoint = `${URL}/admin/${EMPLOYEE_ID.current}`
     const payload = { clockedIn:boolean }
     const result = await axiosRequest('put', endpoint, payload)
     console.log(result.data);
   }
   //----------------------------------------
-
-  const getEmployeeId = ( string ) => {
-    const array = EMPLOYEE_INFO
-    //find object in config.js where 'name' = name, return value of 'id'
-    let obj = array.find(o => o.email === string );
-    console.log(obj.id);
-    //return obj.id
-  }
 
   const clockIn = () => {
     addStartTimetoTimeSheet()
@@ -114,8 +106,8 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
   //----------------------------------------
 
   useEffect(() => {
+    EMPLOYEE_ID.current = getEmployeeId(user.email)
     checkClockedInStatus()
-    getEmployeeId(user.email)
   },[])
 
   return (
