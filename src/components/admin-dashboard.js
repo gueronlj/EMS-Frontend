@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext } from 'react'
 import Profile from '@components/simple-profile.js'
 import EmployeeList from '@components/Employees/employee-list.js'
 import QuickMenu from '@components/quick-menu.js'
@@ -11,11 +11,12 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Login from '@components/Buttons/login.js'
 import Logout from '@components/Buttons/logoutButton.js'
+import Header from '@components/header.js'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
 
 const AdminDashboard = ( props ) => {
-  const {isAuthenticated, getAccessTokenSilently} = useAuth0();
+  const {getAccessTokenSilently} = useAuth0();
   const [editMode, setEditMode] = useState(false)
   const [eventForm, setEventForm] = useState(false)
   const [detailsView, setDetailsView ] = useState(false)
@@ -29,14 +30,14 @@ const AdminDashboard = ( props ) => {
   const [loadingEmployees, setLoadingEmployees] = useState(false)
   const [message, setMessage] = useState('')
 
-  const TARGET_URI = process.env.REACT_APP_DEV_URI;
+  const ENDPOINT = process.env.REACT_APP_DEV_URI;
 
   const fetchSchedule = async () => {
     try{
       const token = await getAccessTokenSilently();
       const options = {
         method: 'GET',
-        url: `${TARGET_URI}/admin/${selectedEmployee._id}`,
+        url: `${ENDPOINT}/admin/${selectedEmployee._id}`,
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -52,7 +53,7 @@ const AdminDashboard = ( props ) => {
       const token = await getAccessTokenSilently();
       const options = {
         method: 'GET',
-        url: `${TARGET_URI}/admin`,
+        url: `${ENDPOINT}/admin`,
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -60,7 +61,7 @@ const AdminDashboard = ( props ) => {
       const response = await axios(options)
       setEmployeeList(response.data)
       setLoadingEmployees(false)
-    } catch (error) {console.error(error)}
+    } catch (error) { console.error(error) }
   }
 
   useEffect(() => {
@@ -68,89 +69,84 @@ const AdminDashboard = ( props ) => {
   },[])
 
   return (<>
-    <div className="header">
-      {props.user && <h4 className="user-name">Hello, {props.user.name}</h4>}
-      <AddEmployeeButton
-        showNewEmployeeModal={showNewEmployeeModal}
-        setShowNewEmployeeModal={setShowNewEmployeeModal}/>
-      <Login />
-      <Logout />
-    </div>
+    <Header
+      isAdmin={props.isAdmin}
+      user={props.user}
+      showNewEmployeeModal={showNewEmployeeModal}
+      setShowNewEmployeeModal={setShowNewEmployeeModal}
+    />
     <div className="main">
-      {!isAuthenticated ? <p>You are not logged in.</p>
-        :
-        <>
-          <div className="dashboard">
-            <Profile
-              selectedEmployee={selectedEmployee}
-              fetchSchedule={fetchSchedule}
-              schedule={schedule}
-              setSchedule={setSchedule}
-              editMode={editMode}
-              setEditMode={setEditMode}
-              detailsView={detailsView}
-              setDetailsView={setDetailsView}
-              setShowEditModal={setShowEditModal}
-              setMessage={setMessage}/>
-              {showModal?
-                <Modal>
-                  <EventForm
-                    selectedEmployee={selectedEmployee}
-                    fetchSchedule={fetchSchedule}
-                    setShowModal={setShowModal}
-                    setFeedbackAlert={setFeedbackAlert}
-                    setMessage={setMessage}/>
-                </Modal>
-              :null}
-              {showEditModal?
-                <Modal>
-                  <EmployeeEditForm
-                    setShowEditModal={setShowEditModal}
-                    selectedEmployee={selectedEmployee}
-                    setSelectedEmployee={setSelectedEmployee}
-                    setFeedbackAlert={setFeedbackAlert}
-                    setMessage={setMessage}/>
-                </Modal>
-              :null}
-              {showNewEmployeeModal?
-                <Modal>
-                  <NewEmployeeForm
-                    setShowNewEmployeeModal={setShowNewEmployeeModal}
-                    setSelectedEmployee={setSelectedEmployee}
-                    fetchEmployeeList={fetchEmployeeList}/>
-                </Modal>
-              :null}
-          </div>
-          <div className="main-top">
-            <div className="sideMenu">
-              <EmployeeList
-                fetchEmployeeList={fetchEmployeeList}
-                employeeList={employeeList}
-                setEmployeeList={setEmployeeList}
-                setSelectedEmployee={setSelectedEmployee}
-                selectedEmployee={selectedEmployee}
-                loadingEmployees={loadingEmployees}/>
-            </div>
-            <div className="quick-menu">
-              {selectedEmployee?
-                <QuickMenu
+      <>
+        <div className="dashboard">
+          <Profile
+            selectedEmployee={selectedEmployee}
+            fetchSchedule={fetchSchedule}
+            schedule={schedule}
+            setSchedule={setSchedule}
+            editMode={editMode}
+            setEditMode={setEditMode}
+            detailsView={detailsView}
+            setDetailsView={setDetailsView}
+            setShowEditModal={setShowEditModal}
+            setMessage={setMessage}/>
+            {showModal?
+              <Modal>
+                <EventForm
                   selectedEmployee={selectedEmployee}
                   fetchSchedule={fetchSchedule}
-                  eventForm={eventForm}
-                  setEventForm={setEventForm}
-                  showModal={showModal}
                   setShowModal={setShowModal}
-                  setMessage={setMessage}
-                  detailsView={detailsView}
-                  setDetailsView={setDetailsView}
-                  setFeedbackAlert={setFeedbackAlert}/>
-              :
-                <p>Select an employee to to clock in and out.</p>
-              }
-            </div>
+                  setFeedbackAlert={setFeedbackAlert}
+                  setMessage={setMessage}/>
+              </Modal>
+            :null}
+            {showEditModal?
+              <Modal>
+                <EmployeeEditForm
+                  setShowEditModal={setShowEditModal}
+                  selectedEmployee={selectedEmployee}
+                  setSelectedEmployee={setSelectedEmployee}
+                  setFeedbackAlert={setFeedbackAlert}
+                  setMessage={setMessage}/>
+              </Modal>
+            :null}
+            {showNewEmployeeModal?
+              <Modal>
+                <NewEmployeeForm
+                  setShowNewEmployeeModal={setShowNewEmployeeModal}
+                  setSelectedEmployee={setSelectedEmployee}
+                  fetchEmployeeList={fetchEmployeeList}/>
+              </Modal>
+            :null}
+        </div>
+        <div className="main-top">
+          <div className="sideMenu">
+            <EmployeeList
+              fetchEmployeeList={fetchEmployeeList}
+              employeeList={employeeList}
+              setEmployeeList={setEmployeeList}
+              setSelectedEmployee={setSelectedEmployee}
+              selectedEmployee={selectedEmployee}
+              loadingEmployees={loadingEmployees}/>
           </div>
-        </>
-      }
+          <div className="quick-menu">
+            {selectedEmployee?
+              <QuickMenu
+                selectedEmployee={selectedEmployee}
+                fetchSchedule={fetchSchedule}
+                eventForm={eventForm}
+                setEventForm={setEventForm}
+                showModal={showModal}
+                setShowModal={setShowModal}
+                setMessage={setMessage}
+                detailsView={detailsView}
+                setDetailsView={setDetailsView}
+                setFeedbackAlert={setFeedbackAlert}/>
+            :
+              <p>Select an employee to to clock in and out.</p>
+            }
+          </div>
+        </div>
+      </>
       {feedbackAlert &&
         <Snackbar open={feedbackAlert} autoHideDuration={6000} onClose={() => setFeedbackAlert(false)}>
           <Alert onClose={() => setFeedbackAlert(false)} severity="success" sx={{ width: '100%', color:'#7cff40'}}>
