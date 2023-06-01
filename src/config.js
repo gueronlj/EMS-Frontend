@@ -1,0 +1,32 @@
+export const EMPLOYEE_INFO = [
+  {
+    name:'Lorens',
+    email:'gueronlj@gmail.com',
+    id:'636e93f0ce43e8354b80a56d'
+  },
+  {
+    name:'Peter',
+    email:'petertran.pfs@gmail.com',
+    id:'636e9484ce43e8354b80a56f'
+  },
+  {
+    name:'Lan',
+    email:'gueronlj@gmail.com',
+    id:'636e93d7ce43e8354b80a56c'
+  },
+  {
+    name:'Bo',
+    email:'gueronlj@gmail.com',
+    id:'6455ce0e5c5093c440ae6511'
+  },
+  {
+    name:`Peter's Dad`,
+    email:'gueronlj@gmail.com',
+    id:'636e94aace43e8354b80a570'
+  },
+  {
+    name:'testing',
+    email:'gueronlj@gmail.com',
+    id:'640b5ad33537b73b6b694755'
+  }
+]

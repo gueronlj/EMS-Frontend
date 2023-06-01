@@ -33,8 +33,19 @@ button{
   color: var(--stormy);
 }
 
+.loading-screen-text>*{
+  text-align: center;
+  color:white;
+}
+
+.loading-screen-text{
+  margin-top: 40%;
+}
+
 .user-name{
-  font: 16px "Fira Sans", sans-serif;
+  font: 15px "Fira Sans", sans-serif;
+  color: white;
+  margin: 10px;
 }
 .quick-message{
   margin: 10px;
@@ -44,7 +55,7 @@ button{
 .header{
   display:flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: baseline;
   background-color: var(--stormy);
   margin: 0px;
@@ -57,7 +68,7 @@ button{
    font: 14px "Fira Sans", sans-serif;
    align-items: center;
    margin-left: 0px;
-   margin-right: 15px;
+   margin-right: 0px;
 }
 
 .loading-spinner{
@@ -160,7 +171,6 @@ li{
 
 h4, h5, h3  {
    margin: .5em;
-   margin-left: 0;
    color:var(--teal);
    font-weight: 100;
 }
@@ -175,7 +185,6 @@ h1{
 
 table{
    width: 100%;
-   margin: .5em;
    padding: 7px;
    border-spacing: 0 20px;
 }
