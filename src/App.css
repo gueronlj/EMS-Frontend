@@ -33,8 +33,19 @@ button{
   color: var(--stormy);
 }
 
+.loading-screen-text>*{
+  text-align: center;
+  color:white;
+}
+
+.loading-screen-text{
+  margin-top: 40%;
+}
+
 .user-name{
-  font: 16px "Fira Sans", sans-serif;
+  font: 15px "Fira Sans", sans-serif;
+  color: white;
+  margin: 10px;
 }
 .quick-message{
   margin: 10px;

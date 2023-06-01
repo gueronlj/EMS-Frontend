@@ -12,7 +12,7 @@ const App = () => {
   const checkAdmin = () => {
     const adminList = [
       'petertran.pfs@gmail.com',
-      'gueronlj@gmail.com'
+      //'gueronlj@gmail.com'
     ]
     if ( adminList.includes(user?.email) ) {
       setIsAdmin(true)
@@ -25,16 +25,22 @@ const App = () => {
 
   if ( isLoading ) {
     return(
-      <div className="loading-spinner">
-        <ColorRing
-          visible={true}
-          height="140"
-          width="140"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#192231', '#98878F', '#494E6B', '#56f4de', '#849b87']}
-        />
+      <div className="main" >
+        <div className="loading-screen-text">
+          <h1>Hangry Panda</h1>
+          <h2>Employee Management System</h2>
+        </div>
+        <div className="loading-spinner">
+          <ColorRing
+            visible={true}
+            height="140"
+            width="140"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#192231', '#98878F', '#494E6B', '#56f4de', '#849b87']}
+          />
+        </div>
       </div>
     )
   } else {
