@@ -119,32 +119,38 @@ const AdminDashboard = ( props ) => {
             :null}
         </div>
         <div className="main-top">
-          <div className="sideMenu">
-            <EmployeeList
-              fetchEmployeeList={fetchEmployeeList}
-              employeeList={employeeList}
-              setEmployeeList={setEmployeeList}
-              setSelectedEmployee={setSelectedEmployee}
-              selectedEmployee={selectedEmployee}
-              loadingEmployees={loadingEmployees}/>
-          </div>
-          <div className="quick-menu">
-            {selectedEmployee?
-              <QuickMenu
+        {loadingEmployees?
+          <p className="loading-text">Loading</p>
+          :
+          <>
+            <div className="sideMenu">
+              <EmployeeList
+                fetchEmployeeList={fetchEmployeeList}
+                employeeList={employeeList}
+                setEmployeeList={setEmployeeList}
+                setSelectedEmployee={setSelectedEmployee}
                 selectedEmployee={selectedEmployee}
-                fetchSchedule={fetchSchedule}
-                eventForm={eventForm}
-                setEventForm={setEventForm}
-                showModal={showModal}
-                setShowModal={setShowModal}
-                setMessage={setMessage}
-                detailsView={detailsView}
-                setDetailsView={setDetailsView}
-                setFeedbackAlert={setFeedbackAlert}/>
-            :
-              <p>Select an employee to to clock in and out.</p>
-            }
-          </div>
+                loadingEmployees={loadingEmployees}/>
+            </div>
+            <div className="quick-menu">
+              {selectedEmployee?
+                <QuickMenu
+                  selectedEmployee={selectedEmployee}
+                  fetchSchedule={fetchSchedule}
+                  eventForm={eventForm}
+                  setEventForm={setEventForm}
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                  setMessage={setMessage}
+                  detailsView={detailsView}
+                  setDetailsView={setDetailsView}
+                  setFeedbackAlert={setFeedbackAlert}/>
+              :
+                <p>Select an employee to to clock in and out.</p>
+              }
+            </div>
+          </>
+        }
         </div>
       </>
       {feedbackAlert &&

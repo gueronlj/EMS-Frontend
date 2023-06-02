@@ -39,7 +39,7 @@ button{
 }
 
 .loading-screen-text{
-  margin-top: 40%;
+  margin: auto;
 }
 
 .user-name{
@@ -75,7 +75,6 @@ button{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10%;
 }
 
 .sideMenu{
@@ -103,7 +102,7 @@ button{
    display: flex;
    flex-direction: row;
    justify-content: space-between;
-   align-items: baseline;
+   align-items: flex-start;
 }
 
 .quick-menu{
@@ -114,8 +113,10 @@ button{
 }
 
 .main p{
+   color:var(--stormy);
    text-align: center;
    margin-right: 25px;
+   margin-top: 50%;
 }
 
 li{
@@ -167,6 +168,12 @@ li{
 .report-container{
    display: flex;
    justify-content: space-between;
+}
+
+img{
+  max-width: 300px;
+  max-height: 300px;
+  margin: 2em;
 }
 
 h4, h5, h3  {
