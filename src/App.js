@@ -26,9 +26,9 @@ const App = () => {
   if ( isLoading ) {
     return(
       <div className="main" >
+        <img src="/images/favicon.ico" alt="Hangry Panda Logo"/>
         <div className="loading-screen-text">
-          <h1>Hangry Panda</h1>
-          <h2>Employee Management System</h2>
+          <h1>Employee Management System</h1>
         </div>
         <div className="loading-spinner">
           <ColorRing
