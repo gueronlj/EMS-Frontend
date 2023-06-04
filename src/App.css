@@ -26,6 +26,7 @@ label{
 button{
   font-size: 1.2em;
 }
+
 .loading-text{
   text-align: center;
   font: 16px "Fira Sans", sans-serif;
@@ -244,6 +245,10 @@ form{
    flex-direction: row;
    margin-bottom: .5em;
    justify-content: center;
+}
+
+.quick-menu{
+   margin-top: 20px;
 }
 
 .quick-menu-shortcuts{

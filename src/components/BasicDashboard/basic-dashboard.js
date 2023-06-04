@@ -3,6 +3,7 @@ import {parse} from 'date-fns'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react';
 import { getEmployeeId } from './Helpers/getEmployeeId.js'
+import Checklist from '../Checklist/table.js';
 
 import Header from '@components/header.js';
 
@@ -119,15 +120,16 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
         setShowNewEmployeeModal={setShowNewEmployeeModal}
       />
       <div className ="quick-menu">
-      <div className = "clock-in-out">
-        <button id={new Date().toLocaleTimeString()} className="clock-in-btn" innerText="start" onClick={clockIn} disabled={clockInDisabled}>
-           Clock-In
-        </button>
-        <button id={new Date().toLocaleTimeString()} className="clock-out-btn" innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
-           Clock-Out
-        </button>
+        <div className = "clock-in-out">
+          <button id={new Date().toLocaleTimeString()} className="clock-in-btn" innerText="start" onClick={clockIn} disabled={clockInDisabled}>
+            Clock-In
+          </button>
+          <button id={new Date().toLocaleTimeString()} className="clock-out-btn" innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
+            Clock-Out
+          </button>
+        </div>
       </div>
-      </div>
+      <Checklist/>
     </>
   );
 }
