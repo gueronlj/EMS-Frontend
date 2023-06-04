@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios'
 import { ColorRing } from 'react-loader-spinner';
+import FilterButtons from './filter-buttons';
 
 const Checklist = () => {
     const [allItems, setAllItems] = useState([]);
@@ -17,7 +18,7 @@ const Checklist = () => {
         try {
             setLoading(true)
             let response = await axios.get(`${endpoint}/checklist`);            
-            setVisibleItems(response.data)
+            setAllItems(response.data)
             console.log(response.data)
             setLoading(false)
         } catch(error) {
@@ -31,6 +32,9 @@ const Checklist = () => {
 
     return (
         <main>
+            <FilterButtons
+                setVisibleItems={setVisibleItems}
+                allItems={allItems}/>
             { loading? 
                 <ColorRing/>
             :
