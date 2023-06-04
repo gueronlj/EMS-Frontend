@@ -10,20 +10,58 @@ const Checklist = () => {
     const [loading, setLoading] = useState(false);
     const endpoint = process.env.REACT_APP_CHECKLIST_ENDPOINT
 
-    const handleCheckboxCLick = () => {
-
-    }
-
     const fetchItems = async () => {
         try {
             setLoading(true)
             let response = await axios.get(`${endpoint}/checklist`);            
-            setAllItems(response.data)
-            console.log(response.data)
+            setAllItems(response.data);
+            console.log(response.data);
             setLoading(false)
         } catch(error) {
             console.log(error);
         } 
+    }
+
+    /*updatedStatus is needed because the visibleItems array is
+     a copy of a filtered allItems array, to show updated 
+     status values we must update the copy too
+    */
+    const updatedStatus = (index, boolean) => {
+        visibleItems[index].status = boolean
+      } 
+      
+    const handleCheckboxCLick = ( item ) => {
+        //Find the index we need to update
+        const isMatching = (ele) => ele.name === item.name;
+        const matchingIndex = visibleItems.findIndex(isMatching);
+        if ( item.status === true ){
+            console.log('turning off')
+            axios.put(`${endpoint}/checklist/disable/${item._id}`)
+                .then(() => {
+                    fetchItems();
+                    updatedStatus(matchingIndex, false)
+                })
+        } else {
+            console.log('turning on')
+            axios.put(`${endpoint}/checklist/enable/${item._id}`)
+                .then(() => {
+                  fetchItems();
+                  updatedStatus(matchingIndex, true)
+                })
+
+        }
+    }
+
+    const uncheckAll = async () => {
+        axios.put(`${endpoint}/checklist/uncheck-all`)
+            .then(()=>{
+                fetchItems();
+                //TODO: Update visualItems array
+            })
+            .catch()
+            .finally(() => {
+                setVisibleItems(Array.from(allItems))
+            })
     }
 
     useEffect(()=>{
@@ -46,7 +84,7 @@ const Checklist = () => {
                     className="checklist">
                     <thead>
                         <tr>
-                            <th>Loaded</th>
+                            <th><button onClick={uncheckAll}>Uncheck All</button></th>
                             <th>Name</th>
                             <th>Qty</th>
                         </tr>
@@ -59,8 +97,8 @@ const Checklist = () => {
                                         <input
                                             type='checkbox'
                                             name='status'
-                                            checked={item.status}
-                                            onChange={(event)=>handleCheckboxCLick(item)}/>
+                                            checked={item?.status}
+                                            onChange={()=>handleCheckboxCLick(item)}/>
                                     </td>
                                     <td>{item.name}</td>
                                     <td>{item.quantity}/{item.recommended}</td>
