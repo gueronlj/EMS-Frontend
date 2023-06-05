@@ -8,6 +8,7 @@ const Checklist = () => {
     const [allItems, setAllItems] = useState([]);
     const [visibleItems, setVisibleItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [filters, setFilters] = useState('')
     const endpoint = process.env.REACT_APP_CHECKLIST_ENDPOINT
 
     const fetchItems = async () => {
@@ -15,11 +16,20 @@ const Checklist = () => {
             setLoading(true)
             let response = await axios.get(`${endpoint}/checklist`);            
             setAllItems(response.data);
-            console.log(response.data);
             setLoading(false)
         } catch(error) {
             console.log(error);
         } 
+    }
+
+    const filterItems = ( filter ) => {     
+        if (filter !== ''){
+            let array = allItems.filter(item => item.tags.includes(filter))
+            //add all items with that tag to visibleItems array
+            setVisibleItems(array)
+        } else {
+            setVisibleItems(allItems)
+        }
     }
 
     /*updatedStatus is needed because the visibleItems array is
@@ -35,14 +45,12 @@ const Checklist = () => {
         const isMatching = (ele) => ele.name === item.name;
         const matchingIndex = visibleItems.findIndex(isMatching);
         if ( item.status === true ){
-            console.log('turning off')
             axios.put(`${endpoint}/checklist/disable/${item._id}`)
                 .then(() => {
                     fetchItems();
                     updatedStatus(matchingIndex, false)
                 })
         } else {
-            console.log('turning on')
             axios.put(`${endpoint}/checklist/enable/${item._id}`)
                 .then(() => {
                   fetchItems();
@@ -56,23 +64,39 @@ const Checklist = () => {
         axios.put(`${endpoint}/checklist/uncheck-all`)
             .then(()=>{
                 fetchItems();
-                //TODO: Update visualItems array
+                visibleItems.forEach(item => item.status = false)
             })
-            .catch()
-            .finally(() => {
-                setVisibleItems(Array.from(allItems))
+    }
+
+    const handleIncrease = ( item ) => {
+        axios.put(`${endpoint}/checklist/increase/${item._id}`)
+            .then(() => fetchItems())
+            .then(()=>{
+                const index = visibleItems.findIndex((ele) => ele.name === item.name);
+                visibleItems[index].quantity ++
+            })
+    }
+
+    const handleDecrease = ( item ) => {
+        axios.put(`${endpoint}/checklist/decrease/${item._id}`)
+            .then(() => fetchItems())
+            .then(()=>{
+                const index = visibleItems.findIndex((ele) => ele.name === item.name);
+                visibleItems[index].quantity --
             })
     }
 
     useEffect(()=>{
-        fetchItems()
-    },[])
+        fetchItems();
+        filterItems(filters);         
+    },[filters])
 
     return (
         <main>
             <FilterButtons
                 setVisibleItems={setVisibleItems}
-                allItems={allItems}/>
+                allItems={allItems}
+                setFilters={setFilters}/>
             { loading? 
                 <ColorRing/>
             :
@@ -90,9 +114,28 @@ const Checklist = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {visibleItems.map((item)=>{
-                            return(
-                                <tr key={item._id}> 
+                        {visibleItems.length > 0 ? 
+                            visibleItems.map((item)=>{
+                                return(
+                                    <tr key={item._id}> 
+                                        <td>
+                                            <input
+                                                type='checkbox'
+                                                name='status'
+                                                checked={item?.status}
+                                                onChange={()=>handleCheckboxCLick(item)}/>
+                                        </td>
+                                        <td>{item.name}</td>
+                                        <td>{item.quantity}/{item.recommended}</td>
+                                        <td onClick={() => handleIncrease(item)}>+</td>
+                                        <td onClick={() => handleDecrease(item)}>-</td>                       
+                                    </tr>
+                                )
+                            })
+                            :
+                            allItems.map((item) => {
+                                return(
+                                    <tr key={item._id}> 
                                     <td>
                                         <input
                                             type='checkbox'
@@ -102,11 +145,12 @@ const Checklist = () => {
                                     </td>
                                     <td>{item.name}</td>
                                     <td>{item.quantity}/{item.recommended}</td>
-                                    <td>+</td>
-                                    <td>-</td>                       
+                                    <td onClick={() => handleIncrease(item)}>+</td>
+                                    <td onClick={() => handleDecrease(item)}>-</td>                       
                                 </tr>
-                            )
-                        })}
+                                )
+                            })
+                        }
                     </tbody>
                 </Table>
             }           

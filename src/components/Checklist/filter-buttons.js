@@ -1,13 +1,13 @@
 
-const FilterButtons = ({setVisibleItems, allItems}) => {
+const FilterButtons = ({setVisibleItems, allItems, setFilters}) => {
 
     const showAll = () => {
-        setVisibleItems(allItems);
+        setFilters('')
     }
 
     const filterBy = ( string ) => {
         const array = allItems.filter(item => item.tags.includes(string));
-        setVisibleItems(array);
+        setFilters( string )
     }
 
     return (
