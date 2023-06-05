@@ -117,9 +117,11 @@ const Checklist = () => {
                     className="checklist">
                     <thead>
                         <tr>
-                            <th><button onClick={uncheckAll}>Uncheck All</button></th>
-                            <th>Name</th>
+                            <th style={{'width':'70px'}}><button onClick={uncheckAll}>Clear</button></th>
+                            <th style={{'width':'200px'}}>Name</th>
                             <th>Qty</th>
+                            <th style={{'width':'30px'}}></th>
+                            <th style={{'width':'30px'}}></th>
                         </tr>
                     </thead>
                     <tbody>

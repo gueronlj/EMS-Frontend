@@ -77,7 +77,7 @@ const Schedule = (props) => {
               setMessage={props.setMessage}/>
           </Modal>
         }
-        <table>
+        <table className='time-sheet'>
           {props.schedule.length ?
             <thead>
               <tr>

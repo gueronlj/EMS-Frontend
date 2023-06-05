@@ -324,7 +324,6 @@ form{
 
 th{
    text-align: left;
-   border-right: solid black 1px;
    font-weight: normal;
    color: var(--teal);
    font-size: 14px;
@@ -335,9 +334,13 @@ th{
    color: var(--teal);
 }
 
-tr{
+table.time-sheet tr{
    font-size: 14px;
    margin-bottom: 10px;
+}
+
+table{
+   font: 14px "Fira Sans", sans-serif; 
 }
 
 button{
