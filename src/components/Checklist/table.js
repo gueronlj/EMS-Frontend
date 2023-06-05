@@ -64,7 +64,10 @@ const Checklist = () => {
         axios.put(`${endpoint}/checklist/uncheck-all`)
             .then(()=>{
                 fetchItems();
-                visibleItems.forEach(item => item.status = false)
+                visibleItems.forEach(item => {
+                    item.status = false;
+                    item.quantity = 0;
+                })
             })
     }
 
@@ -74,16 +77,22 @@ const Checklist = () => {
             .then(()=>{
                 const index = visibleItems.findIndex((ele) => ele.name === item.name);
                 visibleItems[index].quantity ++
+                visibleItems[index].status = true;
             })
     }
 
     const handleDecrease = ( item ) => {
-        axios.put(`${endpoint}/checklist/decrease/${item._id}`)
+        if (item.quantity > 0){
+            axios.put(`${endpoint}/checklist/decrease/${item._id}`)
             .then(() => fetchItems())
             .then(()=>{
                 const index = visibleItems.findIndex((ele) => ele.name === item.name);
                 visibleItems[index].quantity --
+                if (visibleItems[index].quantity <= 0){
+                    visibleItems[index].status = false;
+                }
             })
+        }
     }
 
     useEffect(()=>{
@@ -114,7 +123,7 @@ const Checklist = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {visibleItems.length > 0 ? 
+                        { visibleItems.length > 0 ? 
                             visibleItems.map((item)=>{
                                 return(
                                     <tr key={item._id}> 
@@ -125,8 +134,8 @@ const Checklist = () => {
                                                 checked={item?.status}
                                                 onChange={()=>handleCheckboxCLick(item)}/>
                                         </td>
-                                        <td>{item.name}</td>
-                                        <td>{item.quantity}/{item.recommended}</td>
+                                        <td style={item.status===true?{color:'#89DF87'}:{}}>{item.name}</td>
+                                        <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
                                         <td onClick={() => handleIncrease(item)}>+</td>
                                         <td onClick={() => handleDecrease(item)}>-</td>                       
                                     </tr>
@@ -140,11 +149,11 @@ const Checklist = () => {
                                         <input
                                             type='checkbox'
                                             name='status'
-                                            checked={item?.status}
+                                            checked={item.status}
                                             onChange={()=>handleCheckboxCLick(item)}/>
                                     </td>
-                                    <td>{item.name}</td>
-                                    <td>{item.quantity}/{item.recommended}</td>
+                                    <td style={item.status===true || item.quantity > 0?{color:'#89DF87'}:{}}>{item.name}</td>
+                                    <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
                                     <td onClick={() => handleIncrease(item)}>+</td>
                                     <td onClick={() => handleDecrease(item)}>-</td>                       
                                 </tr>
