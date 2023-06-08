@@ -13,7 +13,7 @@ const App = () => {
   const checkAdmin = () => {
     const adminList = [
       'petertran.pfs@gmail.com',
-      //'gueronlj@gmail.com'
+      'gueronlj@gmail.com'
     ]
     if ( adminList.includes(user?.email) ) {
       setIsAdmin(true)
