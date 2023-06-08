@@ -16,7 +16,6 @@ input, select{
     padding: .3em;
     border-radius: 4px;
     margin-right: 1em;
-    max-height: 15px;
 }
 
 label{
@@ -26,6 +25,7 @@ label{
 button{
   font-size: 1.2em;
 }
+
 .loading-text{
   text-align: center;
   font: 16px "Fira Sans", sans-serif;
@@ -116,7 +116,6 @@ button{
    color:var(--stormy);
    text-align: center;
    margin-right: 25px;
-   margin-top: 50%;
 }
 
 li{
@@ -170,7 +169,27 @@ li{
    justify-content: space-between;
 }
 
-img{
+.NavBar {
+   display: flex;
+   flex-direction: row;
+   background-color:var(--cloud);
+}
+
+.NavBar a {
+   text-decoration: none;
+   font: 16px "Fira Sans", sans-serif;
+   color: var(--evening);
+}
+
+.NavBar >* {
+   text-align: center;
+   width: 50%;
+   border-radius: 1px;
+   border: 1px solid var(--evening);
+   padding: 7px;
+}
+
+img {
   max-width: 300px;
   max-height: 300px;
   margin: 2em;
@@ -246,6 +265,10 @@ form{
    justify-content: center;
 }
 
+.quick-menu{
+   margin-top: 20px;
+}
+
 .quick-menu-shortcuts{
    display: flex;
    flex-direction: row;
@@ -319,7 +342,6 @@ form{
 
 th{
    text-align: left;
-   border-right: solid black 1px;
    font-weight: normal;
    color: var(--teal);
    font-size: 14px;
@@ -330,9 +352,83 @@ th{
    color: var(--teal);
 }
 
-tr{
+table.time-sheet tr{
    font-size: 14px;
    margin-bottom: 10px;
+}
+
+table{
+   font: 14px "Fira Sans", sans-serif; 
+}
+
+.check-td{
+   display: flex;
+   justify-content: center;
+}
+
+.checklist-filters button {
+   border-radius: 1px;
+   margin: 4px;
+}
+
+.checklist-filters{
+   display: flex;
+   flex-wrap: wrap;
+}
+
+.note {
+   display: flex;
+   flex-direction: column;
+   background-color: #FAE269;
+   border-radius: 5px;
+   padding: 10px;
+   margin: 10px;
+   width: 90vw;
+}
+
+.note-top{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: nowrap;
+   max-height: 25px;
+   justify-content: space-between;
+}
+
+.note-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  color:var(--evening);
+}
+
+#note-submit{
+   background: none;
+   color: rgba(118,201,76,1);
+   border: 1px solid rgba(118,201,76,1);
+   font-size: 1.1em;
+}
+
+.note img{
+   width: 15px;
+   height: 15px;
+   margin: 0px;
+}
+
+.time-stamp {
+   margin-top: 0px;
+}
+
+.sendMsg textarea {
+   margin: 10px;
+   min-height: 1em;
+   min-width: 300px;
+   padding: 10px;
+   font: 14px "Fira Sans", sans-serif;
+}
+
+.sendMsg input {
+   width: 6em;
+   align-self: flex-end;
 }
 
 button{

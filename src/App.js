@@ -1,9 +1,10 @@
 import './App.css'
-import { useContext, createContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth0 } from '@auth0/auth0-react'
-import AdminDashboard from '@components/admin-dashboard.js'
+import AdminDashboard from '@components/AdminDashboard/admin-dashboard.js'
 import BasicDashboard from '@components/BasicDashboard/basic-dashboard.js'
 import { ColorRing } from  'react-loader-spinner'
+import {Routes, Route} from 'react-router-dom'
 
 const App = () => {
   const { isAuthenticated, isLoading, user, loginWithRedirect } = useAuth0();
@@ -48,15 +49,21 @@ const App = () => {
     if ( isAuthenticated ) {
       if( isAdmin ){
         return(
-          <AdminDashboard
-            isAdmin={isAdmin}
-            user={user}/>
+          <Routes>
+            <Route path="*" element={<AdminDashboard
+              isAdmin={isAdmin}
+              user={user}/> }/>
+          </Routes>     
         )
       } else {
         return(
-          <BasicDashboard
-            isAdmin={isAdmin}
-            user={user}/>
+          <Routes>
+            <Route path="*" element={
+              <BasicDashboard
+                isAdmin={isAdmin}
+                user={user}/>
+            }/>
+          </Routes>         
         )
       }
     } else {
