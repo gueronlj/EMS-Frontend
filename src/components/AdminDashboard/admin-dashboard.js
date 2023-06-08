@@ -12,9 +12,9 @@ import Header from '@components/header.js'
 import NavBar from '../nav-bar'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
-import { Nav } from 'react-bootstrap'
 import {Routes, Route} from 'react-router-dom'
 import Checklist from '../Checklist/table'
+import Notes from '../Notes/notes';
 
 const AdminDashboard = ( props ) => {
   const {getAccessTokenSilently} = useAuth0();
@@ -160,6 +160,7 @@ const AdminDashboard = ( props ) => {
         </>
         }/>
         <Route path="/checklist" element={<Checklist/>}/>
+        <Route path="/notes" element={<Notes/>}/>
       </Routes>     
       {feedbackAlert &&
         <Snackbar open={feedbackAlert} autoHideDuration={6000} onClose={() => setFeedbackAlert(false)}>

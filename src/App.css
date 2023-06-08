@@ -16,7 +16,6 @@ input, select{
     padding: .3em;
     border-radius: 4px;
     margin-right: 1em;
-    max-height: 15px;
 }
 
 label{
@@ -117,7 +116,6 @@ button{
    color:var(--stormy);
    text-align: center;
    margin-right: 25px;
-   margin-top: 50%;
 }
 
 li{
@@ -376,6 +374,61 @@ table{
 .checklist-filters{
    display: flex;
    flex-wrap: wrap;
+}
+
+.note {
+   display: flex;
+   flex-direction: column;
+   background-color: #FAE269;
+   border-radius: 5px;
+   padding: 10px;
+   margin: 10px;
+   width: 90vw;
+}
+
+.note-top{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: nowrap;
+   max-height: 25px;
+   justify-content: space-between;
+}
+
+.note-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  color:var(--evening);
+}
+
+#note-submit{
+   background: none;
+   color: rgba(118,201,76,1);
+   border: 1px solid rgba(118,201,76,1);
+   font-size: 1.1em;
+}
+
+.note img{
+   width: 15px;
+   height: 15px;
+   margin: 0px;
+}
+
+.time-stamp {
+   margin-top: 0px;
+}
+
+.sendMsg textarea {
+   margin: 10px;
+   min-height: 1em;
+   min-width: 300px;
+   padding: 10px;
+   font: 14px "Fira Sans", sans-serif;
+}
+
+.sendMsg input {
+   width: 6em;
+   align-self: flex-end;
 }
 
 button{

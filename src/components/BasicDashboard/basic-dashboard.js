@@ -8,6 +8,7 @@ import NavBar from '../nav-bar.js';
 import { Routes, Route } from 'react-router-dom'
 import Header from '@components/header.js';
 import TimeClock from './TimeClock/time-clock.js';
+import Notes from '../Notes/notes.js';
 
 const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmployeeModal } ) => {
   const [clockOutDisabled, setClockOutDisabled] = useState(true)
@@ -132,6 +133,7 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
             clockOutDisabled={clockOutDisabled}/>
         }/>
         <Route path="/checklist" element={<Checklist/>}/>
+        <Route path="/notes" element={<Notes/>}/>
       </Routes>
     </>
   );
