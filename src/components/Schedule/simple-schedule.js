@@ -85,6 +85,7 @@ const Schedule = (props) => {
                 <th>Start</th>
                 <th>End</th>
                 <th>L/D</th>
+                <th></th>
               </tr>
             </thead>
           :
