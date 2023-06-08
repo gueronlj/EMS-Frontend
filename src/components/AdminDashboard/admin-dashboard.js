@@ -80,7 +80,7 @@ const AdminDashboard = ( props ) => {
       isAdmin={props.isAdmin}/>
     <div className="main">
       <Routes>
-        <Route path="/employees" element={
+        <Route path="/" element={
           <>
           <div className="dashboard">
             <Profile

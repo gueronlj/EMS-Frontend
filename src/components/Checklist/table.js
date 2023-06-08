@@ -98,7 +98,6 @@ const Checklist = () => {
     useEffect(()=>{
         fetchItems();
         filterItems(filters); 
-        console.log(allItems);          
     },[filters])
 
     return (

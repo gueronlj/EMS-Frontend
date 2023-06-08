@@ -13,7 +13,7 @@ const App = () => {
   const checkAdmin = () => {
     const adminList = [
       'petertran.pfs@gmail.com',
-      'gueronlj@gmail.com'
+      //'gueronlj@gmail.com'
     ]
     if ( adminList.includes(user?.email) ) {
       setIsAdmin(true)
@@ -50,7 +50,7 @@ const App = () => {
       if( isAdmin ){
         return(
           <Routes>
-            <Route path="*" element={<AdminDashboard
+            <Route path="/*" element={<AdminDashboard
               isAdmin={isAdmin}
               user={user}/> }/>
           </Routes>     
@@ -58,7 +58,7 @@ const App = () => {
       } else {
         return(
           <Routes>
-            <Route path="*" element={
+            <Route path="/*" element={
               <BasicDashboard
                 isAdmin={isAdmin}
                 user={user}/>
