@@ -101,7 +101,7 @@ const Checklist = () => {
     },[filters])
 
     return (
-        <main>
+        <>
             <FilterButtons
                 setVisibleItems={setVisibleItems}
                 allItems={allItems}
@@ -167,7 +167,7 @@ const Checklist = () => {
                     }
                 </tbody>
             </Table>           
-        </main>
+        </>
     )
 }
 

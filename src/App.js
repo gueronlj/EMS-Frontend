@@ -49,21 +49,15 @@ const App = () => {
     if ( isAuthenticated ) {
       if( isAdmin ){
         return(
-          <Routes>
-            <Route path="/*" element={<AdminDashboard
+          <AdminDashboard
               isAdmin={isAdmin}
-              user={user}/> }/>
-          </Routes>     
+              user={user}/>    
         )
       } else {
         return(
-          <Routes>
-            <Route path="/*" element={
-              <BasicDashboard
-                isAdmin={isAdmin}
-                user={user}/>
-            }/>
-          </Routes>         
+          <BasicDashboard
+            isAdmin={isAdmin}
+            user={user}/>        
         )
       }
     } else {

@@ -43,7 +43,7 @@ button{
 }
 
 .user-name{
-  font: 15px "Fira Sans", sans-serif;
+  font: 16px "Fira Sans", sans-serif;
   color: white;
   margin: 10px;
 }
@@ -101,15 +101,17 @@ button{
 .main-top{
    display: flex;
    flex-direction: row;
-   justify-content: space-between;
    align-items: flex-start;
+   justify-content: center;
+   width: 100%;
 }
 
-.quick-menu{
+.quick-menu, .dashboard{
    display: flex;
    flex-direction: column;
    justify-content: center;
    padding: .25em;
+   margin: auto;
 }
 
 .main p{
@@ -172,13 +174,13 @@ li{
 .NavBar {
    display: flex;
    flex-direction: row;
-   background-color:var(--cloud);
+   background-color:black;
 }
 
 .NavBar a {
    text-decoration: none;
    font: 16px "Fira Sans", sans-serif;
-   color: var(--evening);
+   color: white;
 }
 
 .NavBar >* {
@@ -340,11 +342,11 @@ form{
   justify-content: space-between;
 }
 
-th{
+th {
    text-align: left;
-   font-weight: normal;
-   color: var(--teal);
-   font-size: 14px;
+   background-color: #494E6B;
+   padding-left: 2px;
+   padding-right: 2px;
 }
 
 .edit-shift{
@@ -358,12 +360,20 @@ table.time-sheet tr{
 }
 
 table{
-   font: 14px "Fira Sans", sans-serif; 
+   font: 16px "Fira Sans", sans-serif; 
+}
+
+table.checklist{
+   width: 100;
 }
 
 .check-td{
    display: flex;
    justify-content: center;
+}
+
+.check-td button{
+   border: none;
 }
 
 .checklist-filters button {
@@ -373,7 +383,10 @@ table{
 
 .checklist-filters{
    display: flex;
+   justify-content: flex-start;
    flex-wrap: wrap;
+   width: 100vw;
+   margin-top: 20px;
 }
 
 .note {
@@ -537,7 +550,7 @@ button:disabled{
 }
 
 .header button{
-   font-size: 14px;
+   font-size: 16px;
    margin-right: 10px;
    margin-top: 5px;
    margin-bottom: 5px;
