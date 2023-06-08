@@ -124,17 +124,19 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
       />
       <NavBar
         isAdmin={isAdmin}/>
-      <Routes>
-        <Route path="/timeclock" element={
-          <TimeClock
-            clockIn={clockIn}
-            clockOut={clockOut}
-            clockInDisabled={clockInDisabled}
-            clockOutDisabled={clockOutDisabled}/>
-        }/>
-        <Route path="/checklist" element={<Checklist/>}/>
-        <Route path="/notes" element={<Notes/>}/>
-      </Routes>
+      <div className='main'>
+        <Routes>
+          <Route path="/" element={
+            <TimeClock
+              clockIn={clockIn}
+              clockOut={clockOut}
+              clockInDisabled={clockInDisabled}
+              clockOutDisabled={clockOutDisabled}/>
+          }/>
+          <Route path="/checklist" element={<Checklist/>}/>
+          <Route path="/notes" element={<Notes/>}/>
+        </Routes>
+      </div>     
     </>
   );
 }
