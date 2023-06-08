@@ -1,7 +1,7 @@
 import './App.css'
 import { useState, useEffect } from "react";
 import { useAuth0 } from '@auth0/auth0-react'
-import AdminDashboard from '@components/admin-dashboard.js'
+import AdminDashboard from '@components/AdminDashboard/admin-dashboard.js'
 import BasicDashboard from '@components/BasicDashboard/basic-dashboard.js'
 import { ColorRing } from  'react-loader-spinner'
 
@@ -12,7 +12,7 @@ const App = () => {
   const checkAdmin = () => {
     const adminList = [
       'petertran.pfs@gmail.com',
-     // 'gueronlj@gmail.com'
+      'gueronlj@gmail.com'
     ]
     if ( adminList.includes(user?.email) ) {
       setIsAdmin(true)
@@ -50,7 +50,7 @@ const App = () => {
         return(
           <AdminDashboard
             isAdmin={isAdmin}
-            user={user}/>
+            user={user}/>      
         )
       } else {
         return(

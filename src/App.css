@@ -171,7 +171,27 @@ li{
    justify-content: space-between;
 }
 
-img{
+.NavBar {
+   display: flex;
+   flex-direction: row;
+   background-color:var(--cloud);
+}
+
+.NavBar a {
+   text-decoration: none;
+   font: 16px "Fira Sans", sans-serif;
+   color: var(--evening);
+}
+
+.NavBar >* {
+   text-align: center;
+   width: 50%;
+   border-radius: 1px;
+   border: 1px solid var(--evening);
+   padding: 7px;
+}
+
+img {
   max-width: 300px;
   max-height: 300px;
   margin: 2em;
@@ -341,6 +361,21 @@ table.time-sheet tr{
 
 table{
    font: 14px "Fira Sans", sans-serif; 
+}
+
+.check-td{
+   display: flex;
+   justify-content: center;
+}
+
+.checklist-filters button {
+   border-radius: 1px;
+   margin: 4px;
+}
+
+.checklist-filters{
+   display: flex;
+   flex-wrap: wrap;
 }
 
 button{

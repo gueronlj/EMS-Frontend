@@ -4,8 +4,10 @@ import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react';
 import { getEmployeeId } from './Helpers/getEmployeeId.js'
 import Checklist from '../Checklist/table.js';
-
+import NavBar from '../nav-bar.js';
+import { Routes, Route } from 'react-router-dom'
 import Header from '@components/header.js';
+import TimeClock from './TimeClock/time-clock.js';
 
 const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmployeeModal } ) => {
   const [clockOutDisabled, setClockOutDisabled] = useState(true)
@@ -119,17 +121,18 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
         showNewEmployeeModal={showNewEmployeeModal}
         setShowNewEmployeeModal={setShowNewEmployeeModal}
       />
-      <div className ="quick-menu">
-        <div className = "clock-in-out">
-          <button id={new Date().toLocaleTimeString()} className="clock-in-btn" innerText="start" onClick={clockIn} disabled={clockInDisabled}>
-            Clock-In
-          </button>
-          <button id={new Date().toLocaleTimeString()} className="clock-out-btn" innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
-            Clock-Out
-          </button>
-        </div>
-      </div>
-      <Checklist/>
+      <NavBar
+        isAdmin={isAdmin}/>
+      <Routes>
+        <Route path="/timeclock" element={
+          <TimeClock
+            clockIn={clockIn}
+            clockOut={clockOut}
+            clockInDisabled={clockInDisabled}
+            clockOutDisabled={clockOutDisabled}/>
+        }/>
+        <Route path="/checklist" element={<Checklist/>}/>
+      </Routes>
     </>
   );
 }

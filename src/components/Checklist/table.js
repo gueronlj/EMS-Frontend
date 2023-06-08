@@ -106,65 +106,64 @@ const Checklist = () => {
                 setVisibleItems={setVisibleItems}
                 allItems={allItems}
                 setFilters={setFilters}/>
-            { loading? 
-                <ColorRing/>
-            :
-                <Table 
-                    striped 
-                    bordered 
-                    hover 
-                    variant="dark" 
-                    className="checklist">
-                    <thead>
-                        <tr>
-                            <th style={{'width':'70px'}}><button onClick={uncheckAll}>Clear</button></th>
-                            <th style={{'width':'200px'}}>Name</th>
-                            <th>Qty</th>
-                            <th style={{'width':'30px'}}></th>
-                            <th style={{'width':'30px'}}></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { visibleItems.length > 0 ? 
-                            visibleItems.map((item)=>{
-                                return(
-                                    <tr key={item._id}> 
-                                        <td>
-                                            <input
-                                                type='checkbox'
-                                                name='status'
-                                                checked={item?.status}
-                                                onChange={()=>handleCheckboxCLick(item)}/>
-                                        </td>
-                                        <td style={item.status===true?{color:'#89DF87'}:{}}>{item.name}</td>
-                                        <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
-                                        <td onClick={() => handleIncrease(item)}>+</td>
-                                        <td onClick={() => handleDecrease(item)}>-</td>                       
-                                    </tr>
-                                )
-                            })
-                            :
-                            allItems.map((item) => {
-                                return(
-                                    <tr key={item._id}> 
-                                    <td>
+            
+            <Table 
+                striped 
+                bordered 
+                hover 
+                variant="dark" 
+                className="checklist">
+                <thead>
+                    <tr>
+                        <th className="check-td" style={{'width':'70px'}}><button onClick={uncheckAll}>Clear</button></th>
+                        <th style={{'width':'200px'}}>Name</th>
+                        <th>Qty</th>
+                        <th style={{'width':'30px'}}></th>
+                        <th style={{'width':'30px'}}></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { visibleItems.length > 0 ? 
+                        visibleItems.map((item)=>{
+                            return(
+                                <tr key={item._id}> 
+                                    <td className='check-td'>
                                         <input
+                                            className='check'
                                             type='checkbox'
                                             name='status'
-                                            checked={item.status}
+                                            checked={item?.status}
                                             onChange={()=>handleCheckboxCLick(item)}/>
                                     </td>
-                                    <td style={item.status===true || item.quantity > 0?{color:'#89DF87'}:{}}>{item.name}</td>
+                                    <td style={item.status===true?{color:'#89DF87'}:{}}>{item.name}</td>
                                     <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
                                     <td onClick={() => handleIncrease(item)}>+</td>
                                     <td onClick={() => handleDecrease(item)}>-</td>                       
                                 </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </Table>
-            }           
+                            )
+                        })
+                        :
+                        allItems.map((item) => {
+                            return(
+                                <tr key={item._id}> 
+                                <td className='check-td'>
+                                    <input
+                                        className='check'
+                                        type='checkbox'
+                                        name='status'
+                                        checked={item.status}
+                                        onChange={()=>handleCheckboxCLick(item)}/>
+                                </td>
+                                <td style={item.status===true || item.quantity > 0?{color:'#89DF87'}:{}}>{item.name}</td>
+                                <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
+                                <td onClick={() => handleIncrease(item)}>+</td>
+                                <td onClick={() => handleDecrease(item)}>-</td>                       
+                            </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </Table>           
         </main>
     )
 }
