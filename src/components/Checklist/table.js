@@ -124,7 +124,7 @@ const Checklist = () => {
                 </thead>
                 <tbody>
                     { visibleItems.length > 0 ? 
-                        visibleItems.map((item)=>{
+                        visibleItems?.map((item)=>{
                             return(
                                 <tr key={item._id}> 
                                     <td className='check-td'>
@@ -143,7 +143,7 @@ const Checklist = () => {
                             )
                         })
                         :
-                        allItems.map((item) => {
+                        allItems?.map((item) => {
                             return(
                                 <tr key={item._id}> 
                                 <td className='check-td'>
