@@ -98,7 +98,7 @@ const Checklist = () => {
     useEffect(()=>{
         fetchItems();
         filterItems(filters); 
-        console.log(allItems);        
+        console.log(allItems);          
     },[filters])
 
     return (
@@ -144,7 +144,9 @@ const Checklist = () => {
                             )
                         })
                         :
-                        allItems?.map((item) => {
+                        <>
+                        {allItems && 
+                            allItems.map((item) => {
                             return(
                                 <tr key={item._id}> 
                                 <td className='check-td'>
@@ -161,7 +163,8 @@ const Checklist = () => {
                                 <td onClick={() => handleDecrease(item)}>-</td>                       
                             </tr>
                             )
-                        })
+                        })}
+                        </>
                     }
                 </tbody>
             </Table>           
