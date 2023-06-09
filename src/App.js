@@ -27,7 +27,7 @@ const App = () => {
   if ( isLoading ) {
     return(
       <div className="main" >
-        <img src="/images/favicon.ico" alt="Hangry Panda Logo"/>
+        <img id="loading-logo" src="/images/favicon.ico" alt="Hangry Panda Logo"/>
         <div className="loading-screen-text">
           <h1>Employee Management System</h1>
         </div>

@@ -267,15 +267,12 @@ form{
    justify-content: center;
 }
 
-.quick-menu{
-   margin-top: 20px;
-}
-
 .quick-menu-shortcuts{
    display: flex;
    flex-direction: row;
    flex-wrap: wrap;
    justify-content: center;
+   margin-bottom: 10px;
 }
 
 .quick-menu h4{
@@ -490,7 +487,7 @@ button:disabled{
 }
 
 .clock-in-out button {
-   width: 60vw;
+   max-width: 500px;
    height: 15vh;
    margin-bottom: 2em;
    font-size: larger;
@@ -569,4 +566,9 @@ button:disabled{
    color: var(--evening);
    background: var(--teal);
    border-radius: 0px;
+}
+
+#loading-logo {
+   min-width: 300px;
+   min-height: 300px;
 }
