@@ -182,14 +182,6 @@ const QuickMenu = (props) => {
        </div>
        <Paper elevation={3}>
           <div className="quick-menu">
-             <div className="clock-in-out">
-                <button id={new Date().toLocaleTimeString()} className="clock-in-btn" innerText="start" onClick={clockIn} disabled={clockInDisabled}>
-                   Clock-In
-                </button>
-                <button id={new Date().toLocaleTimeString()} className="clock-out-btn" innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
-                   Clock-Out
-                </button>
-             </div>
              <h4>-Quick Add-</h4>
              <div className="quick-menu-shortcuts">
                 <button id="Lunch" innerText="period" onClick={quickAddEvent}>
@@ -207,6 +199,14 @@ const QuickMenu = (props) => {
                    setEventForm={props.setEventForm}
                    showModal={props.showModal}
                    setShowModal={props.setShowModal}/>
+             </div>
+             <div className="clock-in-out">
+                <button id={new Date().toLocaleTimeString()} className="clock-in-btn" innerText="start" onClick={clockIn} disabled={clockInDisabled}>
+                   Clock-In
+                </button>
+                <button id={new Date().toLocaleTimeString()} className="clock-out-btn" innerText="end" onClick={clockOut} disabled={clockOutDisabled}>
+                   Clock-Out
+                </button>
              </div>
           </div>
        </Paper>
