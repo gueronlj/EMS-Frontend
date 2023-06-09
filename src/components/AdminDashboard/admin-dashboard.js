@@ -135,7 +135,9 @@ const AdminDashboard = ( props ) => {
                   setEmployeeList={setEmployeeList}
                   setSelectedEmployee={setSelectedEmployee}
                   selectedEmployee={selectedEmployee}
-                  loadingEmployees={loadingEmployees}/>
+                  loadingEmployees={loadingEmployees}
+                  showNewEmployeeModal={showNewEmployeeModal}
+                  setShowNewEmployeeModal={setShowNewEmployeeModal}/>
               </div>
               <div className="quick-menu">
                 {selectedEmployee?

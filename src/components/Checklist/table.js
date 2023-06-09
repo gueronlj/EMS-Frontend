@@ -115,7 +115,7 @@ const Checklist = () => {
                 className="checklist">
                 <thead>
                     <tr>
-                        <th className="check-td" style={{'width':'70px'}}><button onClick={uncheckAll}>Clear</button></th>
+                        <th className="check-td"><button onClick={uncheckAll}>Clear</button></th>
                         <th style={{'width':'200px'}}>Name</th>
                         <th>Qty</th>
                         <th style={{'width':'30px'}}></th>
@@ -137,8 +137,8 @@ const Checklist = () => {
                                     </td>
                                     <td style={item.status===true?{color:'#89DF87'}:{}}>{item.name}</td>
                                     <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
-                                    <td onClick={() => handleIncrease(item)}>+</td>
-                                    <td onClick={() => handleDecrease(item)}>-</td>                       
+                                    <td><img src="images/plus-white.png" onClick={() => handleIncrease(item)} alt="Plus Icon"/></td>
+                                    <td><img src="images/minus-white.png" onClick={() => handleDecrease(item)} alt="Decrease Button"/></td>                       
                                 </tr>
                             )
                         })

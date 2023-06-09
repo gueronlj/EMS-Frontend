@@ -28,5 +28,10 @@ export const EMPLOYEE_INFO = [
     name:'testing',
     email:'gueronlj@gmail.com',
     id:'640b5ad33537b73b6b694755'
+  },
+  {
+    name:'Hai',
+    email:'h.m.huynh90@gmail.com',
+    id:'fakeid'
   }
 ]
