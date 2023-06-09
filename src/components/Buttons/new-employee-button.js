@@ -1,9 +1,9 @@
-const AddEmployeeButton = (props) => {
+const AddEmployeeButton = ({setShowNewEmployeeModal, showNewEmployeeModal}) => {
    const toggleButton = () => {
-      if(props.showNewEmployeeModal){
-         props.setShowNewEmployeeModal(false)
+      if(showNewEmployeeModal){
+         setShowNewEmployeeModal(false)
       }else{
-         props.setShowNewEmployeeModal(true)
+         setShowNewEmployeeModal(true)
       }
    }
 
