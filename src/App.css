@@ -46,6 +46,7 @@ button{
   font: 16px "Fira Sans", sans-serif;
   color: white;
   margin: 10px;
+  margin-left: 20px;
 }
 
 .quick-message{
@@ -80,7 +81,7 @@ button{
 
 .sideMenu{
    margin-top: 20px;
-   margin-left: 5px;
+   margin-left: 20px;
    display: flex;
    flex-direction: column;
    font-size: 1em;
@@ -111,7 +112,7 @@ button{
    display: flex;
    flex-direction: column;
    justify-content: center;
-   padding: .25em;
+   padding: 20px;
    margin: auto;
 }
 
@@ -175,13 +176,13 @@ li{
 .NavBar {
    display: flex;
    flex-direction: row;
-   background-color:black;
+   background-color:#494E6B;
 }
 
 .NavBar a {
    text-decoration: none;
    font: 16px "Fira Sans", sans-serif;
-   color: white;
+   color: var(--teal);
 }
 
 .NavBar >* {
@@ -192,10 +193,15 @@ li{
    padding: 7px;
 }
 
+.NavBar > *:hover{
+   background-color: #56f4de;
+   color: #192231;
+}
+
 img {
   max-width: .8em;
   max-height: .8em;
-  margin: 10px;
+  margin: 5px;
 }
 
 h4, h5, h3  {
@@ -214,7 +220,12 @@ h1{
 
 table {
    width: 100%;
-   border-spacing: 0 20px;
+   border-spacing: 0px;
+}
+
+tr>td{
+   padding-bottom: 15px;
+   padding-top: 15px;
 }
 
 form{
@@ -279,10 +290,11 @@ form{
    text-align: center;
 }
 
-.quick-menu-shortcuts button:hover, .header-btn:hover, .edit-button:hover, .apply-btn:hover{
+.quick-menu-shortcuts button:hover, .header-btn:hover, .edit-button:hover, .apply-btn:hover, .checklist-filters button:hover{
   background-color: var(--teal);
   color: var(--evening);
   background: var(--teal);
+  cursor: pointer;
 }
 
 .details-card{
@@ -322,6 +334,11 @@ form{
   background: linear-gradient(90deg, rgba(25,34,49,1) 0%, rgba(73,78,107,1) 100%, rgba(152,135,143,1) 100%);
 }
 
+.quick-menu-header h1 {
+   margin-left: auto;
+   margin-right: auto;
+}
+
  .details-btn{
    justify-content: flex-end;
    border: none;
@@ -353,11 +370,15 @@ th {
 
 table.time-sheet tr{
    font-size: 14px;
-   margin-bottom: 10px;
+   row-gap: 2px;
 }
 
-table{
+table.checklist{
    font: 16px "Fira Sans", sans-serif; 
+}
+
+tr:nth-child(even) {
+   background-color:#202b3e;
 }
 
 .check-td{
@@ -381,6 +402,7 @@ table{
    width: 100vw;
    margin-top: 20px;
    margin-left: 10px;
+   margin-bottom: 20px;
 }
 
 .note {
@@ -414,6 +436,11 @@ table{
    border-radius: 1px;
    font-size: 1.1em;
    margin-right: 0px;
+}
+
+#note-submit:hover {
+   color: #192231;
+   background-color: #56f4de;
 }
 
 .note img{
@@ -491,6 +518,7 @@ button:disabled{
    height: 15vh;
    margin-bottom: 2em;
    font-size: larger;
+   border-radius: 3px;
 }
 
 .clock-in-btn{  
@@ -550,7 +578,7 @@ button:disabled{
 
 .header button{
    font-size: 16px;
-   margin-right: 10px;
+   margin-right: 20px;
    margin-top: 5px;
    margin-bottom: 5px;
 }

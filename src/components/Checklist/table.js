@@ -116,10 +116,10 @@ const Checklist = () => {
                 <thead>
                     <tr>
                         <th className="check-td"><button onClick={uncheckAll}>Clear</button></th>
-                        <th style={{'width':'200px'}}>Name</th>
-                        <th>Qty</th>
-                        <th style={{'width':'30px'}}></th>
-                        <th style={{'width':'30px'}}></th>
+                        <th>Name</th>
+                        <th width="7%">Qty</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,26 +142,26 @@ const Checklist = () => {
                                 </tr>
                             )
                         })
-                        :
+                    :
                         <>
                         {allItems && 
                             allItems.map((item) => {
-                            return(
-                                <tr key={item._id}> 
-                                <td className='check-td'>
-                                    <input
-                                        className='check'
-                                        type='checkbox'
-                                        name='status'
-                                        checked={item.status}
-                                        onChange={()=>handleCheckboxCLick(item)}/>
-                                </td>
-                                <td style={item.status===true || item.quantity > 0?{color:'#89DF87'}:{}}>{item.name}</td>
-                                <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
-                                <td onClick={() => handleIncrease(item)}>+</td>
-                                <td onClick={() => handleDecrease(item)}>-</td>                       
-                            </tr>
-                            )
+                                return(
+                                    <tr key={item._id}> 
+                                        <td className='check-td'>
+                                            <input
+                                                className='check'
+                                                type='checkbox'
+                                                name='status'
+                                                checked={item.status}
+                                                onChange={()=>handleCheckboxCLick(item)}/>
+                                        </td>
+                                        <td style={item.status===true || item.quantity > 0?{color:'#89DF87'}:{}}>{item.name}</td>
+                                        <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
+                                        <td><img src="images/plus-white.png" onClick={() => handleIncrease(item)} alt="Plus Icon"/></td>
+                                        <td><img src="images/minus-white.png" onClick={() => handleDecrease(item)} alt="Decrease Button"/></td>                       
+                                    </tr>
+                                )
                         })}
                         </>
                     }

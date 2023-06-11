@@ -11,6 +11,7 @@ const FilterButtons = ({allItems, setFilters}) => {
 
     return (
         <nav className="checklist-filters">
+            <h3>Filters:</h3>
             <button onClick={()=>{filterBy('Cold')}}>Cold</button>
             <button onClick={()=>{filterBy('Frozen')}}>Frozen</button>
             <button onClick={()=>{filterBy('Veggie')}}>Veggies</button>
