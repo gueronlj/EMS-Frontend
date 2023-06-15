@@ -75,8 +75,11 @@ button{
 
 .loading-spinner{
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .sideMenu{
@@ -374,7 +377,7 @@ table.time-sheet tr{
 }
 
 table.checklist{
-   font: 16px "Fira Sans", sans-serif; 
+   font: 16px "Fira Sans", sans-serif;
 }
 
 tr:nth-child(even) {
@@ -521,7 +524,7 @@ button:disabled{
    border-radius: 3px;
 }
 
-.clock-in-btn{  
+.clock-in-btn{
    background: linear-gradient(129deg, rgba(118,201,76,1) 55%, rgba(195,255,164,1) 100%);
    color: var(--evening);
    border: 1px solid rgba(118,201,76,1);
@@ -599,4 +602,29 @@ button:disabled{
 #loading-logo {
    min-width: 300px;
    min-height: 300px;
+}
+
+#time-clock {
+   display: flex;
+   flex-direction: row;
+   justify-content:space-between;
+}
+
+#time-clock-left {
+   margin-top: 25px;
+   max-width: 40vw;
+}
+
+.SelfReport {
+   color: white;
+   padding: 5px;
+}
+
+.SelfReport > * {
+   margin: 1em;
+}
+
+.SelfReport h2 {
+   margin: 0px;
+   text-align: center;
 }
