@@ -11,12 +11,12 @@ export const EMPLOYEE_INFO = [
   },
   {
     name:'Lan',
-    email:'gueronlj@gmail.com',
+    email:'lannthipham@outlook.com',
     id:'636e93d7ce43e8354b80a56c'
   },
   {
     name:'Bo',
-    email:'gueronlj@gmail.com',
+    email:'vincehuynh84@gmail.com',
     id:'6455ce0e5c5093c440ae6511'
   },
   {
