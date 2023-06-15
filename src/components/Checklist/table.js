@@ -14,15 +14,15 @@ const Checklist = () => {
     const fetchItems = async () => {
         try {
             setLoading(true)
-            let response = await axios.get(`${endpoint}/checklist`);            
+            let response = await axios.get(`${endpoint}/checklist`);
             setAllItems(response.data);
             setLoading(false)
         } catch(error) {
             console.log(error);
-        } 
+        }
     }
 
-    const filterItems = ( filter ) => {     
+    const filterItems = ( filter ) => {
         if (filter !== ''){
             let array = allItems.filter(item => item.tags.includes(filter))
             //add all items with that tag to visibleItems array
@@ -33,13 +33,13 @@ const Checklist = () => {
     }
 
     /*updatedStatus is needed because the visibleItems array is
-     a copy of a filtered allItems array, to show updated 
+     a copy of a filtered allItems array, to show updated
      status values we must update the copy too
     */
     const updatedStatus = (index, boolean) => {
         visibleItems[index].status = boolean
-      } 
-      
+      }
+
     const handleCheckboxCLick = ( item ) => {
         //Find the index we need to update
         const isMatching = (ele) => ele.name === item.name;
@@ -97,7 +97,7 @@ const Checklist = () => {
 
     useEffect(()=>{
         fetchItems();
-        filterItems(filters); 
+        filterItems(filters);
     },[filters])
 
     return (
@@ -106,12 +106,12 @@ const Checklist = () => {
                 setVisibleItems={setVisibleItems}
                 allItems={allItems}
                 setFilters={setFilters}/>
-            
-            <Table 
-                striped 
-                bordered 
-                hover 
-                variant="dark" 
+
+            <Table
+                striped
+                bordered
+                hover
+                variant="dark"
                 className="checklist">
                 <thead>
                     <tr>
@@ -122,11 +122,24 @@ const Checklist = () => {
                         <th></th>
                     </tr>
                 </thead>
+                { loading ?
+                   <div className="loading-spinner">
+                    <ColorRing
+                      visible={true}
+                      height="140"
+                      width="140"
+                      ariaLabel="blocks-loading"
+                      wrapperStyle={{}}
+                      wrapperClass="blocks-wrapper"
+                      colors={['#192231', '#98878F', '#494E6B', '#56f4de', '#849b87']}
+                    />
+                 </div>
+                :
                 <tbody>
-                    { visibleItems.length > 0 ? 
+                    { visibleItems.length > 0 ?
                         visibleItems?.map((item)=>{
                             return(
-                                <tr key={item._id}> 
+                                <tr key={item._id}>
                                     <td className='check-td'>
                                         <input
                                             className='check'
@@ -138,16 +151,16 @@ const Checklist = () => {
                                     <td style={item.status===true?{color:'#89DF87'}:{}}>{item.name}</td>
                                     <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
                                     <td><img src="images/plus-white.png" onClick={() => handleIncrease(item)} alt="Plus Icon"/></td>
-                                    <td><img src="images/minus-white.png" onClick={() => handleDecrease(item)} alt="Decrease Button"/></td>                       
+                                    <td><img src="images/minus-white.png" onClick={() => handleDecrease(item)} alt="Decrease Button"/></td>
                                 </tr>
                             )
                         })
                     :
                         <>
-                        {allItems && 
+                        {allItems &&
                             allItems.map((item) => {
                                 return(
-                                    <tr key={item._id}> 
+                                    <tr key={item._id}>
                                         <td className='check-td'>
                                             <input
                                                 className='check'
@@ -159,14 +172,16 @@ const Checklist = () => {
                                         <td style={item.status===true || item.quantity > 0?{color:'#89DF87'}:{}}>{item.name}</td>
                                         <td style={item.quantity>=item.recommended?{color:'#89DF87'}:{}}>{item.quantity}/{item.recommended}</td>
                                         <td><img src="images/plus-white.png" onClick={() => handleIncrease(item)} alt="Plus Icon"/></td>
-                                        <td><img src="images/minus-white.png" onClick={() => handleDecrease(item)} alt="Decrease Button"/></td>                       
+                                        <td><img src="images/minus-white.png" onClick={() => handleDecrease(item)} alt="Decrease Button"/></td>
                                     </tr>
                                 )
                         })}
                         </>
                     }
                 </tbody>
-            </Table>           
+                }
+
+            </Table>
         </>
     )
 }

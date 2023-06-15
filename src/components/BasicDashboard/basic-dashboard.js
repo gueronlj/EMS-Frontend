@@ -9,10 +9,14 @@ import { Routes, Route } from 'react-router-dom'
 import Header from '@components/header.js';
 import TimeClock from './TimeClock/time-clock.js';
 import Notes from '../Notes/notes.js';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmployeeModal } ) => {
   const [clockOutDisabled, setClockOutDisabled] = useState(true)
   const [clockInDisabled, setClockInDisabled] = useState(false)
+  const [alert, setAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
   const URL = process.env.REACT_APP_DEV_URI;
   const EMPLOYEE_ID = useRef('')
   const { getAccessTokenSilently } = useAuth0()
@@ -99,6 +103,8 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
     addStartTimetoTimeSheet()
     toggleButtonStatus()
     changeClockedInStatus(true)
+    setAlert(true)
+    setAlertMessage('You have clocked in!')
   }
   //----------------------------------------
 
@@ -106,13 +112,15 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
     toggleButtonStatus()
     addEndTimetoTimeSheet()
     changeClockedInStatus(false)
+    setAlert(true)
+    setAlertMessage('You have clocked out!')
   }
   //----------------------------------------
 
   useEffect(() => {
     EMPLOYEE_ID.current = getEmployeeId(user.email)
     checkClockedInStatus()
-  },[])
+},[])
 
   return (
     <>
@@ -122,8 +130,10 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
         showNewEmployeeModal={showNewEmployeeModal}
         setShowNewEmployeeModal={setShowNewEmployeeModal}
       />
+
       <NavBar
         isAdmin={isAdmin}/>
+
       <div className='main'>
         <Routes>
           <Route path="/" element={
@@ -131,12 +141,21 @@ const BasicDashboard = ( { user, isAdmin, showNewEmployeeModal, setShowNewEmploy
               clockIn={clockIn}
               clockOut={clockOut}
               clockInDisabled={clockInDisabled}
-              clockOutDisabled={clockOutDisabled}/>
+              clockOutDisabled={clockOutDisabled}
+              user={user}
+              alertMessage={alertMessage}
+              alert={alert}/>
           }/>
           <Route path="/checklist" element={<Checklist/>}/>
           <Route path="/notes" element={<Notes/>}/>
         </Routes>
-      </div>     
+
+         <Snackbar open={alert} autoHideDuration={7000} onClose={() => setAlert(false)}>
+           <Alert onClose={() => setAlert(false)} severity="success" sx={{ width: '100%', color:'#7cff40'}}>
+             {alertMessage}
+           </Alert>
+         </Snackbar>
+      </div>
     </>
   );
 }
