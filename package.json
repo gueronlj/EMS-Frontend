@@ -28,6 +28,7 @@
     "react-scripts": "^5.0.1",
     "request": "^2.88.2",
     "styled-components": "^5.3.6",
+    "swr": "^2.1.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
